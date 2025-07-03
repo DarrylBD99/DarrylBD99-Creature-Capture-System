@@ -1,0 +1,604 @@
+[gd_scene load_steps=10 format=3 uid="uid://fh5j2husvn5a"]
+
+[ext_resource type="Texture2D" uid="uid://ddns0sa8opd3c" path="res://Example/Assets/Graphics/MainMenu_BG.png" id="1_8ryit"]
+
+[sub_resource type="GDScript" id="GDScript_7d6pn"]
+resource_name = "MainMenu"
+script/source = "extends CanvasLayer
+
+@export var player_creatures : Dictionary[StringName, int]
+var saves : Array[CCS_PlayerData]
+
+signal game_load
+
+const opening_cutscene : PackedScene = preload(\"uid://cjvmlm6l26qo3\")
+const game_base : PackedScene = preload(\"uid://jh5w3r1uh5m3\")
+
+func _ready() -> void:
+	CCS_BattleManager.save_loaded.connect( func():
+		for child : Control in %SaveContainer.get_children():
+			if child.has_focus():
+				child.release_focus()
+				break
+		
+		_load_game(game_base)
+	)
+	
+	saves = CCS_PlayerData.get_all_saves()
+	%EmptySave.visible = saves.is_empty()
+	for save_idx : int in saves.size():
+		var button : Button = _create_load_save_button(saves.get(save_idx), save_idx)
+		%SaveContainer.add_child(button)
+		%SaveContainer.move_child(button, save_idx)
+	
+	_show_title_screen()
+	
+	%New.pressed.connect( func():
+		%TitleScreen.hide()
+		%NewGame.show()
+		%NameSelect.grab_focus()
+	)
+	
+	%NameSelect.text_submitted.connect(_new_save)
+	
+	%CreditButton.pressed.connect( func():
+		%TitleScreen.hide()
+		%Credits.show()
+		%CreditsBackButton.grab_focus()
+	)
+	
+	%Load.pressed.connect( func():
+		%TitleScreen.hide()
+		%LoadSaves.show()
+		
+		for child : Control in %SaveContainer.get_children():
+			if child is Button:
+				child.grab_focus()
+				return
+		
+		game_load.emit()
+	)
+	
+	%Quit.pressed.connect( func():
+		%TitleScreen.hide()
+		%QuitGame.show()
+		%QuitGameNo.grab_focus()
+	)
+	
+	%CreditsBackButton.pressed.connect(_show_title_screen)
+	
+	%LoadBackButton.pressed.connect(_show_title_screen)
+	
+	%NewBackButton.pressed.connect(_show_title_screen)
+	
+	%QuitGameYes.pressed.connect( func(): get_tree().quit() )
+	%QuitGameNo.pressed.connect(_show_title_screen)
+
+func _show_title_screen() -> void:
+	%TitleScreen.show()
+	%LoadSaves.hide()
+	%QuitGame.hide()
+	%Credits.hide()
+	%NewGame.hide()
+	
+	%Load.grab_focus()
+
+func _new_save(trainer_name : String) -> void:
+	if trainer_name.is_empty():
+		return
+	
+	if not %NewGame.visible:
+		return
+	
+	CCS_PlayerData.new_game()
+	
+	for species : StringName in player_creatures:
+		CCS_PlayerData.give_creature(species, player_creatures.get(species))
+	
+	CCS_PlayerData.give_item(\"LumaCrystal\", 2)
+	CCS_PlayerData.give_item(\"Medicine\", 1)
+	
+	CCS_PlayerData.set_trainer_name(trainer_name)
+	_load_game(opening_cutscene)
+
+#region Load Game
+const button_text : String = \"\"\"{trainer_name}
+
+Party
+{creatures}\"\"\"
+
+const creature_text : String = \"{name} Lvl. {level}\\n\"
+
+func _load_game(scene : PackedScene) -> void:
+	CCS_BattleUIManager.play_transition(\"black_fade_in\")
+	await CCS_BattleUIManager.transition_end
+	get_tree().change_scene_to_packed(scene)
+
+func _create_load_save_button(player_data : CCS_PlayerData, slot : int) -> Button:
+	var button : Button = Button.new()
+	
+	var creatures : String = \"\"
+	for creature : CCS_Creature in player_data.team.creature_list:
+		creatures += creature_text.format({
+			\"name\" : creature.get_creature_name(),
+			\"level\" : creature.stats.level
+		})
+	
+	button.text = button_text.format({
+		\"trainer_name\" : player_data.team.get_trainer_name(),
+		\"creatures\" : creatures,
+	})
+	
+	button.pressed.connect(func(): CCS_PlayerData.load_game(slot) )
+	
+	return button
+#endregion
+
+func _input(event: InputEvent) -> void:
+	if %TitleScreen.visible:
+		return
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		_show_title_screen()
+		get_viewport().set_input_as_handled()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ryit"]
+bg_color = Color(0, 0, 0, 0.556863)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42lcs"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.964706)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="GDScript" id="GDScript_3y04k"]
+resource_name = "EnterName"
+script/source = "extends Button
+
+func _pressed() -> void:
+	%NameSelect.text_submitted.emit(%NameSelect.text)
+"
+
+[sub_resource type="GDScript" id="GDScript_hb7bm"]
+resource_name = "BlackFade_DisableInput"
+script/source = "extends ColorRect
+
+func _input(_event: InputEvent) -> void:
+	if visible:
+		get_viewport().set_input_as_handled()
+"
+
+[sub_resource type="Animation" id="Animation_42lcs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BlackFade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlackFade:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_8ryit"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BlackFade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlackFade:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3y04k"]
+_data = {
+&"RESET": SubResource("Animation_42lcs"),
+&"new_animation": SubResource("Animation_8ryit")
+}
+
+[node name="CanvasLayer" type="CanvasLayer"]
+layer = 0
+script = SubResource("GDScript_7d6pn")
+player_creatures = Dictionary[StringName, int]({
+&"Bloom": 5,
+&"Embit": 5
+})
+
+[node name="BG" type="TextureRect" parent="."]
+z_index = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_8ryit")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Panel" type="Panel" parent="."]
+z_index = 4
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8ryit")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+
+[node name="TitleScreen" type="Control" parent="Panel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Logo" type="VBoxContainer" parent="Panel/MarginContainer/TitleScreen"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 220.0
+grow_horizontal = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/TitleScreen/Logo"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 128
+text = "Lumas"
+
+[node name="Subtitle" type="Label" parent="Panel/MarginContainer/TitleScreen/Logo"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Isle of Eternity"
+
+[node name="Buttons" type="VBoxContainer" parent="Panel/MarginContainer/TitleScreen"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -167.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Load" type="Button" parent="Panel/MarginContainer/TitleScreen/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Load Save"
+
+[node name="New" type="Button" parent="Panel/MarginContainer/TitleScreen/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "New Game"
+
+[node name="CreditButton" type="Button" parent="Panel/MarginContainer/TitleScreen/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Credits"
+
+[node name="Quit" type="Button" parent="Panel/MarginContainer/TitleScreen/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Quit
+"
+
+[node name="LoadSaves" type="Control" parent="Panel/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/LoadSaves"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/LoadSaves/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="SaveContainer" type="VBoxContainer" parent="Panel/MarginContainer/LoadSaves/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="EmptySave" type="Label" parent="Panel/MarginContainer/LoadSaves/ScrollContainer/MarginContainer/SaveContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_42lcs")
+text = "You have no save files..."
+horizontal_alignment = 1
+
+[node name="LoadBackButton" type="Button" parent="Panel/MarginContainer/LoadSaves/ScrollContainer/MarginContainer/SaveContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Back"
+
+[node name="NewGame" type="Control" parent="Panel/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/NewGame"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -55.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/NewGame/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/NewGame/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Please enter a name:  "
+
+[node name="NameSelect" type="LineEdit" parent="Panel/MarginContainer/NewGame/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+
+[node name="EnterName" type="Button" parent="Panel/MarginContainer/NewGame/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Enter"
+script = SubResource("GDScript_3y04k")
+
+[node name="NewBackButton" type="Button" parent="Panel/MarginContainer/NewGame/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Back"
+
+[node name="QuitGame" type="Control" parent="Panel/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/QuitGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -472.0
+offset_top = -101.0
+offset_right = 472.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/QuitGame/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Are you sure you want to quit?"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/QuitGame/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="QuitGameYes" type="Button" parent="Panel/MarginContainer/QuitGame/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Yes"
+
+[node name="QuitGameNo" type="Button" parent="Panel/MarginContainer/QuitGame/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "No"
+
+[node name="Credits" type="Control" parent="Panel/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Panel/MarginContainer/Credits"]
+layout_mode = 2
+offset_right = 1024.0
+offset_bottom = 520.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/Credits/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/Credits/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/bold_font_size = 48
+bbcode_enabled = true
+text = "[b]Credits"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Person" type="Label" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "DarrylBD99"
+horizontal_alignment = 2
+
+[node name="Job" type="Label" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "Main Developer"
+
+[node name="Assets" type="RichTextLabel" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/bold_font_size = 48
+bbcode_enabled = true
+text = "[b]Assets"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Person" type="Label" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "DarrylBD99
+
+NYKNCK
+Kenny
+Skfod_
+Eclipzodiac
+Leohpaz"
+horizontal_alignment = 2
+
+[node name="Asset" type="Label" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "Creature Capture System Plugin
+Environmental Factor Addon
+Candle (edited)
+Tileset
+Stylized Medieval Market
+RPG Battle music
+RPG Essentials SFX (Free)"
+
+[node name="Disclaimer" type="Label" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Disclaimer: AI image generation was used for Lumas such as Bloom for this demo to help finish the demo faster."
+horizontal_alignment = 1
+
+[node name="CreditsBackButton" type="Button" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back"
+
+[node name="BlackFade" type="ColorRect" parent="."]
+visible = false
+z_index = 5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = SubResource("GDScript_hb7bm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3y04k")
+}
+autoplay = "new_animation"

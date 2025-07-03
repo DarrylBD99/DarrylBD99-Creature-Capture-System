@@ -1,0 +1,1 @@
+extends CCS_CalculationVariableNode

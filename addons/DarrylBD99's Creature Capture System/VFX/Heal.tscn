@@ -1,0 +1,167 @@
+[gd_scene load_steps=24 format=3 uid="uid://d1mnakusrfwio"]
+
+[ext_resource type="Script" uid="uid://cd6edex6fl2qt" path="res://addons/DarrylBD99's Creature Capture System/Battle System/battle_vfx.gd" id="1_emcey"]
+[ext_resource type="Texture2D" uid="uid://c7s0hjnlqnhqa" path="res://addons/DarrylBD99's Creature Capture System/Graphics/HitParticle.png" id="2_nadh3"]
+[ext_resource type="Texture2D" uid="uid://qb14c3bc7opa" path="res://addons/DarrylBD99's Creature Capture System/Graphics/Shockwave.png" id="3_sgob5"]
+[ext_resource type="AudioStream" uid="uid://dlt6nj833ytu3" path="res://addons/DarrylBD99's Creature Capture System/Sounds/Hit.wav" id="4_pcx17"]
+
+[sub_resource type="Curve" id="Curve_vprmv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.740845, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_58fq7"]
+curve = SubResource("Curve_vprmv")
+
+[sub_resource type="Gradient" id="Gradient_nfj85"]
+offsets = PackedFloat32Array(0.00303951, 1)
+colors = PackedColorArray(0.0660669, 0.987773, 2.23327e-05, 1, 0.644056, 1, 0.611914, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3q4um"]
+gradient = SubResource("Gradient_nfj85")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_emcey"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.104225, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nadh3"]
+curve = SubResource("Curve_emcey")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cform"]
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, -1, 0)
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_nadh3")
+color_ramp = SubResource("GradientTexture1D_3q4um")
+alpha_curve = SubResource("CurveTexture_58fq7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f63vk"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_nadh3")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_vprmv"]
+material = SubResource("StandardMaterial3D_f63vk")
+
+[sub_resource type="Curve" id="Curve_nfj85"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3q4um"]
+curve = SubResource("Curve_nfj85")
+
+[sub_resource type="Curve" id="Curve_cform"]
+_data = [Vector2(0, 0), 0.0, 3.07616, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_avfd8"]
+curve = SubResource("Curve_cform")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g235b"]
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_avfd8")
+color = Color(0.0582429, 0.926954, 0, 1)
+alpha_curve = SubResource("CurveTexture_3q4um")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aw8w0"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_sgob5")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_shxo5"]
+material = SubResource("StandardMaterial3D_aw8w0")
+
+[sub_resource type="Animation" id="Animation_58fq7"]
+resource_name = "Hit"
+length = 0.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"set_position_user_center"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_nfj85"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HealParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shockwave:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3q4um"]
+_data = {
+&"Hit": SubResource("Animation_58fq7"),
+&"RESET": SubResource("Animation_nfj85")
+}
+
+[node name="Heal" type="Node3D"]
+script = ExtResource("1_emcey")
+
+[node name="HealParticles" type="GPUParticles3D" parent="."]
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.6
+process_material = SubResource("ParticleProcessMaterial_cform")
+draw_pass_1 = SubResource("QuadMesh_vprmv")
+
+[node name="Shockwave" type="GPUParticles3D" parent="."]
+amount = 1
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_g235b")
+draw_pass_1 = SubResource("QuadMesh_shxo5")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_pcx17")
+autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3q4um")
+}
+autoplay = "Hit"

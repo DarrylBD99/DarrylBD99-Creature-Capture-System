@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjiatb5hse8b"]
+
+[ext_resource type="SpriteFrames" uid="uid://cksut75sirb75" path="res://Example/Assets/Graphics/Lumas/CreatureSpriteLibrary.tres" id="1_78q4a"]
+[ext_resource type="Script" uid="uid://bmaic83lmeieg" path="res://addons/DarrylBD99's Creature Capture System/Battle System/creature_sprite_3d.gd" id="2_4s1uu"]
+
+[node name="CreatureSprite3d" type="AnimatedSprite3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+texture_filter = 0
+sprite_frames = ExtResource("1_78q4a")
+animation = &"Graveltide_FRONT"
+script = ExtResource("2_4s1uu")

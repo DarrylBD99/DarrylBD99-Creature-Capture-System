@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://biq4ruoyqfmi1"
+path="res://.godot/imported/11- Duel under the Eclipse.ogg-b62168c4cf67fe6a6d57f166020591ad.oggvorbisstr"
+
+[deps]
+
+source_file="res://Example/Assets/Audio/Music/11- Duel under the Eclipse.ogg"
+dest_files=["res://.godot/imported/11- Duel under the Eclipse.ogg-b62168c4cf67fe6a6d57f166020591ad.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

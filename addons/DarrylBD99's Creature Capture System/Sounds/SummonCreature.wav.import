@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cvw1rqm16mupx"
+path="res://.godot/imported/SummonCreature.wav-38f4bf776702a18cff87db11a2dc206e.sample"
+
+[deps]
+
+source_file="res://addons/DarrylBD99's Creature Capture System/Sounds/SummonCreature.wav"
+dest_files=["res://.godot/imported/SummonCreature.wav-38f4bf776702a18cff87db11a2dc206e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

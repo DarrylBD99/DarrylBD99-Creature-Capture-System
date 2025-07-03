@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcixpbvj2whd7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_34kjf"]
+bg_color = Color(0.587752, 0.574213, 0.773955, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.896162, 0.735645, 0.929185, 1)
+border_blend = true
+
+[sub_resource type="GDScript" id="GDScript_jfpmy"]
+resource_name = "EFButton"
+script/source = "extends Button
+
+@export var theme_selected : Theme
+@onready var theme_base : Theme = get_theme()
+
+var summon_ef_command : CCS_EF_BattleCommand_Summon
+var user : CCS_Creature
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	CCS_BattleUIManager.cancel_action.connect(_cancel_action)
+	CCS_BattleUIManager.attack_pool_updated.connect(_set_selected_creature)
+	
+func _cancel_action():
+	var idx : int = CCS_BattleManager.command_list.find(summon_ef_command)
+	
+	if idx >= 0:
+		CCS_BattleManager.command_list.remove_at(idx)
+		summon_ef_command.queue_free()
+
+func _set_selected_creature(creature : CCS_Creature):
+	user = creature
+
+func _toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		summon_ef_command = CCS_EF_BattleCommand_Summon.new(user)
+		CCS_BattleManager.command_list.append(summon_ef_command)
+	else:
+		_cancel_action()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c8hrx"]
+
+[sub_resource type="Theme" id="Theme_eg8rn"]
+Button/styles/focus = SubResource("StyleBoxFlat_c8hrx")
+
+[node name="EFButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_styles/pressed = SubResource("StyleBoxFlat_34kjf")
+toggle_mode = true
+text = "Aura Field"
+script = SubResource("GDScript_jfpmy")
+theme_selected = SubResource("Theme_eg8rn")

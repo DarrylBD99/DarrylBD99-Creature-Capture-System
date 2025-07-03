@@ -1,0 +1,2 @@
+extends CCS_StaticData_DataBase
+class_name CCS_ItemType

@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bguqkgbrcvnh1"]
+
+[ext_resource type="Shader" uid="uid://h88kl30j0a8g" path="res://addons/Environmental Factor [DarrylBD99's CCS Addon]/Shader/SummonAura.gdshader" id="1_5gb7v"]
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_5gb7v")
+shader_parameter/enabled = true
+shader_parameter/billboard = true
+shader_parameter/y_billboard = false
+shader_parameter/line_color = Color(0.72589, 0.513017, 0.236555, 1)
+shader_parameter/glowSize = 2.0
+shader_parameter/glowDensity = 5
+shader_parameter/glowRadialCoverage = 4
+shader_parameter/glowAngle = 1.57
+shader_parameter/glowSharpness = 1.0
+shader_parameter/alphaThreshold = 0.2

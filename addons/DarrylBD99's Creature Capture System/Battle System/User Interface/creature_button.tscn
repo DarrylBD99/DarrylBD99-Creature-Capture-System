@@ -1,0 +1,124 @@
+[gd_scene load_steps=8 format=3 uid="uid://c6ckdngqn5kkx"]
+
+[ext_resource type="Script" uid="uid://knp3lp4mdkj0" path="res://addons/DarrylBD99's Creature Capture System/Battle System/User Interface/creature_button.gd" id="1_fn0ig"]
+[ext_resource type="Script" uid="uid://cltxvh38r5u5i" path="res://addons/DarrylBD99's Creature Capture System/Battle System/User Interface/HUDPanel.gd" id="2_0tqgb"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_3ovsi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h66ai"]
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fn0ig"]
+bg_color = Color(1, 0.278431, 0.278431, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkywc"]
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 2.0
+expand_margin_top = 3.0
+expand_margin_right = 2.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0tqgb"]
+bg_color = Color(0.0563428, 0.394613, 0.855232, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[node name="Creature" type="Button"]
+custom_minimum_size = Vector2(325, 80)
+anchors_preset = -1
+anchor_right = 0.00694444
+anchor_bottom = 0.0123457
+offset_right = -8.0
+offset_bottom = -8.0
+size_flags_horizontal = 3
+script = ExtResource("1_fn0ig")
+metadata/_edit_use_anchors_ = true
+
+[node name="HUDPanel" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("2_0tqgb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDPanel"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="HUDPanel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = SubResource("CanvasTexture_3ovsi")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="HUDPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUDPanel/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="HUDPanel/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+text = "{Creature_Name}"
+
+[node name="Level" type="Label" parent="HUDPanel/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Lvl. {level}"
+horizontal_alignment = 2
+
+[node name="HealthBar" type="ProgressBar" parent="HUDPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_h66ai")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fn0ig")
+show_percentage = false
+
+[node name="XPBar" type="ProgressBar" parent="HUDPanel/HBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hkywc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0tqgb")
+show_percentage = false

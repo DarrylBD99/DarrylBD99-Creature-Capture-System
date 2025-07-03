@@ -1,0 +1,261 @@
+[gd_scene load_steps=11 format=4 uid="uid://de5de0dh51j06"]
+
+[ext_resource type="Script" uid="uid://cd6edex6fl2qt" path="res://addons/DarrylBD99's Creature Capture System/Battle System/battle_vfx.gd" id="1_b0tck"]
+[ext_resource type="Texture2D" uid="uid://cj6wlib1mabd5" path="res://addons/Environmental Factor [DarrylBD99's CCS Addon]/Graphics/GroundEffect.png" id="2_x00ep"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxc5g"]
+shading_mode = 2
+albedo_color = Color(0, 0, 0, 0.533333)
+metallic_specular = 0.0
+disable_receive_shadows = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_i2pqo"]
+material = SubResource("StandardMaterial3D_dxc5g")
+height = 0.5
+radial_segments = 16
+rings = 8
+is_hemisphere = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xpq27"]
+resource_name = "Material.001"
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.14, 0.14, 0.14, 0)
+albedo_texture = ExtResource("2_x00ep")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ayfpk"]
+_surfaces = [{
+"aabb": AABB(-1.5, 0, -1.5, 3, 0.8, 3),
+"format": 34896613377,
+"index_count": 192,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAAAAIAAwAFAAEABAACAAYAAwAHAAUACAAEAAYABwAJAAUACAAGAAoABwALAAkADAAIAAoACwANAAkADAAKAA4ACwAPAA0AEAAMAA4ADwARAA0AEAAOABIADwATABEAFAAQABIAEwAVABEAFAASABYAEwAXABUAGAAUABYAFwAZABUAGAAWABoAFwAbABkAHAAYABoAGwAdABkAHAAaAB4AGwAfAB0AIAAcAB4AHwAhAB0AIAAeACIAHwAjACEAJAAgACIAIwAlACEAJAAiACYAIwAnACUAKAAkACYAJwApACUAKAAmACoAJwArACkALAAoACoAKwAtACkALAAqAC4AKwAvAC0AMAAsAC4ALwAxAC0AMAAuADIALwAzADEANAAwADIAMwA1ADEANAAyADYAMwA3ADUAOAA0ADYANwA5ADUAOAA2ADoANwA7ADkAPAA4ADoAOwA9ADkAPAA6AD4AOwA/AD0APwA8AD4APwA+AD0A"),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 64,
+"vertex_data": PackedByteArray("/38AACEiAAD4mP//dQIAAP9///8AAAAAT5IAAO8jAACvbQAA7yMAAPuw//++CQAABmf//3UCAADrowAARykAABNcAABHKQAAHMf//5IVAAADT///vgkAACW0AADzMQAA2UsAAPMxAACB2v//fSUAAOI4//+SFQAAXsIAAKA9AACgPQAAoD0AAGzq///iOAAAfSX//30lAAALzgAA2UsAAPMxAADZSwAAQPb//wNPAACSFf//4jgAALfWAAATXAAARykAABNcAACJ/f//BmcAAL4J//8DTwAAD9wAAK9tAADvIwAAr20AAP//////fwAAdQL//wZnAADc3QAA/38AACEiAAD/fwAAif3///iYAAAAAP///38AAA/cAABPkgAA7yMAAE+SAABA9v//+7AAAHUC///4mAAAt9YAAOujAABHKQAA66MAAGzq//8cxwAAvgn///uwAAALzgAAJbQAAPMxAAAltAAAgdr//4HaAACSFf//HMcAAF7CAABewgAAoD0AAF7CAAAcx///bOoAAH0l//+B2gAAJbQAAAvOAADZSwAAC84AAPuw//9A9gAA4jj//2zqAADrowAAt9YAABNcAAC31gAA+Jj//4n9AAADT///QPYAAE+SAAAP3AAAr20AAA/cAAD/f/////8AAAZn//+J/QAA/38AANzdAAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qtcrm"]
+resource_name = "GroundEffect_Cylinder"
+_surfaces = [{
+"aabb": AABB(-1.5, 0, -1.5, 3, 0.8, 3),
+"attribute_data": PackedByteArray("/////yj6/3////9/KPr//yj6//9S9P9/KPr/f1L0//9S9P//e+7/f1L0/3977v//e+7//6Xo/3977v9/pej//6Xo///O4v9/pej/f87i///O4v//+Nz/f87i/3/43P//+Nz//yHX/3/43P9/Idf//yHX//9L0f9/Idf/f0vR//9L0f//dMv/f0vR/390y///dMv//57F/390y/9/nsX//57F///Hv/9/nsX/f8e////Hv///8bn/f8e//3/xuf//8bn//xq0/3/xuf9/GrT//xq0//9Erv9/GrT/f0Su//9Erv//bqj/f0Su/39uqP//bqj//5ei/39uqP9/l6L//5ei///BnP9/l6L/f8Gc///BnP//6pb/f8Gc/3/qlv//6pb//xSR/3/qlv9/FJH//xSR//89i/9/FJH/fz2L//89i///Z4X/fz2L/39nhf//Z4X//5B//39nhf9/kH///5B///+6ef9/kH//f7p5//+6ef//43P/f7p5/3/jc///43P//w1u/3/jc/9/DW7//w1u//82aP9/DW7/fzZo//82aP//YGL/fzZo/39gYv//YGL//4pc/39gYv9/ilz//4pc//+zVv9/ilz/f7NW//+zVv//3VD/f7NW/3/dUP//3VD//wZL/3/dUP9/Bkv//wZL//8wRf9/Bkv/fzBF//8="),
+"format": 34896613399,
+"index_count": 192,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANAA3ADUAOAA5ADoAOAA7ADkAPAA9AD4APAA/AD0AQABBAEIAQABDAEEARABFAEYARABHAEUASABJAEoASABLAEkATABNAE4ATABPAE0AUABRAFIAUABTAFEAVABVAFYAVABXAFUAWABZAFoAWABbAFkAXABdAF4AXABfAF0AYABhAGIAYABjAGEAZABlAGYAZABnAGUAaABpAGoAaABrAGkAbABtAG4AbABvAG0AcABxAHIAcABzAHEAdAB1AHYAdAB3AHUAeAB5AHoAeAB7AHkAfAB9AH4AfAB/AH0A"),
+"material": SubResource("StandardMaterial3D_xpq27"),
+"name": "Ground",
+"primitive": 3,
+"uv_scale": Vector4(3.7, 2, 0, 0),
+"vertex_count": 128,
+"vertex_data": PackedByteArray("/38AACEiGfz4mP//dQIZ/P9///8AABn8T5IAAO8jGfxPkgAA7yNQ9Puw//++CVD0+Jj//3UCUPTrowAARylQ9OujAABHKYrsHMf//5IViuz7sP//vgmK7CW0AADzMYrsJbQAAPMxxOSB2v//fSXE5BzH//+SFcTkXsIAAKA9xORewgAAoD0E3Wzq///iOATdgdr//30lBN0LzgAA2UsE3QvOAADZS0jVQPb//wNPSNVs6v//4jhI1bfWAAATXEjVt9YAABNcls2J/f//BmeWzUD2//8DT5bND9wAAK9tls0P3AAAr23vxf//////f+/Fif3//wZn78Xc3QAA/3/vxdzdAAD/f1e+if3///iYV77//////39Xvg/cAABPkle+D9wAAE+S2LZA9v//+7DYton9///4mNi2t9YAAOuj2La31gAA66N7r2zq//8cx3uvQPb///uwe68LzgAAJbR7rwvOAAAltFOogdr//4HaU6hs6v//HMdTqF7CAABewlOoXsIAAF7ChaEcx///bOqFoYHa//+B2oWhJbQAAAvOhaEltAAAC85Sm/uw//9A9lKbHMf//2zqUpvrowAAt9ZSm+ujAAC31kGW+Jj//4n9QZb7sP//QPZBlk+SAAAP3EGWT5IAAA/cOZP/f/////85k/iY//+J/TmT/38AANzdOZP/fwAA3N05kwZn//+J/TmT/3//////OZOvbQAAD9w5k69tAAAP3EGWA0///0D2QZYGZ///if1BlhNcAAC31kGWE1wAALfWUpviOP//bOpSmwNP//9A9lKb2UsAAAvOUpvZSwAAC86FoX0l//+B2oWh4jj//2zqhaGgPQAAXsKFoaA9AABewlOokhX//xzHU6h9Jf//gdpTqPMxAAAltFOo8zEAACW0e6++Cf//+7B7r5IV//8cx3uvRykAAOuje69HKQAA66PYtnUC///4mNi2vgn///uw2LbvIwAAT5LYtu8jAABPkle+AAD///9/V751Av//+JhXviEiAAD/f1e+ISIAAP9/78V1Av//BmfvxQAA////f+/F7yMAAK9t78XvIwAAr22Wzb4J//8DT5bNdQL//wZnls1HKQAAE1yWzUcpAAATXEjVkhX//+I4SNW+Cf//A09I1fMxAADZS0jV8zEAANlLBN19Jf//fSUE3ZIV///iOATdoD0AAKA9BN2gPQAAoD3E5OI4//+SFcTkfSX//30lxOTZSwAA8zHE5NlLAADzMYrsA0///74JiuziOP//khWK7BNcAABHKYrsE1wAAEcpUPQGZ///dQJQ9ANP//++CVD0r20AAO8jUPSvbQAA7yMZ/P9///8AABn8Bmf//3UCGfz/fwAAISIZ/NB+URnQflEZ0H5RGdB+URl7fDQbe3w0G3t8NBt7fDQbLHoTHSx6Ex0sehMdLHoTHdZ39x7Wd/ce1nf3HtZ39x5tdeogbXXqIG116iBtdeog5HL4IuRy+CLkcvgi5HL4IipwLiUqcC4lKnAuJSpwLiUqbZsnKm2bJyptmycqbZsnyWlYKslpWCrJaVgqyWlYKttlhi3bZYYt22WGLdtlhi0mYVYxJmFWMSZhVjEmYVYxRVsYNkVbGDZFWxg2RVsYNo5TVzyOU1c8jlNXPI5TVzy7SBxFu0gcRbtIHEW7SBxFEDiaUhA4mlIQOJpSEDiaUkQauWpEGrlqRBq5akQauWpFFUOaRRVDmkUVQ5pFFUOaZS0QuGUtELhlLRC4ZS0QuOM6u8jjOrvI4zq7yOM6u8inQ43Tp0ON06dDjdOnQ43T5klF2+ZJRdvmSUXb5klF26lOJeGpTiXhqU4l4alOJeF4UtvleFLb5XhS2+V4UtvlplXI6aZVyOmmVcjpplXI6WRYKu1kWCrtZFgq7WRYKu3RWinw0Vop8NFaKfDRWinwBl3j8gZd4/IGXePyBl3j8hRfbfUUX231FF9t9RRfbfUHYdX3B2HV9wdh1fcHYdX362Ir+utiK/rrYiv662Ir+spke/zKZHv8ymR7/Mpke/ytZs/+rWbP/q1mz/6tZs/+")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ayfpk")
+
+[sub_resource type="Animation" id="Animation_ot641"]
+resource_name = "EF_Summon"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(4.5, 5.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.352941), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 6.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [Vector3(0.6, 0.2, 0), 1.5],
+"method": &"camera_shake_tween"
+}, {
+"args": [],
+"method": &"camera_shake"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 6.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [2.0],
+"method": &"focus_camera_to_user"
+}, {
+"args": [],
+"method": &"focus_camera_to_field_no_tween"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 5.7, 7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"set_position_user"
+}, {
+"args": ["black_fade_in", 5.0],
+"method": &"ui_transition"
+}, {
+"args": ["black_fade_out"],
+"method": &"ui_transition"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Cylinder:mesh:surface_0/material:albedo_color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(3, 3.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.14, 0.14, 0.14, 0), Color(0.14, 0.14, 0.14, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Cylinder:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(3, 6),
+"transitions": PackedFloat32Array(1.86607, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -6.28319, 0)]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 2, 4.5, 5.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [0.0, 0.0],
+"method": &"set_scale_to_user_sprite_tween"
+}, {
+"args": [1.3, 1.0],
+"method": &"set_scale_to_user_sprite_tween"
+}, {
+"args": [1.2, 0.5],
+"method": &"set_scale_to_user_sprite_tween"
+}, {
+"args": [4.0, 0.5],
+"method": &"set_scale_to_user_sprite_tween"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_i2pqo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.533333)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Cylinder:mesh:surface_0/material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.14, 0.14, 0.14, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Cylinder:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b71rw"]
+_data = {
+&"EF_Summon": SubResource("Animation_ot641"),
+&"RESET": SubResource("Animation_i2pqo")
+}
+
+[node name="EF_Summon Effect" type="Node3D"]
+script = ExtResource("1_b0tck")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
+mesh = SubResource("SphereMesh_i2pqo")
+
+[node name="Cylinder" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, -0.2, 0)
+mesh = SubResource("ArrayMesh_qtcrm")
+skeleton = NodePath("")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_b71rw")
+}
+autoplay = "EF_Summon"
