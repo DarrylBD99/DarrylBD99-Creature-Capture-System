@@ -3,6 +3,7 @@
 #include <Nodes/CreatureSprite3D.hpp>
 #include <Resources/BattleTeam.hpp>
 #include <Resources/StaticData/Species.hpp>
+#include <Resources/StaticData/Type.hpp>
 #include <godot_cpp/classes/project_settings.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <map>
@@ -28,17 +29,21 @@ struct SettingProperty {
 void initialize(ModuleInitializationLevel p_level) {
     if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) return;
     
+    // Nodes
     GDREGISTER_CLASS(godot::CreatureSprite3D);
 
+    // Static Data Resources
     GDREGISTER_CLASS(godot::SpeciesResource);
+    GDREGISTER_CLASS(godot::TypeResource);
     
+    // Battle Resources
     GDREGISTER_CLASS(godot::BattleTeam);
 
-    
+    // Add Project Settings
     godot::ProjectSettings* project_setting = godot::ProjectSettings::get_singleton();
 
     const std::map<vector<String>, SettingProperty> default_settings = {
-        {
+        { // Store Sprite Frames to be used for AnimatedSprite Nodes
             {
                 "darrylbd99/creature_capture_system/sprite_frames/front",
                 "darrylbd99/creature_capture_system/sprite_frames/back",
@@ -53,7 +58,7 @@ void initialize(ModuleInitializationLevel p_level) {
                 ""
             }
         },
-        {
+        { // Rarity Alternate Color Chance
             {
                 "darrylbd99/creature_capture_system/rarity/alternate_color_(maximum: " + String::num_int64(BattleManager::MAX_RANDOM) + ")",
             }, SettingProperty{
