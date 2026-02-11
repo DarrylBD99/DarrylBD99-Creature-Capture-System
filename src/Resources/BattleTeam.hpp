@@ -11,7 +11,7 @@ namespace godot {
         private:
             // Add member variables here
             String m_team_name;
-            vector<Ref<BattleCreature>> m_members;
+            std::vector<Ref<BattleCreature>> m_members;
 
         protected:
             static void _bind_methods();
