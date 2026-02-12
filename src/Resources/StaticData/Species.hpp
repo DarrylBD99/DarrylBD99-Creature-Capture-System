@@ -6,7 +6,6 @@
 #include <godot_cpp/classes/sprite_frames.hpp>
 #include <Type.hpp>
 
-// Stats are inherit to species but should they be defined here?
 
 namespace godot {
     class SpeciesResource : public Resource {
