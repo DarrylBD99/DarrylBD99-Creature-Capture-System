@@ -2,7 +2,7 @@
 #define TYPE_RESOURCE_H
 
 #include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/classes/audio_stream.hpp>
+//#include <godot_cpp/classes/audio_stream.hpp>
 
 namespace godot {
     class TypeResource : public Resource {
@@ -19,6 +19,17 @@ namespace godot {
             static void _bind_methods();
             
         public:
+
+            enum m_type_enum {NORMAL,FIRE,WATER,ICE,DRAGON,FAIRY,ROCK,
+            GROUND,ELECTRIC,STEEL,POSION,FLYING,DARK,PSYCHIC,
+            GRASS,BUG,FIGHTING,GHOST,NONE};
+            m_type_enum m_move_type; 
+
+
+            enum m_category_enum { PHYSICAL, SPECIAL, STATUS };
+            m_category_enum m_move_category; 
+
+
             TypeResource();
             virtual ~TypeResource();
             StringName GetTypeId() const;
@@ -31,4 +42,8 @@ namespace godot {
             void SetResistances(const TypedArray<StringName>& resistances);
     };
 };
+
+VARIANT_ENUM_CAST(TypeResource::m_type_enum);
+VARIANT_ENUM_CAST(TypeResource::m_category_enum);
+
 #endif

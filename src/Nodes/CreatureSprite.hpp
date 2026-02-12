@@ -8,7 +8,7 @@
 namespace godot {
     class CreatureSprite{
         protected:
-            StringName m_speciesId;
+            StringName m_speciesId; // isn't this redundent since SpeciesId is in SpeciesResource
             Ref<SpeciesResource> m_speciesResource = nullptr;
             AudioStreamPlayer* m_audioPlayer = nullptr;
         public:
