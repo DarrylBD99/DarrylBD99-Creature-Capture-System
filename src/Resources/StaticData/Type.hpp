@@ -22,7 +22,7 @@ namespace godot {
 
             enum m_type_enum {NORMAL,FIRE,WATER,ICE,DRAGON,FAIRY,ROCK,
             GROUND,ELECTRIC,STEEL,POSION,FLYING,DARK,PSYCHIC,
-            GRASS,BUG,FIGHTING,GHOST};
+            GRASS,BUG,FIGHTING,GHOST,NONE};
             m_type_enum m_move_type; 
 
 
