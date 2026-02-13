@@ -13,7 +13,6 @@ void TypeResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_resistances"), &TypeResource::GetResistances);
     ClassDB::bind_method(D_METHOD("set_resistances", "resistances"), &TypeResource::SetResistances);
     
-
     ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "type_id"), "set_type_id", "get_type_id");
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "type_name"), "set_type_name", "get_type_name");
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "weaknesses", PROPERTY_HINT_ARRAY_TYPE, "StringName"), "set_weaknesses", "get_weaknesses");
