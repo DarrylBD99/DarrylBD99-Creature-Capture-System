@@ -17,8 +17,8 @@ namespace godot {
             Ref<SpriteFrames> m_species_sprite;
 
 
-            TypeResource::m_type_enum m_species_type_1;
-            TypeResource::m_type_enum m_species_type_2;
+            StringName m_species_type_1;
+            StringName m_species_type_2;
 
 
             int m_species_HP_iv = 0;
@@ -43,10 +43,10 @@ namespace godot {
             Ref<SpriteFrames> GetSpeciesSprite() const;
             void SetSpeciesSprite(const Ref<SpriteFrames>& sprite);
 
-            TypeResource::m_type_enum GetSpeciesType1() const;
-            void SetSpeciesType1(TypeResource::m_type_enum type);
-            TypeResource::m_type_enum GetSpeciesType2() const;
-            void SetSpeciesType2(TypeResource::m_type_enum type);
+            StringName GetSpeciesType1() const;
+            void SetSpeciesType1(const StringName& type);
+            StringName GetSpeciesType2() const;
+            void SetSpeciesType2(const StringName& type);
 
             /// HP
             int GetSpeciesHP() const;

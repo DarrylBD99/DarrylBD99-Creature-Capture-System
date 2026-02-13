@@ -12,31 +12,7 @@ void TypeResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_weaknesses", "weaknesses"), &TypeResource::SetWeaknesses);
     ClassDB::bind_method(D_METHOD("get_resistances"), &TypeResource::GetResistances);
     ClassDB::bind_method(D_METHOD("set_resistances", "resistances"), &TypeResource::SetResistances);
-    BIND_ENUM_CONSTANT(NORMAL);
-    BIND_ENUM_CONSTANT(FIRE);
-    BIND_ENUM_CONSTANT(WATER);
-    BIND_ENUM_CONSTANT(ICE);
-    BIND_ENUM_CONSTANT(DRAGON);
-    BIND_ENUM_CONSTANT(FAIRY);
-    BIND_ENUM_CONSTANT(ROCK);
-    BIND_ENUM_CONSTANT(GROUND);
-    BIND_ENUM_CONSTANT(ELECTRIC);
-    BIND_ENUM_CONSTANT(STEEL);
-    BIND_ENUM_CONSTANT(POSION);
-    BIND_ENUM_CONSTANT(FLYING);
-    BIND_ENUM_CONSTANT(DARK);
-    BIND_ENUM_CONSTANT(PSYCHIC);
-    BIND_ENUM_CONSTANT(GRASS);
-    BIND_ENUM_CONSTANT(BUG);
-    BIND_ENUM_CONSTANT(FIGHTING);
-    BIND_ENUM_CONSTANT(GHOST);
-    BIND_ENUM_CONSTANT(NONE);
-    //
-    BIND_ENUM_CONSTANT(PHYSICAL);
-    BIND_ENUM_CONSTANT(SPECIAL);
-    BIND_ENUM_CONSTANT(STATUS);
     
-
     ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "type_id"), "set_type_id", "get_type_id");
     ADD_PROPERTY(PropertyInfo(Variant::STRING, "type_name"), "set_type_name", "get_type_name");
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "weaknesses", PROPERTY_HINT_ARRAY_TYPE, "StringName"), "set_weaknesses", "get_weaknesses");

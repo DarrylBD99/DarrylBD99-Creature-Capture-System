@@ -4,7 +4,7 @@
 #include <Resources/BattleTeam.hpp>
 #include <Resources/StaticData/Species.hpp>
 #include <Resources/StaticData/Type.hpp>
-#include <Resources/StaticData/Moves.hpp>
+#include <Resources/StaticData/Attack.hpp>
 #include <godot_cpp/classes/project_settings.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <map>
@@ -36,7 +36,7 @@ void initialize(ModuleInitializationLevel p_level) {
     // Static Data Resources
     GDREGISTER_CLASS(godot::SpeciesResource);
     GDREGISTER_CLASS(godot::TypeResource);
-    GDREGISTER_CLASS(godot::MoveResource);
+    GDREGISTER_CLASS(godot::AttackResource);
 
     
     // Battle Resources

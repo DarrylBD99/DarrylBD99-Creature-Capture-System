@@ -8,8 +8,6 @@ void SpeciesResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_species_id", "id"), &SpeciesResource::SetSpeciesId);
     ClassDB::bind_method(D_METHOD("get_species_sound"), &SpeciesResource::GetSpeciesSound);
     ClassDB::bind_method(D_METHOD("set_species_sound", "stream"), &SpeciesResource::SetSpeciesSound);
-    ClassDB::bind_method(D_METHOD("get_species_sprite"), &SpeciesResource::GetSpeciesSprite);
-    ClassDB::bind_method(D_METHOD("set_species_sprite", "sprite"), &SpeciesResource::SetSpeciesSprite);
     //types
     //1
     ClassDB::bind_method(D_METHOD("get_species_type_1"), &SpeciesResource::GetSpeciesType1);
@@ -36,8 +34,8 @@ void SpeciesResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_species_spdef"), &SpeciesResource::GetSpeciesSPDEF);
     ClassDB::bind_method(D_METHOD("set_species_spdef", "value"), &SpeciesResource::SetSpeciesSPDEF);
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "species_type_1", PROPERTY_HINT_ENUM, "NORMAL,FIRE,WATER,ICE,DRAGON,FAIRY,ROCK,GROUND,ELECTRIC,STEEL,POSION,FLYING,DARK,PSYCHIC,GRASS,BUG,FIGHTING,GHOST"), "set_species_type_1", "get_species_type_1");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "species_type_2", PROPERTY_HINT_ENUM, "NORMAL,FIRE,WATER,ICE,DRAGON,FAIRY,ROCK,GROUND,ELECTRIC,STEEL,POSION,FLYING,DARK,PSYCHIC,GRASS,BUG,FIGHTING,GHOST,NONE"), "set_species_type_2", "get_species_type_2");
+    ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "species_type_1"), "set_species_type_1", "get_species_type_1");
+    ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "species_type_2"), "set_species_type_2", "get_species_type_2");
     ADD_PROPERTY(PropertyInfo(Variant::INT, "stats/HP", PROPERTY_HINT_RANGE, "0,255,1"),"set_species_hp","get_species_hp");
     ADD_PROPERTY(PropertyInfo(Variant::INT, "stats/atk", PROPERTY_HINT_RANGE, "0,255,1"),"set_species_atk","get_species_atk");
     ADD_PROPERTY(PropertyInfo(Variant::INT, "stats/spatk", PROPERTY_HINT_RANGE, "0,255,1"),"set_species_spatk","get_species_spatk");
@@ -46,7 +44,6 @@ void SpeciesResource::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::INT, "stats/spdef", PROPERTY_HINT_RANGE, "0,255,1"),"set_species_spdef","get_species_spdef");
     ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "species_id"), "set_species_id", "get_species_id");
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "species_sound", PROPERTY_HINT_RESOURCE_TYPE, "AudioStream"), "set_species_sound", "get_species_sound");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "species_sprite", PROPERTY_HINT_RESOURCE_TYPE, "SpriteFrames"), "set_species_sprite", "get_species_sprite");
 
 }
 
@@ -74,27 +71,19 @@ void SpeciesResource::SetSpeciesSound(Ref<AudioStream> stream) {
     this->m_species_sound = stream;
 }
 
-godot::Ref<godot::SpriteFrames> SpeciesResource::GetSpeciesSprite() const {
-    return m_species_sprite;
-}
-
-void SpeciesResource::SetSpeciesSprite(const Ref<SpriteFrames>& sprite) {
-    m_species_sprite = sprite;
-}
-
 //Types
 //1
-godot::TypeResource::m_type_enum SpeciesResource::GetSpeciesType1() const {
+godot::StringName SpeciesResource::GetSpeciesType1() const {
     return m_species_type_1;
 }
-void SpeciesResource::SetSpeciesType1(TypeResource::m_type_enum type) {
+void SpeciesResource::SetSpeciesType1(const StringName& type) {
     m_species_type_1 = type;
 }
 //2
-godot::TypeResource::m_type_enum SpeciesResource::GetSpeciesType2() const {
+godot::StringName SpeciesResource::GetSpeciesType2() const {
     return m_species_type_2;
 }
-void SpeciesResource::SetSpeciesType2(TypeResource::m_type_enum type) {
+void SpeciesResource::SetSpeciesType2(const StringName& type) {
     m_species_type_2 = type;
 }
 
