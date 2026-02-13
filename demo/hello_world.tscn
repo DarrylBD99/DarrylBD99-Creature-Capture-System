@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdrgw5escb0jw"]
+
+[ext_resource type="SpeciesResource" uid="uid://w4cs25f8w0v1" path="res://new_species_resource.tres" id="1_kqpgu"]
+[ext_resource type="SpriteFrames" uid="uid://do6ayrb482jks" path="res://front.tres" id="2_gngqb"]
+[ext_resource type="Script" uid="uid://dvj8uxhx0rnn" path="res://hello_world.gd" id="3_4y6qr"]
+
+[node name="CreatureSprite3D" type="CreatureSprite3D"]
+species_resource = ExtResource("1_kqpgu")
+sprite_frames = ExtResource("2_gngqb")
+script = ExtResource("3_4y6qr")
