@@ -1,0 +1,310 @@
+[gd_scene load_steps=9 format=3 uid="uid://b0qq4x3620dkr"]
+
+[ext_resource type="Script" uid="uid://cd6edex6fl2qt" path="res://addons/DarrylBD99's Creature Capture System/Battle System/battle_vfx.gd" id="1_nmthd"]
+[ext_resource type="MeshLibrary" uid="uid://b4owc1toaohhl" path="res://Example/GridSet.tres" id="2_ra6qv"]
+[ext_resource type="AudioStream" uid="uid://dgabwnp6yw8g3" path="res://Example/Assets/Audio/Foundation.wav" id="3_j62hd"]
+[ext_resource type="AudioStream" uid="uid://dlt6nj833ytu3" path="res://addons/DarrylBD99's Creature Capture System/Sounds/Hit.wav" id="4_n06cw"]
+[ext_resource type="AudioStream" uid="uid://cnu8a88v3mpvh" path="res://Example/Assets/Audio/hit.wav" id="5_2fcoy"]
+
+[sub_resource type="Animation" id="Animation_iw0er"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Foundation_Base:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -2, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FoundationLeft:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -6, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FoundationRight:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -6, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Foundation:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Hit2:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Hit:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Foundation_Base:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("FoundationLeft:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("FoundationRight:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ra6qv"]
+resource_name = "base"
+length = 1.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"focus_camera_to_user"
+}, {
+"args": [0.2],
+"method": &"focus_camera_to_field"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"set_position_user"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Foundation_Base:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -2, 0), Vector3(0, -2, 0), Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FoundationLeft:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-4, -8, 0), Vector3(-4, -8, 0), Vector3(-4, 0, 0), Vector3(-4, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FoundationRight:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(4, -8, 0), Vector3(4, -8, 0), Vector3(4, 0, 0), Vector3(4, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Foundation:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Hit2:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1.33333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Hit:playing")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.95),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Foundation_Base:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.00466508, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("FoundationLeft:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.00466508, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("FoundationRight:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iw0er"]
+_data = {
+&"RESET": SubResource("Animation_iw0er"),
+&"base": SubResource("Animation_ra6qv")
+}
+
+[node name="CCS_BattleVFX" type="Node3D"]
+script = ExtResource("1_nmthd")
+metadata/_custom_type_script = "uid://cd6edex6fl2qt"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_iw0er")
+}
+autoplay = "base"
+
+[node name="Foundation_Base" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+mesh_library = ExtResource("2_ra6qv")
+data = {
+"cells": PackedInt32Array(1, 65535, 27, 0, 65535, 27, 65535, 65535, 27, 65534, 65535, 27, 65534, 0, 27, 65534, 1, 27, 65535, 1, 27, 0, 1, 27, 1, 1, 27, 1, 0, 27, 0, 0, 27, 65535, 0, 27, 65534, 65534, 27, 65535, 65534, 27, 0, 65534, 27, 1, 65534, 27)
+}
+
+[node name="FoundationLeft" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
+mesh_library = ExtResource("2_ra6qv")
+data = {
+"cells": PackedInt32Array(131071, 1, 27, 131070, 1, 27, 131070, 0, 27, 131071, 0, 27, 131071, 65535, 27, 131071, 65534, 27, 131070, 65534, 27, 131070, 65535, 27, 196607, 1, 27, 196607, 0, 27, 196607, 65535, 27, 196606, 65535, 27, 196606, 65534, 27, 196607, 65534, 27, 196606, 0, 27, 196606, 1, 27, 262143, 65534, 27, 262143, 65535, 27, 262142, 65535, 27, 262142, 0, 27, 262142, 65534, 27, 262143, 0, 27, 262143, 1, 27, 262142, 1, 27)
+}
+metadata/_editor_floor_ = Vector3(0, 3, 0)
+
+[node name="FoundationRight" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
+mesh_library = ExtResource("2_ra6qv")
+data = {
+"cells": PackedInt32Array(65537, 65534, 27, 65536, 65534, 27, 65536, 65535, 27, 65536, 0, 27, 65536, 1, 27, 65537, 1, 27, 65537, 0, 27, 65537, 65535, 27, 131073, 65534, 27, 131072, 65534, 27, 131072, 65535, 27, 131072, 0, 27, 131072, 1, 27, 131073, 1, 27, 131073, 0, 27, 131073, 65535, 27, 196609, 65534, 27, 196608, 65534, 27, 196608, 65535, 27, 196608, 0, 27, 196608, 1, 27, 196609, 1, 27, 196609, 0, 27, 196609, 65535, 27)
+}
+metadata/_editor_floor_ = Vector3(0, 3, 0)
+
+[node name="Foundation" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_j62hd")
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_n06cw")
+pitch_scale = 2.0
+
+[node name="Hit2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_2fcoy")

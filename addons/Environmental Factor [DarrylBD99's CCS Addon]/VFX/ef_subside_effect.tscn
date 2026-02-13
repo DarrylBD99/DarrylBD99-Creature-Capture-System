@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcmn784rv1kcg"]
+
+[ext_resource type="Script" uid="uid://cd6edex6fl2qt" path="res://addons/DarrylBD99's Creature Capture System/Battle System/battle_vfx.gd" id="1_7te7i"]
+
+[sub_resource type="Animation" id="Animation_ot641"]
+resource_name = "EF_Summon"
+length = 1.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.55),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": ["black_fade"],
+"method": &"ui_transition"
+}, {
+"args": [],
+"method": &"turn_on_lights"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0],
+"method": &"change_field"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_i2pqo"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b71rw"]
+_data = {
+&"EF_Summon": SubResource("Animation_ot641"),
+&"RESET": SubResource("Animation_i2pqo")
+}
+
+[node name="EF_Subside Effect" type="Node3D"]
+script = ExtResource("1_7te7i")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_b71rw")
+}
+autoplay = "EF_Summon"

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bvrjfr8aqwnv5"
+path="res://.godot/imported/StatChange.wav-36f0006af2c95ebc0b279a9c9f356c21.sample"
+
+[deps]
+
+source_file="res://addons/DarrylBD99's Creature Capture System/Sounds/StatChange.wav"
+dest_files=["res://.godot/imported/StatChange.wav-36f0006af2c95ebc0b279a9c9f356c21.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

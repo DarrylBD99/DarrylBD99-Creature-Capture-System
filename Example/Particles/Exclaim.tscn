@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://lrg0lnca0og3"]
+
+[ext_resource type="Texture2D" uid="uid://rx2pc560kbpm" path="res://Example/Assets/Graphics/Exclaim.png" id="1_8w0x2"]
+[ext_resource type="Script" uid="uid://dib0w7aa7nhgf" path="res://Example/Particles/GPUParticle.gd" id="2_r1d5s"]
+[ext_resource type="AudioStream" uid="uid://d248ddbtv4bgo" path="res://Example/Assets/Audio/alert.wav" id="3_04j4q"]
+
+[sub_resource type="Curve" id="Curve_r1d5s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.241975, 1), -0.0227628, -0.0227628, 0, 0, Vector2(1, 0), -1.45585, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_byn1i"]
+curve = SubResource("Curve_r1d5s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_04j4q"]
+resource_local_to_scene = true
+emission_shape_offset = Vector3(0, 1, 0)
+emission_shape_scale = Vector3(1, 2, 1)
+gravity = Vector3(0, 4, 0)
+color = Color(1, 0.529412, 0.486275, 1)
+alpha_curve = SubResource("CurveTexture_byn1i")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_04j4q"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_8w0x2")
+texture_filter = 2
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_8xqcj"]
+material = SubResource("StandardMaterial3D_04j4q")
+size = Vector2(2, 2)
+
+[node name="GPUParticles3D" type="GPUParticles3D"]
+emitting = false
+amount = 1
+lifetime = 0.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_04j4q")
+draw_pass_1 = SubResource("QuadMesh_8xqcj")
+script = ExtResource("2_r1d5s")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_04j4q")
+autoplay = true
+
+[connection signal="finished" from="." to="." method="_on_finish"]

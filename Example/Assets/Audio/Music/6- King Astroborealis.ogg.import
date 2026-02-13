@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cth7px4mobrgw"
+path="res://.godot/imported/6- King Astroborealis.ogg-598306710347bd0c4adae1784793f796.oggvorbisstr"
+
+[deps]
+
+source_file="res://Example/Assets/Audio/Music/6- King Astroborealis.ogg"
+dest_files=["res://.godot/imported/6- King Astroborealis.ogg-598306710347bd0c4adae1784793f796.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

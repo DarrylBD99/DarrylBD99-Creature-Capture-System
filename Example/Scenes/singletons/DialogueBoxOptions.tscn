@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://htq3wbnt0osl"]
+
+[sub_resource type="Theme" id="Theme_dj8lq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dntyo"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.00659969, 0.757122, 0.862218, 1)
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dj8lq"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+bg_color = Color(1, 1, 1, 1)
+
+[node name="DialogueOption" type="Button"]
+theme = SubResource("Theme_dj8lq")
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxFlat_dntyo")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_dj8lq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dj8lq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dj8lq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dj8lq")
+text = "Yes"

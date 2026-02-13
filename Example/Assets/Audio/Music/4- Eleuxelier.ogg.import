@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dc7f8l584wjcy"
+path="res://.godot/imported/4- Eleuxelier.ogg-b2a77622073a02e0d308219cbaa30a45.oggvorbisstr"
+
+[deps]
+
+source_file="res://Example/Assets/Audio/Music/4- Eleuxelier.ogg"
+dest_files=["res://.godot/imported/4- Eleuxelier.ogg-b2a77622073a02e0d308219cbaa30a45.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

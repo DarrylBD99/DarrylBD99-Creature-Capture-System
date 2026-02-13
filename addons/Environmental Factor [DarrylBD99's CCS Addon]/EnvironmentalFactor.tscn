@@ -1,0 +1,264 @@
+[gd_scene load_steps=10 format=3 uid="uid://7pbjsu34ohyt"]
+
+[ext_resource type="Script" uid="uid://f1mf60rw2k7n" path="res://addons/Environmental Factor [DarrylBD99's CCS Addon]/Data/editor_scene.gd" id="1_co3ey"]
+[ext_resource type="Script" uid="uid://cjn3tbdmcfjmu" path="res://addons/Environmental Factor [DarrylBD99's CCS Addon]/Data/environmental_factor_data_editor.gd" id="2_s46a6"]
+[ext_resource type="PackedScene" uid="uid://b2f57vrxwouwg" path="res://addons/DarrylBD99's Creature Capture System/Data Management/Editor/ItemContainer.tscn" id="3_s46a6"]
+
+[sub_resource type="GDScript" id="GDScript_s46a6"]
+script/source = "@tool
+extends ConfirmationDialog
+
+@onready var label : Label = $Label
+signal delete_confirm(delete : bool)
+
+func _ready() -> void:
+	confirmed.connect( func(): delete_confirm.emit(true) )
+	canceled.connect( func(): delete_confirm.emit(false) )
+
+func set_label(var_name : String, type : String) -> void:
+	label.text = \"Are you sure you want to delete {0} of {1}?\".format([var_name, type])
+"
+
+[sub_resource type="Image" id="Image_s46a6"]
+data = {
+"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 33, 224, 224, 224, 255, 224, 224, 224, 255, 231, 231, 231, 31, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 226, 226, 226, 95, 224, 224, 224, 57, 255, 255, 255, 0, 224, 224, 224, 99, 224, 224, 224, 255, 224, 224, 224, 255, 225, 225, 225, 93, 255, 255, 255, 0, 224, 224, 224, 57, 224, 224, 224, 90, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 225, 225, 225, 93, 224, 224, 224, 255, 224, 224, 224, 254, 224, 224, 224, 165, 224, 224, 224, 217, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 214, 225, 225, 225, 167, 224, 224, 224, 254, 224, 224, 224, 254, 224, 224, 224, 88, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 228, 228, 228, 55, 224, 224, 224, 254, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 253, 225, 225, 225, 51, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 225, 225, 225, 166, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 160, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 33, 224, 224, 224, 99, 224, 224, 224, 217, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 186, 224, 224, 224, 32, 224, 224, 224, 33, 224, 224, 224, 187, 224, 224, 224, 255, 224, 224, 224, 255, 225, 225, 225, 215, 224, 224, 224, 98, 224, 224, 224, 32, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 33, 255, 255, 255, 0, 255, 255, 255, 0, 227, 227, 227, 36, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 33, 255, 255, 255, 0, 255, 255, 255, 0, 229, 229, 229, 38, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 231, 231, 231, 31, 226, 226, 226, 95, 224, 224, 224, 216, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 187, 225, 225, 225, 34, 226, 226, 226, 35, 224, 224, 224, 192, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 213, 226, 226, 226, 95, 231, 231, 231, 31, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 225, 225, 225, 166, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 163, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 57, 224, 224, 224, 254, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 254, 227, 227, 227, 54, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 90, 224, 224, 224, 254, 224, 224, 224, 253, 224, 224, 224, 161, 225, 225, 225, 215, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 213, 224, 224, 224, 162, 224, 224, 224, 253, 224, 224, 224, 253, 226, 226, 226, 86, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 88, 225, 225, 225, 51, 255, 255, 255, 0, 224, 224, 224, 98, 224, 224, 224, 255, 224, 224, 224, 255, 226, 226, 226, 95, 255, 255, 255, 0, 227, 227, 227, 53, 226, 226, 226, 86, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 32, 224, 224, 224, 255, 224, 224, 224, 255, 231, 231, 231, 31, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_fb2mf"]
+image = SubResource("Image_s46a6")
+
+[sub_resource type="Image" id="Image_nmfwc"]
+data = {
+"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_kqapl"]
+image = SubResource("Image_nmfwc")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ayra"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.4)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="Environmental Factor" type="HSplitContainer" node_paths=PackedStringArray("import_button", "export_button", "data_add_text", "data_add_button", "delete_btn", "data_type_dropdown", "data_list")]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_co3ey")
+import_button = NodePath("Selectable/DataFile/Import")
+export_button = NodePath("Selectable/DataFile/Export")
+data_add_text = NodePath("Selectable/Create/Name")
+data_add_button = NodePath("Selectable/Create/Add")
+delete_btn = NodePath("EditableInfo/DeleteBtn")
+data_type_dropdown = NodePath("Selectable/Type")
+data_list = NodePath("Selectable/List")
+
+[node name="Popups" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Save" type="FileDialog" parent="Popups"]
+auto_translate_mode = 1
+title = "Save Static Data"
+initial_position = 2
+size = Vector2i(800, 480)
+exclusive = false
+access = 2
+filters = PackedStringArray("*.res", "*.tres")
+
+[node name="Load" type="FileDialog" parent="Popups"]
+auto_translate_mode = 1
+title = "Open a File"
+initial_position = 2
+size = Vector2i(800, 480)
+exclusive = false
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.res", "*.tres")
+
+[node name="Delete" type="ConfirmationDialog" parent="Popups"]
+auto_translate_mode = 1
+initial_position = 1
+size = Vector2i(295, 100)
+ok_button_text = "Delete"
+script = SubResource("GDScript_s46a6")
+
+[node name="Label" type="Label" parent="Popups/Delete"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 287.0
+offset_bottom = 51.0
+text = "Are you sure you want to delete {0} of {1}?"
+
+[node name="StaticData" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_s46a6")
+
+[node name="Selectable" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="DataFile" type="HBoxContainer" parent="Selectable"]
+layout_mode = 2
+
+[node name="Import" type="Button" parent="Selectable/DataFile"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Import"
+
+[node name="Export" type="Button" parent="Selectable/DataFile"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Export"
+
+[node name="Type" type="OptionButton" parent="Selectable"]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Terrain"
+popup/item_0/icon = SubResource("ImageTexture_fb2mf")
+popup/item_0/id = 1
+popup/item_1/text = "Type Factor"
+popup/item_1/icon = SubResource("ImageTexture_fb2mf")
+popup/item_1/id = 2
+
+[node name="List" type="ItemList" parent="Selectable"]
+layout_mode = 2
+size_flags_vertical = 3
+allow_reselect = true
+
+[node name="Create" type="HBoxContainer" parent="Selectable"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Name" type="LineEdit" parent="Selectable/Create"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Add" type="Button" parent="Selectable/Create"]
+layout_mode = 2
+icon = SubResource("ImageTexture_kqapl")
+icon_alignment = 1
+
+[node name="EditableInfo" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Info" type="PanelContainer" parent="EditableInfo"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_1ayra")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="EditableInfo/Info"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="EditableInfo/Info/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EditableInfo/Info/ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ID" type="HBoxContainer" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="id_label" type="Label" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/ID"]
+layout_mode = 2
+text = "Creature ID: "
+
+[node name="id_edit" type="LineEdit" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/ID"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Name_label" type="Label" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/ID"]
+layout_mode = 2
+text = "Name: "
+
+[node name="Name_edit" type="LineEdit" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/ID"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Multipliers" type="HBoxContainer" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BoostMult_Label" type="Label" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/Multipliers"]
+layout_mode = 2
+text = "Boost Multiplier: "
+
+[node name="BoostMult_edit" type="SpinBox" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/Multipliers"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 1.0
+allow_greater = true
+
+[node name="DefectMult_Label" type="Label" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/Multipliers"]
+layout_mode = 2
+text = "Defective Multiplier: "
+
+[node name="DefectMult_edit" type="SpinBox" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/Multipliers"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 1.0
+allow_greater = true
+
+[node name="TypeList" type="HBoxContainer" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BoostTypes_Label" type="Label" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/TypeList"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Boosted Types: "
+vertical_alignment = 1
+
+[node name="BoostTypes_edit" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/TypeList" instance=ExtResource("3_s46a6")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DefectTypes_label" type="Label" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/TypeList"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Defective Type: "
+vertical_alignment = 1
+
+[node name="DefectTypes_edit" parent="EditableInfo/Info/ScrollContainer/MarginContainer/VBoxContainer/TypeList" instance=ExtResource("3_s46a6")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DeleteBtn" type="Button" parent="EditableInfo"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Delete"

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bxr36ioj7ebne"
+path="res://.godot/imported/8- It's right below your feet.ogg-77b9936795ba5e605b99647f5b724c4b.oggvorbisstr"
+
+[deps]
+
+source_file="res://Example/Assets/Audio/Music/8- It's right below your feet.ogg"
+dest_files=["res://.godot/imported/8- It's right below your feet.ogg-77b9936795ba5e605b99647f5b724c4b.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

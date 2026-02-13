@@ -1,0 +1,225 @@
+[gd_scene load_steps=18 format=3 uid="uid://u3ijh7j6u13l"]
+
+[ext_resource type="Texture2D" uid="uid://dm60slkydhd1w" path="res://addons/DarrylBD99's Creature Capture System/Graphics/ParticleBase.png" id="1_c3cl4"]
+[ext_resource type="Texture2D" uid="uid://qb14c3bc7opa" path="res://addons/DarrylBD99's Creature Capture System/Graphics/Shockwave.png" id="2_rvp1t"]
+[ext_resource type="AudioStream" uid="uid://dlt6nj833ytu3" path="res://addons/DarrylBD99's Creature Capture System/Sounds/Hit.wav" id="4_nnet5"]
+
+[sub_resource type="GDScript" id="GDScript_eq2vw"]
+script/source = "extends CCS_BattleVFX
+
+const amount_multiplier : int = 15
+
+func _ready() -> void:
+	set_position_user_center()
+	var user_pos : Vector3 = user.sprite.global_position
+	user_pos.y += user.sprite.offset.y / 10
+	
+	var target_pos : Vector3 = targets[0].sprite.global_position
+	target_pos.y += targets[0].sprite.offset.y / 10
+	
+	var direction : Vector3 = user_pos - target_pos
+	var distance : float = direction.length()
+	look_at_from_position(user_pos, target_pos)
+	%Beam.amount = distance * amount_multiplier
+	%Shockwave.global_position = target_pos
+
+	var particle_material : ParticleProcessMaterial = %Beam.process_material
+	particle_material.initial_velocity_min = -distance
+	particle_material.initial_velocity_max = -distance
+	$AnimationPlayer.play(\"base\")
+	super()
+"
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t1ctk"]
+emission_shape_offset = Vector3(0, 0, -0.2)
+direction = Vector3(0, 0, 1)
+spread = 0.0
+initial_velocity_min = -5.0
+initial_velocity_max = -5.0
+gravity = Vector3(0, 0, 0)
+scale_min = 1.5
+scale_max = 1.5
+color = Color(6.077, 6.077, 0.218, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ogteb"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_c3cl4")
+disable_receive_shadows = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_2kusx"]
+material = SubResource("StandardMaterial3D_ogteb")
+
+[sub_resource type="Curve" id="Curve_fy5bn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8my3o"]
+curve = SubResource("Curve_fy5bn")
+
+[sub_resource type="Curve" id="Curve_cjepy"]
+_data = [Vector2(0, 0), 0.0, 3.07616, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ug160"]
+curve = SubResource("Curve_cjepy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8jrpw"]
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_ug160")
+color = Color(6.077, 6.077, 0.218, 1)
+alpha_curve = SubResource("CurveTexture_8my3o")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sv83m"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_rvp1t")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_v3cg1"]
+material = SubResource("StandardMaterial3D_sv83m")
+
+[sub_resource type="Animation" id="Animation_fy5bn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Beam:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Hit:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_t1ctk"]
+resource_name = "base"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Beam:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"damage_target_with_attack"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Hit:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8my3o"]
+_data = {
+&"RESET": SubResource("Animation_fy5bn"),
+&"base": SubResource("Animation_t1ctk")
+}
+
+[node name="PhotonBlash" type="Node3D"]
+script = SubResource("GDScript_eq2vw")
+metadata/_custom_type_script = "uid://cd6edex6fl2qt"
+
+[node name="Beam" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 75
+amount_ratio = 0.5
+visibility_aabb = AABB(-1000, -1000, -1000, 2000, 2000, 2000)
+process_material = SubResource("ParticleProcessMaterial_t1ctk")
+draw_pass_1 = SubResource("QuadMesh_2kusx")
+
+[node name="Shockwave" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 1
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_8jrpw")
+draw_pass_1 = SubResource("QuadMesh_v3cg1")
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_nnet5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Shockwave")
+libraries = {
+&"": SubResource("AnimationLibrary_8my3o")
+}

@@ -1,0 +1,357 @@
+[gd_scene load_steps=28 format=3 uid="uid://dm7r2x2j4262p"]
+
+[ext_resource type="AudioStream" uid="uid://dy6mx5o831fat" path="res://Example/Assets/Audio/Slash.wav" id="2_a2i7h"]
+[ext_resource type="Texture2D" uid="uid://c7s0hjnlqnhqa" path="res://addons/DarrylBD99's Creature Capture System/Graphics/HitParticle.png" id="2_y8h2k"]
+[ext_resource type="AudioStream" uid="uid://dlt6nj833ytu3" path="res://addons/DarrylBD99's Creature Capture System/Sounds/Hit.wav" id="4_37dex"]
+
+[sub_resource type="GDScript" id="GDScript_a2i7h"]
+resource_name = "Hit"
+script/source = "extends CCS_BattleVFX
+
+func _ready() -> void:
+	set_position_target_center()
+	$AnimationPlayer.play(\"Hit\")
+	super()
+"
+
+[sub_resource type="Shader" id="Shader_8y44e"]
+code = "shader_type spatial;
+render_mode specular_toon,diffuse_toon,cull_disabled;
+
+group_uniforms ANIMATION;
+uniform float progress : hint_range(0.0, 1.0, 0.01) = 0.0;
+// This value animates this shader when DERIVE_PROGRESS is set to 0.0
+
+uniform float derive_progress : hint_range(-1.0, 1.0, 1.0) = 0.0;
+// 0.0 Use PROGRESS (Change value in code or animation player)
+// -1.0 Use TIME (Idle Loop)
+// 1.0 use LIFETIME (Particle)
+
+uniform float ease_progress : hint_range(-1.0, 1.0, 1.0) = 0.0;
+// 0.0 No easing
+// -1.0 Ease : Expo In
+// 1.0 Ease : Expo Out
+
+uniform float time_scale : hint_range(0.0, 8.0, 0.01) = 1.0;
+uniform float anim_rot_amt : hint_range(0.0, 1.0, 0.01) = 1.0;
+// ^^^
+// The shader is setup to rotate the main image as it progresses, 
+// set this to 0 to disable that behaviour
+group_uniforms;
+
+group_uniforms SHAPE;
+uniform sampler2D base_noise : hint_default_white, filter_linear_mipmap;
+// ^^^ 
+// This is the basis of the main rough looking shape, It's width should be 
+// stretched but that's up to you.
+
+// these should be GradientTexture1Ds
+uniform sampler2D width_gradient_mask : hint_default_transparent;
+// ^^^ 
+// This clips the slashes width, use white for what you want to clip, and 
+// black for what you want to keep.
+uniform sampler2D length_gradient_mask : hint_default_transparent;
+// ^^^ 
+// This clips the slashes \"length\" and controls how it animates... uh try 
+// using a gradient that progresses 'white -> black -> white'
+uniform sampler2D highlight : source_color,hint_default_transparent;
+// ^^^ 
+// This will be overlayed ontop of the main shape, it will get masked by 
+// LENGTH_GRADIENT_MASK so it animates in sync with the main shape.
+
+uniform float zoom : hint_range(0.0, 2.0, 0.01) = 0.6; // Scales the final image, Inverted (smaller means bigger)
+uniform float rotate_all : hint_range(0.0, 360.0, 0.1) = 0.0; // Rotates the final image by x degrees
+group_uniforms;
+
+group_uniforms COLORING;
+uniform float emission_strength : hint_range(0.0, 1.0, 0.1) = 1.0;
+// ^^^
+// Makes it glow
+
+uniform float mix_strength : hint_range(0.0, 2.0, 0.01) = 1.0; 
+// ^^^
+// Controls how COLOR_LOOKUP is applied, less will move it closer to black if
+// COLOR_LOOKUP isn't empty
+
+// this should be a GradientTexture1D
+uniform sampler2D color_lookup : source_color,hint_default_white;
+
+varying float LIFETIME;
+varying float INDEX;
+
+vec2 polar_coordinates(vec2 uv, vec2 center, float zoomm, float repeat) {
+	vec2 dir = uv - center;
+	float radius = length(dir) * 2.0;
+	float angle = atan(dir.y, dir.x) * 1.0/(3.1416 * 2.0);
+	return mod(vec2(radius * zoomm, angle * repeat), 1.0);
+}
+
+vec2 rotate(vec2 uv, vec2 pivot, float angle) {
+	mat2 rotation = mat2(vec2(sin(angle), -cos(angle)),
+						vec2(cos(angle), sin(angle)));
+	uv -= pivot;
+	uv = uv * rotation;
+	uv += pivot;
+	return uv;
+}
+
+// Easing Functions Adapted From https://easings.net/
+
+float easeOutExpo(float x) {
+	return 1.0 - pow(2.0, -10.0 * x);
+}
+
+float easeInExpo(float x) {
+	return pow(2.0, 10.0 * x - 10.0);
+}
+
+//Circ
+float easeInOut(float x) {
+	float result;
+	if (x < 0.5) {result = (1.0 - sqrt(1.0 - pow(2.0 * x, 2.0))) / 2.0;}
+	else {result =(sqrt(1.0 - pow(-2.0 * x + 2.0, 2.0)) + 1.0) / 2.0;}
+	return result;
+}
+
+void vertex() {
+	LIFETIME = INSTANCE_CUSTOM.y;
+	INDEX = float(INSTANCE_ID);
+	
+    mat4 modified_model_view = VIEW_MATRIX * mat4(
+        INV_VIEW_MATRIX[0],
+        INV_VIEW_MATRIX[1],
+        INV_VIEW_MATRIX[2],
+        MODEL_MATRIX[3]
+    );
+    MODELVIEW_MATRIX = modified_model_view;
+}
+
+float get_progress() {
+	float p;
+	float final;
+	if (derive_progress > 0.0) {p = LIFETIME;}
+	else if (derive_progress < 0.0) {p = mod(TIME * time_scale,1.0);}
+	// You can change out what p is equal to here to tweak the idle loop behaviour
+	// abs(sin(TIME * time_scale)) [Back and Forth]
+	// mod(TIME * time_scale,1.0) [Over and Over]
+	else {p = progress;}
+	
+	if (ease_progress > 0.0) {final = easeOutExpo(p);}
+	else if (ease_progress < 0.0) {final = easeInExpo(p);}
+	else {final = p;}
+	
+	return final;
+}
+
+void fragment() {
+	// Get Values
+	float p = get_progress();
+	vec2 aUV = polar_coordinates(rotate(UV,vec2(0.5),radians(rotate_all)),vec2(0.5),zoom,1.0);
+	vec4 b = texture(base_noise,aUV - vec2(0.0,p));
+	vec4 wm = texture(width_gradient_mask,aUV);
+	vec4 lm = texture(length_gradient_mask,rotate(aUV-vec2(0.0,easeInOut(p * anim_rot_amt)),vec2(0.5),radians(180.0)));
+	
+	// Combine Them
+	vec4 prefinal = (b-wm) - lm;
+	vec3 albe = vec3(1.0)*(texture(color_lookup,vec2(clamp(prefinal.r * UV.x,0.0,1.0),0.0)).rgb*mix_strength);
+	vec4 high = clamp(texture(highlight,aUV) - (lm),0.0,1.0);
+	
+	// Apply Them
+	ALBEDO = clamp(albe + high.rgb,0.0,1.0);
+	EMISSION = clamp(albe + high.rgb,0.0,1.0) * (3.0 * emission_strength);
+	
+	float start = abs(cos(p * PI));
+	float end = abs(cos(p * PI));
+	ALPHA *= clamp(smoothstep(start,end,prefinal.r) + smoothstep(clamp(start,0.0,0.2),clamp(end,0.0,0.2),(high.r * 0.2)),0.0,1.0) * COLOR.a;
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kpeh0"]
+noise_type = 2
+fractal_gain = 2.0
+cellular_distance_function = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vdxg2"]
+height = 128
+seamless = true
+noise = SubResource("FastNoiseLite_kpeh0")
+
+[sub_resource type="Gradient" id="Gradient_3v8ni"]
+colors = PackedColorArray(0.0527249, 0.585226, 0.045266, 1, 4.04298e-06, 0.464625, 0.23367, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_85biq"]
+gradient = SubResource("Gradient_3v8ni")
+
+[sub_resource type="Gradient" id="Gradient_rtxly"]
+offsets = PackedFloat32Array(0, 0.241007, 0.624101)
+colors = PackedColorArray(0, 0, 0, 1, 0.498039, 0.498039, 0.498039, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ukcbf"]
+gradient = SubResource("Gradient_rtxly")
+
+[sub_resource type="Gradient" id="Gradient_iihdk"]
+offsets = PackedFloat32Array(0.246403, 0.329137, 0.383094, 0.422662, 0.492806)
+colors = PackedColorArray(1, 1, 1, 1, 0.289474, 0.289474, 0.289474, 1, 0, 0, 0, 1, 0.409836, 0.409836, 0.409836, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rvmht"]
+gradient = SubResource("Gradient_iihdk")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwa0x"]
+render_priority = 0
+shader = SubResource("Shader_8y44e")
+shader_parameter/progress = 0.4
+shader_parameter/derive_progress = 0.0
+shader_parameter/ease_progress = 0.0
+shader_parameter/time_scale = 1.0
+shader_parameter/anim_rot_amt = 1.0
+shader_parameter/base_noise = SubResource("NoiseTexture2D_vdxg2")
+shader_parameter/width_gradient_mask = SubResource("GradientTexture1D_rvmht")
+shader_parameter/length_gradient_mask = SubResource("GradientTexture1D_ukcbf")
+shader_parameter/zoom = 0.5
+shader_parameter/rotate_all = 360.0
+shader_parameter/emission_strength = 1.0
+shader_parameter/mix_strength = 1.0
+shader_parameter/color_lookup = SubResource("GradientTexture1D_85biq")
+
+[sub_resource type="QuadMesh" id="QuadMesh_e7g82"]
+material = SubResource("ShaderMaterial_qwa0x")
+size = Vector2(10, 10)
+
+[sub_resource type="Curve" id="Curve_jtjfk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.502164, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_58fq7"]
+curve = SubResource("Curve_jtjfk")
+
+[sub_resource type="Gradient" id="Gradient_07ay1"]
+colors = PackedColorArray(0.561, 8, 0.529, 1, 0, 0.649759, 0.444648, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3q4um"]
+gradient = SubResource("Gradient_07ay1")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_2ohvw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_bq427"]
+curve = SubResource("Curve_2ohvw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ht8iw"]
+angle_min = -180.0
+angle_max = 180.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 8.0
+scale_curve = SubResource("CurveTexture_bq427")
+color_ramp = SubResource("GradientTexture1D_3q4um")
+alpha_curve = SubResource("CurveTexture_58fq7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f63vk"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_y8h2k")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_mmcwf"]
+material = SubResource("StandardMaterial3D_f63vk")
+
+[sub_resource type="Animation" id="Animation_vc13b"]
+resource_name = "Hit"
+length = 0.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"damage_target_with_attack"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hit:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Slash:mesh:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.277392, 1),
+"update": 0,
+"values": [0.4, 0.8]
+}
+
+[sub_resource type="Animation" id="Animation_u7gix"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Slash:mesh:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y8h2k"]
+_data = {
+&"Hit": SubResource("Animation_vc13b"),
+&"RESET": SubResource("Animation_u7gix")
+}
+
+[node name="CCS_BattleVFX" type="Node3D"]
+script = SubResource("GDScript_a2i7h")
+metadata/_custom_type_script = "uid://cd6edex6fl2qt"
+
+[node name="Slash" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
+mesh = SubResource("QuadMesh_e7g82")
+
+[node name="Hit" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 1
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ht8iw")
+draw_pass_1 = SubResource("QuadMesh_mmcwf")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_a2i7h")
+volume_db = 5.0
+autoplay = true
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_37dex")
+volume_db = -5.0
+autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_y8h2k")
+}

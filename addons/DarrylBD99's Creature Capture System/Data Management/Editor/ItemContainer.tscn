@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2f57vrxwouwg"]
+
+[ext_resource type="Script" uid="uid://lcwvcg6xmwbx" path="res://addons/Creature Capture System/Data Management/Editor/ItemContainer.gd" id="1_vtmtc"]
+
+[node name="ItemContainer" type="VBoxContainer"]
+offset_right = 118.0
+offset_bottom = 31.0
+script = ExtResource("1_vtmtc")
+
+[node name="OptionButton" type="OptionButton" parent="."]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+allow_reselect = true

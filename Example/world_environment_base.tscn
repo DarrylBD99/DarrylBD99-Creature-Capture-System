@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvy5cdspev0kx"]
+
+[ext_resource type="Shader" uid="uid://bcriuuiup5d2v" path="res://Example/Scenes/sky.gdshader" id="1_goubw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5o5j1"]
+shader = ExtResource("1_goubw")
+shader_parameter/sky_col = Color(0.256513, 0.557409, 0.961377, 1)
+shader_parameter/horizon_col = Color(0.464276, 0.691294, 0.949415, 1)
+shader_parameter/sun_col = Color(0.934589, 0.843869, 0.694714, 1)
+shader_parameter/sun_size = 0.1
+
+[sub_resource type="Sky" id="Sky_hxwkw"]
+sky_material = SubResource("ShaderMaterial_5o5j1")
+
+[sub_resource type="Environment" id="Environment_xodr5"]
+background_mode = 2
+sky = SubResource("Sky_hxwkw")
+ambient_light_source = 3
+reflected_light_source = 2
+fog_light_color = Color(0.502785, 0.709132, 0.936477, 1)
+fog_sky_affect = 0.3
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_xodr5")

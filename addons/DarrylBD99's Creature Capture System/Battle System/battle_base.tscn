@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://brkrfqcpce4k3"]
+
+[ext_resource type="Script" uid="uid://cwa1pn6dpgy18" path="res://addons/DarrylBD99's Creature Capture System/Battle System/battle_base.gd" id="1_fvicb"]
+[ext_resource type="AudioStream" uid="uid://cvw1rqm16mupx" path="res://addons/DarrylBD99's Creature Capture System/Sounds/SummonCreature.wav" id="2_rp1c2"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3lqm1"]
+noise_type = 0
+fractal_octaves = 4
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_7eqj3"]
+clip_count = 2
+clip_0/name = &"None"
+clip_0/auto_advance = 0
+clip_1/name = &"Summon"
+clip_1/stream = ExtResource("2_rp1c2")
+clip_1/auto_advance = 0
+_transitions = {
+Vector2i(0, 1): {
+"fade_beats": 0.0,
+"fade_mode": 0,
+"from_time": 0,
+"to_time": 1
+},
+Vector2i(1, 0): {
+"fade_beats": 0.0,
+"fade_mode": 0,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(1, 1): {
+"fade_beats": 1.0,
+"fade_mode": 0,
+"from_time": 0,
+"to_time": 0
+}
+}
+
+[node name="BattleBase" type="Node"]
+script = ExtResource("1_fvicb")
+camera_shake_noise = SubResource("FastNoiseLite_3lqm1")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(0.606459, 0.0225436, 0.794795, 0.00698134, 0.999408, -0.0336743, -0.795084, 0.0259708, 0.605943, 17.7972, 4.09538, 18.4899)
+fov = 50.0
+
+[node name="SFXStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamInteractive_7eqj3")

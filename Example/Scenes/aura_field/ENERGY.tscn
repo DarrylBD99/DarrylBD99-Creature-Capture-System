@@ -1,0 +1,309 @@
+[gd_scene load_steps=13 format=3 uid="uid://ccd2724lpnc0i"]
+
+[ext_resource type="Script" uid="uid://dlxrxmf73x81g" path="res://addons/DarrylBD99's Creature Capture System/BattleFields/battle_field.gd" id="1_jruqj"]
+[ext_resource type="Shader" uid="uid://bcriuuiup5d2v" path="res://Example/Scenes/sky.gdshader" id="2_xeb8r"]
+[ext_resource type="MeshLibrary" uid="uid://b4owc1toaohhl" path="res://Example/GridSet.tres" id="3_4kw2g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tpcqp"]
+shader = ExtResource("2_xeb8r")
+shader_parameter/sky_col = Color(1, 1, 1, 1)
+shader_parameter/horizon_col = Color(0.575347, 0.827509, 0.924381, 1)
+shader_parameter/sun_col = Color(0.0177101, 0.295036, 0.409153, 1)
+shader_parameter/sun_size = 0.01
+
+[sub_resource type="Sky" id="Sky_n5oqt"]
+sky_material = SubResource("ShaderMaterial_tpcqp")
+
+[sub_resource type="Environment" id="Environment_y7iec"]
+background_mode = 2
+sky = SubResource("Sky_n5oqt")
+ambient_light_source = 3
+reflected_light_source = 2
+
+[sub_resource type="Animation" id="Animation_lnjgu"]
+resource_name = "Enter"
+length = 2.5
+
+[sub_resource type="Animation" id="Animation_tpcqp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../WorldEnvironment:environment:sky:sky_material:shader_parameter/sky_col")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../WorldEnvironment:environment:sky:sky_material:shader_parameter/horizon_col")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.575347, 0.827509, 0.924381, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../WorldEnvironment:environment:sky:sky_material:shader_parameter/sun_col")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.0177101, 0.295036, 0.409153, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:light_energy")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_y7iec"]
+resource_name = "lights_off"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../WorldEnvironment:environment:sky:sky_material:shader_parameter/sky_col")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../WorldEnvironment:environment:sky:sky_material:shader_parameter/horizon_col")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.575347, 0.827509, 0.924381, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../WorldEnvironment:environment:sky:sky_material:shader_parameter/sun_col")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.0177101, 0.295036, 0.409153, 1), Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:light_energy")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_qw0d8"]
+resource_name = "lights_on"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../WorldEnvironment:environment:sky:sky_material:shader_parameter/sky_col")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../WorldEnvironment:environment:sky:sky_material:shader_parameter/horizon_col")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0.575347, 0.827509, 0.924381, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../WorldEnvironment:environment:sky:sky_material:shader_parameter/sun_col")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0.0177101, 0.295036, 0.409153, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:light_energy")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y7iec"]
+_data = {
+&"Enter": SubResource("Animation_lnjgu"),
+&"RESET": SubResource("Animation_tpcqp"),
+&"lights_off": SubResource("Animation_y7iec"),
+&"lights_on": SubResource("Animation_qw0d8")
+}
+
+[sub_resource type="GDScript" id="GDScript_6pdhy"]
+resource_name = "CreatureBase"
+script/source = "extends GridMap
+
+enum BattleSide {
+	Ally,
+	Opp,
+}
+
+@export var side : BattleSide
+@export var index : int = 0
+
+func _ready() -> void:
+	var size : int = CCS_BattleManager.ally_teams.size() if side == BattleSide.Ally else CCS_BattleManager.opp_teams.size()
+	
+	if size == 1:
+		visible = (index == 1)
+	elif size == 2:
+		visible = (index % 2 == 0)
+	else:
+		visible = (index < size)
+"
+
+[node name="BattleField" type="Node3D" node_paths=PackedStringArray("player_feet_pos", "opp_feet_pos", "anim_player")]
+script = ExtResource("1_jruqj")
+player_feet_pos = [NodePath("PlayerBase_0/PlayerPos_0"), NodePath("PlayerBase_1/PlayerPos_1"), NodePath("PlayerBase_2/PlayerPos_2")]
+opp_feet_pos = [NodePath("OppBase_0/OppPos_0"), NodePath("OppBase_1/OppPos_1"), NodePath("OppBase_2/OppPos_2")]
+anim_player = NodePath("AnimationPlayer")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_y7iec")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.028825, 0.583357, 0.811704, 0.597227, -0.661217, 0.453996, 0.801554, 0.471685, -0.367456, 0, 0, 0)
+shadow_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../DirectionalLight3D")
+libraries = {
+&"": SubResource("AnimationLibrary_y7iec")
+}
+
+[node name="PlayerBase_0" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh_library = ExtResource("3_4kw2g")
+data = {
+"cells": PackedInt32Array(-2, 5, 13, -3, 5, 13, -3, 6, 13, -2, 6, 13)
+}
+script = SubResource("GDScript_6pdhy")
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="PlayerPos_0" type="Marker3D" parent="PlayerBase_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -0.04, 12)
+
+[node name="PlayerBase_1" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh_library = ExtResource("3_4kw2g")
+data = {
+"cells": PackedInt32Array(-65536, 6, 13, -1, 6, 13, -1, 5, 13, -65536, 5, 13)
+}
+script = SubResource("GDScript_6pdhy")
+index = 1
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="PlayerPos_1" type="Marker3D" parent="PlayerBase_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, 12)
+
+[node name="PlayerBase_2" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh_library = ExtResource("3_4kw2g")
+data = {
+"cells": PackedInt32Array(-65535, 5, 13, -65535, 6, 13, -65534, 6, 13, -65534, 5, 13)
+}
+script = SubResource("GDScript_6pdhy")
+index = 2
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="PlayerPos_2" type="Marker3D" parent="PlayerBase_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.04, 12)
+
+[node name="OppBase_0" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh_library = ExtResource("3_4kw2g")
+data = {
+"cells": PackedInt32Array(-3, 65530, 13, -2, 65530, 13, -2, 65529, 13, -3, 65529, 13)
+}
+script = SubResource("GDScript_6pdhy")
+side = 1
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="OppPos_0" type="Marker3D" parent="OppBase_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -0.04, -12)
+
+[node name="OppBase_1" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh_library = ExtResource("3_4kw2g")
+data = {
+"cells": PackedInt32Array(-65536, 65529, 13, -65536, 65530, 13, -1, 65530, 13, -1, 65529, 13)
+}
+script = SubResource("GDScript_6pdhy")
+side = 1
+index = 1
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="OppPos_1" type="Marker3D" parent="OppBase_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -12)
+
+[node name="OppBase_2" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh_library = ExtResource("3_4kw2g")
+data = {
+"cells": PackedInt32Array(-65535, 65529, 13, -65535, 65530, 13, -65534, 65530, 13, -65534, 65529, 13)
+}
+script = SubResource("GDScript_6pdhy")
+side = 1
+index = 2
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="OppPos_2" type="Marker3D" parent="OppBase_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.04, -12)

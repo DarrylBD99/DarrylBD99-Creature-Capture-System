@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://3u8veq5geir6"]
+
+[ext_resource type="Script" uid="uid://6oj5h6xpbcsc" path="res://addons/DarrylBD99's Creature Capture System/Battle System/EnemyNPC.gd" id="1_26pmp"]
+
+[node name="EnemyBase" type="CharacterBody3D"]
+collision_layer = 8
+script = ExtResource("1_26pmp")

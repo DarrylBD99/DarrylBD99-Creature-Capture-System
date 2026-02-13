@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ls8u7u7ocw85"
+path="res://.godot/imported/5- The Gauntlet and the Dragon.ogg-1f4fc90abf06dc23ecea1cc2748eecc7.oggvorbisstr"
+
+[deps]
+
+source_file="res://Example/Assets/Audio/Music/5- The Gauntlet and the Dragon.ogg"
+dest_files=["res://.godot/imported/5- The Gauntlet and the Dragon.ogg-1f4fc90abf06dc23ecea1cc2748eecc7.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

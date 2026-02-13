@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://03al07xvnavb"
+path="res://.godot/imported/12- Era Machine.ogg-65097c6e89e012a79f35ca38b5e5e52b.oggvorbisstr"
+
+[deps]
+
+source_file="res://Example/Assets/Audio/Music/12- Era Machine.ogg"
+dest_files=["res://.godot/imported/12- Era Machine.ogg-65097c6e89e012a79f35ca38b5e5e52b.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

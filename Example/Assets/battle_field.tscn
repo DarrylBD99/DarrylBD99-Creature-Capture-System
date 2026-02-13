@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://c8ahdicotfjgo"]
+
+[ext_resource type="Script" uid="uid://dlxrxmf73x81g" path="res://addons/DarrylBD99's Creature Capture System/BattleFields/battle_field.gd" id="1_k7mn6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nb731"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_07sra"]
+sky_material = SubResource("ProceduralSkyMaterial_nb731")
+
+[sub_resource type="Environment" id="Environment_vak64"]
+background_mode = 2
+sky = SubResource("Sky_07sra")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e6cky"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_j20f2"]
+material = SubResource("StandardMaterial3D_e6cky")
+size = Vector2(35, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8kyq3"]
+albedo_color = Color(0.28485, 0.28485, 0.28485, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ci7le"]
+material = SubResource("StandardMaterial3D_8kyq3")
+top_radius = 5.0
+bottom_radius = 5.0
+height = 0.5
+
+[node name="BattleField" type="Node3D"]
+script = ExtResource("1_k7mn6")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vak64")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.128071, 0.464852, 0.876077, 0.584045, -0.749283, 0.312195, 0.801554, 0.471685, -0.367456, 0, 0, 0)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_j20f2")
+
+[node name="Player" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+mesh = SubResource("CylinderMesh_ci7le")
+
+[node name="FeetPos" type="Marker3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="Opp" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+mesh = SubResource("CylinderMesh_ci7le")
+
+[node name="FeetPos" type="Marker3D" parent="Opp"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)

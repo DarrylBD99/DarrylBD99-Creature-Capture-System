@@ -1,0 +1,2 @@
+extends CCS_CalculationVariableNode
+class_name CCS_graph_getter
