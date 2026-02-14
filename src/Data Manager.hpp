@@ -2,7 +2,7 @@
 #define DATA_MANAGER_HPP
 
 #include <godot_cpp/classes/project_settings.hpp>
-
+#include <nodes/BattleField.hpp>
 
 class DataManager {
     private:
@@ -10,14 +10,19 @@ class DataManager {
     
     public:
         DataManager() = delete;
-        static void LoadAllData();
+        ~DataManager() = delete;
 
         static void initialize_project_settings();
         static void update_project_settings();
+        static void free_data();
+
+        static godot::ProjectSettings* project_setting;
         
         static uint8_t* s_max_battle_teams;
         static uint8_t* s_max_team_size;
-        static uint16_t* s_rarity_alternate_color_chance;
+        static uint16_t* s_alternate_color_rarity;
+
+        static godot::BattleField* s_default_battlefield;
 };
 
 #endif // DATA_MANAGER_HPP

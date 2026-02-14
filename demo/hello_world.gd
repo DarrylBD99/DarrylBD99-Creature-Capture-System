@@ -1,1 +1,0 @@
-extends CreatureSprite3D

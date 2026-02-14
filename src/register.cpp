@@ -1,6 +1,8 @@
 # include "register.hpp"
 
 #include <Nodes/CreatureSprite3D.hpp>
+#include <Nodes/BattleField.hpp>
+
 #include <Resources/BattleTeam.hpp>
 #include <Resources/StaticData/Species.hpp>
 #include <Resources/StaticData/Type.hpp>
@@ -10,6 +12,7 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <map>
 
+#include <Battle Manager.hpp>
 #include <Data Manager.hpp>
 #include <Battle Init.hpp>
 
@@ -20,13 +23,14 @@ void initialize(ModuleInitializationLevel p_level) {
     
     // Nodes
     GDREGISTER_CLASS(godot::CreatureSprite3D);
+    GDREGISTER_CLASS(godot::BattleField);
 
     // Static Data Resources
     GDREGISTER_CLASS(godot::SpeciesResource);
     GDREGISTER_CLASS(godot::TypeResource);
     GDREGISTER_CLASS(godot::AttackResource);
     
-    // Battle Resources
+    // // Battle Resources
     GDREGISTER_CLASS(godot::BattleTeam);
 
     // Initialize project settings
@@ -36,11 +40,15 @@ void initialize(ModuleInitializationLevel p_level) {
     if (!godot::Engine::get_singleton()->is_editor_hint()) {
         // Update Data
         DataManager::update_project_settings();
+        BattleInit::SingleBattle(); // Temporary until battle system is implemented
     }
 }
 
 void uninitialize(ModuleInitializationLevel p_level) {
     if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) return;
+
+    // Free data manager resources
+    DataManager::free_data();
 }
 
 extern "C" {

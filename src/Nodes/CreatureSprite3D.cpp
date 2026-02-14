@@ -15,7 +15,6 @@ CreatureSprite3D::CreatureSprite3D() {
 CreatureSprite3D::~CreatureSprite3D() {
     // add your cleanup here
     if (m_audioPlayer && m_audioPlayer->is_inside_tree()) {
-        remove_child(m_audioPlayer);
         m_audioPlayer->queue_free();
         m_audioPlayer = nullptr;
     }
