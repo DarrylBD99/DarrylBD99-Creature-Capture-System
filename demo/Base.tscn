@@ -1,3 +1,11 @@
-[gd_scene load_steps=0 format=3 uid="uid://butfvjgmmpy0i"]
+[gd_scene load_steps=2 format=3 uid="uid://butfvjgmmpy0i"]
+
+[sub_resource type="GDScript" id="GDScript_65yaf"]
+script/source = "extends Node
+
+func _ready() -> void:
+	pass
+"
 
 [node name="Node" type="Node"]
+script = SubResource("GDScript_65yaf")

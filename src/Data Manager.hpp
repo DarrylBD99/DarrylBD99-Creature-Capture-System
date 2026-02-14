@@ -2,6 +2,8 @@
 #define DATA_MANAGER_HPP
 
 #include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/classes/node.hpp>
+
 #include <nodes/BattleField.hpp>
 
 class DataManager {
@@ -16,7 +18,10 @@ class DataManager {
         static void update_project_settings();
         static void free_data();
 
+        static void initialize_battle_singleton();
+
         static godot::ProjectSettings* project_setting;
+        static godot::Node* s_battle_singleton;
         
         static uint8_t* s_max_battle_teams;
         static uint8_t* s_max_team_size;

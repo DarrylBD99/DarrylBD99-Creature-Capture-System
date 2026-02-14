@@ -16,6 +16,8 @@
 #include <Data Manager.hpp>
 #include <Battle Init.hpp>
 
+#include <godot_cpp/core/object.hpp>
+
 #include "gdextension_interface.h"
 
 void initialize(ModuleInitializationLevel p_level) {
@@ -24,7 +26,7 @@ void initialize(ModuleInitializationLevel p_level) {
     // Nodes
     GDREGISTER_CLASS(godot::CreatureSprite3D);
     GDREGISTER_CLASS(godot::BattleField);
-
+    
     // Static Data Resources
     GDREGISTER_CLASS(godot::SpeciesResource);
     GDREGISTER_CLASS(godot::TypeResource);
@@ -35,11 +37,11 @@ void initialize(ModuleInitializationLevel p_level) {
 
     // Initialize project settings
     DataManager::initialize_project_settings();
-
     // Check if in game
     if (!godot::Engine::get_singleton()->is_editor_hint()) {
         // Update Data
         DataManager::update_project_settings();
+
         BattleInit::SingleBattle(); // Temporary until battle system is implemented
     }
 }
