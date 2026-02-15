@@ -16,9 +16,15 @@ void CCS_Battle::_bind_methods() {
     // Binding methods to Godot
     ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("initialize_battle_singleton"), &initialize_battle_singleton);
     ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("single_battle"), &BattleInit::SingleBattle);
+    ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("wild_battle", "species", "level"), &BattleInit::WildBattle);
 }
 
 void CCS_Battle::initialize_battle_singleton() {
+/**
+ * Initializes the Battle Singleton by creating a new Node and adding it to the scene tree.
+ * This node is used to store the current battle state and is automatically added to the scene tree.
+ * This function should be called before starting a battle.
+ */
     DataManager::s_battle_singleton = memnew(godot::Node);
     DataManager::s_battle_singleton->set_name("CCS_Singleton");
     

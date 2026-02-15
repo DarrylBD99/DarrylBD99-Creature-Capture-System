@@ -128,8 +128,6 @@ void DataManager::update_project_settings() {
 }
 
 void DataManager::free_data() {
-    godot::print_line("Freeing DataManager resources...");
-    
     // Free any allocated resources or perform any necessary cleanup here
     if (s_default_battlefield) {
         memdelete(s_default_battlefield);
