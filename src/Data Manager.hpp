@@ -18,10 +18,8 @@ class DataManager {
         static void update_project_settings();
         static void free_data();
 
-        static void initialize_battle_singleton();
-
         static godot::ProjectSettings* project_setting;
-        static godot::Node* s_battle_singleton;
+        static godot::Node3D* s_battle_singleton;
         
         static uint8_t* s_max_battle_teams;
         static uint8_t* s_max_team_size;

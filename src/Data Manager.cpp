@@ -8,9 +8,6 @@
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
-#include <godot_cpp/classes/engine.hpp>
-#include <godot_cpp/classes/scene_tree.hpp>
-#include <godot_cpp/classes/window.hpp>
 
 // Static member definitions
 uint16_t* DataManager::s_alternate_color_rarity = nullptr;
@@ -19,7 +16,7 @@ uint8_t* DataManager::s_max_team_size = nullptr;
 
 godot::ProjectSettings* DataManager::project_setting = nullptr;
 godot::BattleField* DataManager::s_default_battlefield = nullptr;
-godot::Node* DataManager::s_battle_singleton = nullptr;
+godot::Node3D* DataManager::s_battle_singleton = nullptr;
 
 using godot::Variant, godot::PropertyHint, godot::PropertyUsageFlags, godot::String;
 
@@ -129,12 +126,6 @@ void DataManager::update_project_settings() {
         return;
     }
     s_default_battlefield = battlefield;
-}
-
-void DataManager::initialize_battle_singleton() {
-    s_battle_singleton = memnew(godot::Node);
-    godot::SceneTree *tree = godot::Object::cast_to<godot::SceneTree>(godot::Engine::get_singleton()->get_main_loop());
-    tree->get_root()->add_child(s_battle_singleton);
 }
 
 void DataManager::free_data() {
