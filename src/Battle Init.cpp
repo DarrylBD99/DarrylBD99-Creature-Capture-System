@@ -15,11 +15,12 @@ void BattleInit::SingleBattle() {
     godot::UtilityFunctions::print("Single Battle Initialized");
 
     // Check if Battle Singleton is initialized
-    if (!DataManager::s_battle_singleton) {
+    if (DataManager::s_battle_singleton == nullptr) {
         godot::UtilityFunctions::print("Battle Singleton not initialized. Please initialize the battle singleton before starting a battle.");
         return;
     }
 
     // Add Default Battlefield to Battle Singleton
-    DataManager::s_battle_singleton->add_child(DataManager::s_default_battlefield);
+    BattleManager::s_current_battlefield = (godot::BattleField*)DataManager::s_default_battlefield->duplicate();
+    DataManager::s_battle_singleton->add_child(BattleManager::s_current_battlefield);
 }

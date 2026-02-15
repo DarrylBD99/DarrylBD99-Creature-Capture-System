@@ -16,7 +16,7 @@ uint8_t* DataManager::s_max_team_size = nullptr;
 
 godot::ProjectSettings* DataManager::project_setting = nullptr;
 godot::BattleField* DataManager::s_default_battlefield = nullptr;
-godot::Node3D* DataManager::s_battle_singleton = nullptr;
+godot::Node* DataManager::s_battle_singleton = nullptr;
 
 using godot::Variant, godot::PropertyHint, godot::PropertyUsageFlags, godot::String;
 
@@ -120,7 +120,6 @@ void DataManager::update_project_settings() {
             godot::Node* node = godot::Object::cast_to<godot::Node>(instanced_battlefield);
             if (node) node->queue_free();
             else memdelete(instanced_battlefield);
-        
         }
         godot::print_error("Default battlefield is not a valid BattleField scene");
         return;
@@ -132,9 +131,7 @@ void DataManager::free_data() {
     godot::print_line("Freeing DataManager resources...");
     
     // Free any allocated resources or perform any necessary cleanup here
-    if (s_default_battlefield)
+    if (s_default_battlefield) {
         memdelete(s_default_battlefield);
-        
-    if (s_battle_singleton)
-        memdelete(s_battle_singleton);
+    }
 }

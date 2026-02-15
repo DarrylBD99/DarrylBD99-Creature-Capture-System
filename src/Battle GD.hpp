@@ -1,5 +1,5 @@
-#ifndef BATTLE_BASE_HPP
-#define BATTLE_BASE_HPP
+#ifndef BATTLE_GD_HPP
+#define BATTLE_GD_HPP
 
 #include <godot_cpp/classes/ref_counted.hpp>
 
@@ -16,4 +16,4 @@ namespace godot {
 };
 
 
-#endif // BATTLE_BASE_HPP
+#endif // BATTLE_GD_HPP

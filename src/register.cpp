@@ -12,7 +12,7 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <map>
 
-#include <Battle Base.hpp>
+#include <Battle GD.hpp>
 #include <Battle Manager.hpp>
 #include <Data Manager.hpp>
 #include <Battle Init.hpp>
@@ -23,8 +23,6 @@
 
 void initialize(ModuleInitializationLevel p_level) {
     if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) return;
-    // Static Class
-    GDREGISTER_CLASS(godot::CCS_Battle);
 
     // Nodes
     GDREGISTER_CLASS(godot::CreatureSprite3D);
@@ -37,6 +35,9 @@ void initialize(ModuleInitializationLevel p_level) {
     
     // // Battle Resources
     GDREGISTER_CLASS(godot::BattleTeam);
+    
+    // Static Class
+    GDREGISTER_CLASS(godot::CCS_Battle);
 
     // Initialize project settings
     DataManager::initialize_project_settings();

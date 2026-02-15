@@ -4,9 +4,9 @@
 script/source = "extends Node
 
 func _ready() -> void:
+	#CCS_Battle.initialize_battle_singleton()
+	#CCS_Battle.single_battle()
 	pass
-	CCS_Battle.initialize_battle_singleton()
-	CCS_Battle.single_battle()
 "
 
 [node name="Node" type="Node"]

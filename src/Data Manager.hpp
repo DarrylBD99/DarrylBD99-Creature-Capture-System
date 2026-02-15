@@ -3,8 +3,10 @@
 
 #include <godot_cpp/classes/project_settings.hpp>
 #include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/ref.hpp>
 
 #include <nodes/BattleField.hpp>
+
 
 class DataManager {
     private:
@@ -19,7 +21,7 @@ class DataManager {
         static void free_data();
 
         static godot::ProjectSettings* project_setting;
-        static godot::Node3D* s_battle_singleton;
+        static godot::Node* s_battle_singleton;
         
         static uint8_t* s_max_battle_teams;
         static uint8_t* s_max_team_size;
