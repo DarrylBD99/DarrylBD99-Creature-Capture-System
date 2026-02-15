@@ -5,3 +5,6 @@ reloadable = true
 
 [libraries]
 windows.debug.x86_64 = "res://bin/DarrylBD99_CCS.windows.template_debug.x86_64.dll"
+
+[icons]
+BattleField = "res://addons/DarrylBD99 CCS/assets/icons/battle_field.svg"
