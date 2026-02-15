@@ -8,6 +8,7 @@
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/sprite_frames.hpp>
 
 // Static member definitions
 uint16_t* DataManager::s_alternate_color_rarity = nullptr;
@@ -17,6 +18,8 @@ uint8_t* DataManager::s_max_team_size = nullptr;
 godot::ProjectSettings* DataManager::project_setting = nullptr;
 godot::BattleField* DataManager::s_default_battlefield = nullptr;
 godot::Node* DataManager::s_battle_singleton = nullptr;
+godot::Ref<godot::SpriteFrames> DataManager::s_creature_front_sprite_frames = nullptr;
+godot::Ref<godot::SpriteFrames> DataManager::s_creature_back_sprite_frames = nullptr;
 
 using godot::Variant, godot::PropertyHint, godot::PropertyUsageFlags, godot::String;
 
@@ -99,6 +102,16 @@ void DataManager::update_project_settings() {
     uint16_t s_alternate_color_rarity_value = static_cast<uint16_t>(s_alternate_color_rarity_variant);
     s_alternate_color_rarity = new uint16_t(s_alternate_color_rarity_value);
 
+    // Load SpriteFrames resources and store them in static variables
+
+    if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/front")) {
+        s_creature_front_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/front"), "SpriteFrames");
+    }
+
+    if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/back")) {
+        s_creature_back_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/back"), "SpriteFrames");
+    }
+    
     // Load default battlefield as PackedScene and store it in BattleManager
     godot::String battlefield_path = project_setting->get_setting("darrylbd99/creature_capture_system/main/default_battlefield");
     Ref<godot::PackedScene> default_battlefield = godot::ResourceLoader::get_singleton()->load(battlefield_path, "PackedScene");

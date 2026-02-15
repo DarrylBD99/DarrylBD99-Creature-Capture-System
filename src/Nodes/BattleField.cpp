@@ -40,3 +40,13 @@ godot::Vector3 BattleField::GetOpponentPos() const {
 void BattleField::SetOpponentPos(const godot::Vector3& pos) {
     m_opponent_pos = pos;
 }
+
+void BattleField::AddOpponentSprite(CreatureSprite3D* sprite) {
+    godot::UtilityFunctions::print("Adding opponent sprite to battlefield.");
+    if (sprite == nullptr) {
+        godot::UtilityFunctions::push_error("Cannot add null opponent sprite to battlefield.");
+        return;
+    }
+    add_child(sprite);
+    sprite->set_position(m_opponent_pos);
+}

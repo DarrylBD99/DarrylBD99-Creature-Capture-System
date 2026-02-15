@@ -5,7 +5,7 @@
 
 class BattleInit {
     private:
-        static void InitializeBattleField();
+        static godot::Error InitializeBattleField();
     public:
         BattleInit() = delete;
         static void SingleBattle();

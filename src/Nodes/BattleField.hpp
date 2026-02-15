@@ -7,6 +7,8 @@
 
 #include <godot_cpp/classes/ref.hpp>
 
+#include <nodes/CreatureSprite3D.hpp>
+
 namespace godot {
     class BattleField : public Node {
         GDCLASS(BattleField, Node);
@@ -27,6 +29,8 @@ namespace godot {
             void SetPlayerPos(const Vector3& pos);
             Vector3 GetOpponentPos() const;
             void SetOpponentPos(const Vector3& pos);
+
+            void AddOpponentSprite(CreatureSprite3D* sprite);
     };
 };
 

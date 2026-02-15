@@ -4,6 +4,7 @@
 #include <godot_cpp/classes/project_settings.hpp>
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/ref.hpp>
+#include <godot_cpp/classes/sprite_frames.hpp>
 
 #include <nodes/BattleField.hpp>
 
@@ -22,6 +23,9 @@ class DataManager {
 
         static godot::ProjectSettings* project_setting;
         static godot::Node* s_battle_singleton;
+
+        static godot::Ref<godot::SpriteFrames> s_creature_front_sprite_frames;
+        static godot::Ref<godot::SpriteFrames> s_creature_back_sprite_frames;
         
         static uint8_t* s_max_battle_teams;
         static uint8_t* s_max_team_size;

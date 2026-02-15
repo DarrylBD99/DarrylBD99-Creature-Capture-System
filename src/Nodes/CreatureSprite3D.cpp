@@ -1,15 +1,21 @@
 #include "CreatureSprite3D.hpp"
 #include <godot_cpp/classes/engine.hpp>
 
+#include <Data Manager.hpp>
+
 using godot::CreatureSprite3D;
 
 CreatureSprite3D::CreatureSprite3D() {
     // Constructor code here
-
     if (Engine::get_singleton()->is_editor_hint())
         return;
+    
+    // Initialize audio player for creature sounds
     m_audioPlayer = memnew(AudioStreamPlayer);
     add_child(m_audioPlayer);
+
+    // Set sprite frames based on species resource
+    set_sprite_frames(DataManager::s_creature_front_sprite_frames);
 }
 
 CreatureSprite3D::~CreatureSprite3D() {
@@ -37,6 +43,7 @@ godot::StringName CreatureSprite3D::GetSpeciesId() const {
 
 void CreatureSprite3D::SetSpeciesId(const StringName& id) {
     m_speciesId = id;
+    set_autoplay(id); // Assuming the animation name corresponds to the species ID
 }
 
 godot::Ref<godot::SpeciesResource> CreatureSprite3D::GetSpeciesResource() const {
