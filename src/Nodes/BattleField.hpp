@@ -31,6 +31,7 @@ namespace godot {
             void SetOpponentPos(const Vector3& pos);
 
             void AddOpponentSprite(CreatureSprite3D* sprite);
+            void AdjustSprite(CreatureSprite3D* sprite);
     };
 };
 

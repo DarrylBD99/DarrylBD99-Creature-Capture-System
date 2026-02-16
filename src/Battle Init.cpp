@@ -25,12 +25,10 @@ void BattleInit::WildBattle(godot::StringName species, uint8_t level) {
         return;
     }
 
+    InitCreatures(species);
+
     // Set Wild Battle Species and Level (add in later)
     
-    // Create Wild Battle Creature sprite
-    godot::CreatureSprite3D* wild_creature_sprite = memnew(godot::CreatureSprite3D());
-    wild_creature_sprite->SetSpeciesId(species);
-    BattleManager::s_current_battlefield->AddOpponentSprite(wild_creature_sprite);
 }
 
 void BattleInit::SingleBattle() {
@@ -51,13 +49,26 @@ godot::Error BattleInit::InitializeBattleField() {
         return godot::Error::ERR_CANT_CREATE;
     }
 
-    // Add Default Battlefield to Battle Singleton
+    // Check if Default Battlefield is initialized
     if (DataManager::s_default_battlefield == nullptr) {
         godot::UtilityFunctions::push_error("Default Battlefield not initialized. Please initialize the default battlefield before starting a battle.");
         return godot::Error::ERR_CANT_CREATE;
     }
     
+    // Add Default Battlefield to Battle Singleton
     BattleManager::s_current_battlefield = (godot::BattleField*)DataManager::s_default_battlefield->duplicate();
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_battlefield);
     return godot::Error::OK;
 }
+
+
+void BattleInit::InitCreatures(godot::StringName species){
+    //will init all creatures here later i think
+
+    // Create Battle Creature sprite
+    godot::CreatureSprite3D* wild_creature_sprite = memnew(godot::CreatureSprite3D());
+    wild_creature_sprite->SetSpeciesId(species);
+    BattleManager::s_current_battlefield->AddOpponentSprite(wild_creature_sprite);
+    
+}
+

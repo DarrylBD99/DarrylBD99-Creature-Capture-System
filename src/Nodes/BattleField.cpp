@@ -1,4 +1,5 @@
 #include "BattleField.hpp"
+#include <godot_cpp/classes/texture2d.hpp>
 
 using godot::BattleField;
 
@@ -41,12 +42,29 @@ void BattleField::SetOpponentPos(const godot::Vector3& pos) {
     m_opponent_pos = pos;
 }
 
+
 void BattleField::AddOpponentSprite(CreatureSprite3D* sprite) {
-    godot::UtilityFunctions::print("Adding opponent sprite to battlefield.");
+    godot::UtilityFunctions::print("Adding opponent's sprite to battlefield.");
     if (sprite == nullptr) {
         godot::UtilityFunctions::push_error("Cannot add null opponent sprite to battlefield.");
         return;
     }
     add_child(sprite);
     sprite->set_position(m_opponent_pos);
+
+    AdjustSprite(sprite);
+}
+
+
+
+void BattleField::AdjustSprite(CreatureSprite3D* sprite){
+    //should probably have checks
+    Ref<SpriteFrames> frames = sprite->get_sprite_frames();
+    StringName anim = sprite->get_animation();
+    int frame = sprite->get_frame();
+    
+    Ref<Texture2D> tex = frames->get_frame_texture(anim, frame);
+    float h = tex->get_height();
+    sprite->set_offset(Vector2(0, h * 0.5f));
+    // sprite->set_billboard_mode(BaseMaterial3D::BILLBOARD_ENABLED);
 }
