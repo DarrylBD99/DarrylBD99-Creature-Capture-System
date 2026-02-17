@@ -18,8 +18,7 @@ uint8_t* DataManager::s_max_team_size = nullptr;
 godot::ProjectSettings* DataManager::project_setting = nullptr;
 godot::BattleField* DataManager::s_default_battlefield = nullptr;
 godot::Node* DataManager::s_battle_singleton = nullptr;
-godot::Ref<godot::SpriteFrames> DataManager::s_creature_front_sprite_frames = nullptr;
-godot::Ref<godot::SpriteFrames> DataManager::s_creature_back_sprite_frames = nullptr;
+godot::Ref<godot::SpriteFrames> DataManager::s_creature_sprite_frames = nullptr;
 
 using godot::Variant, godot::PropertyHint, godot::PropertyUsageFlags, godot::String;
 
@@ -105,11 +104,11 @@ void DataManager::update_project_settings() {
     // Load SpriteFrames resources and store them in static variables
 
     if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/front")) {
-        s_creature_front_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/front"), "SpriteFrames");
+        s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/front"), "SpriteFrames");
     }
 
     if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/back")) {
-        s_creature_back_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/back"), "SpriteFrames");
+        s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/back"), "SpriteFrames");
     }
     
     // Load default battlefield as PackedScene and store it in BattleManager

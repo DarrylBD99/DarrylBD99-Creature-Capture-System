@@ -15,7 +15,7 @@ CreatureSprite3D::CreatureSprite3D() {
     add_child(m_audioPlayer);
 
     // Set sprite frames based on species resource
-    set_sprite_frames(DataManager::s_creature_front_sprite_frames);
+    set_sprite_frames(DataManager::s_creature_sprite_frames);
 }
 
 CreatureSprite3D::~CreatureSprite3D() {
@@ -43,7 +43,7 @@ godot::StringName CreatureSprite3D::GetSpeciesId() const {
 
 void CreatureSprite3D::SetSpeciesId(const StringName& id) {
     m_speciesId = id;
-    set_autoplay(id); // Assuming the animation name corresponds to the species ID
+
 }
 
 godot::Ref<godot::SpeciesResource> CreatureSprite3D::GetSpeciesResource() const {
@@ -53,3 +53,12 @@ godot::Ref<godot::SpeciesResource> CreatureSprite3D::GetSpeciesResource() const 
 void CreatureSprite3D::SetSpeciesResource(Ref<SpeciesResource> resource) {
     m_speciesResource = resource;
 }
+
+void CreatureSprite3D::SetSprite(bool direction){
+    godot::String animation_name = m_speciesId;
+
+    if (direction){animation_name += "_Front";}
+    else {animation_name += "_Back";}
+    set_autoplay(godot::StringName(animation_name)); // Assuming the animation name corresponds to the species ID
+    //godot::UtilityFunctions::print(animation_name," sprite loaded");
+} 

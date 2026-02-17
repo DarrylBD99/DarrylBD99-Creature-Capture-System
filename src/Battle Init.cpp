@@ -25,10 +25,11 @@ void BattleInit::WildBattle(godot::StringName species, uint8_t level) {
         return;
     }
 
-    InitCreatures(species);
+    // Set Wild Battle Species and Level (add in later)   
 
-    // Set Wild Battle Species and Level (add in later)
-    
+    InitCreatures(species,true);
+    InitCreatures(species,false); //temp in place of a player's creature
+
 }
 
 void BattleInit::SingleBattle() {
@@ -62,13 +63,15 @@ godot::Error BattleInit::InitializeBattleField() {
 }
 
 
-void BattleInit::InitCreatures(godot::StringName species){
-    //will init all creatures here later i think
+void BattleInit::InitCreatures(godot::StringName species,bool opponent){
+    // will init all creatures here later
 
     // Create Battle Creature sprite
-    godot::CreatureSprite3D* wild_creature_sprite = memnew(godot::CreatureSprite3D());
-    wild_creature_sprite->SetSpeciesId(species);
-    BattleManager::s_current_battlefield->AddOpponentSprite(wild_creature_sprite);
-    
+    godot::CreatureSprite3D* creature_sprite = memnew(godot::CreatureSprite3D());
+    creature_sprite->SetSpeciesId(species);
+    creature_sprite->SetSprite(opponent);
+
+    BattleManager::s_current_battlefield->AddSprites(creature_sprite,opponent);
+
 }
 

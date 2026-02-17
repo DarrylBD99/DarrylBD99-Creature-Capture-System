@@ -16,8 +16,8 @@ config/icon="res://icon.svg"
 
 [darrylbd99]
 
-creature_capture_system/sprite_frames/front="uid://do6ayrb482jks"
 creature_capture_system/sprite_frames/back="uid://cbhigoniplqrl"
+creature_capture_system/sprite_frames/front="uid://do6ayrb482jks"
 
 [rendering]
 

@@ -10,7 +10,7 @@ class BattleInit {
         BattleInit() = delete;
         static void SingleBattle();
         static void WildBattle(godot::StringName species, uint8_t level);
-        static void InitCreatures(godot::StringName species);
+        static void InitCreatures(godot::StringName species,bool opponent);
 };
 
 #endif // BATTLE_INIT_HPP

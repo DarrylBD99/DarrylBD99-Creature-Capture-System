@@ -20,6 +20,7 @@ namespace godot {
             void SetSpeciesId(const StringName& id);
             Ref<SpeciesResource> GetSpeciesResource() const;
             void SetSpeciesResource(Ref<SpeciesResource> resource);
+            void SetSprite(bool direction);
     };
 };
 
