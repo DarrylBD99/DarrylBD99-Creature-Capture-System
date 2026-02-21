@@ -30,7 +30,7 @@ class DataManager {
         static uint8_t* s_max_team_size;
         static uint16_t* s_alternate_color_rarity;
 
-        static godot::BattleField* s_default_battlefield;
+        static godot::String* s_default_battlefield_path;
 };
 
 #endif // DATA_MANAGER_HPP

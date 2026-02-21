@@ -12,6 +12,8 @@
 #include <godot_cpp/variant/string_name.hpp>
 
 #include <godot_cpp/classes/scene_tree.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 
 void BattleInit::WildBattle(godot::StringName species, uint8_t level) {
     // Temporary until battle system is implemented
@@ -51,13 +53,21 @@ godot::Error BattleInit::InitializeBattleField() {
     }
 
     // Check if Default Battlefield is initialized
-    if (DataManager::s_default_battlefield == nullptr) {
+    if (DataManager::s_default_battlefield_path == nullptr) {
         godot::UtilityFunctions::push_error("Default Battlefield not initialized. Please initialize the default battlefield before starting a battle.");
         return godot::Error::ERR_CANT_CREATE;
     }
     
+    // Load Default Battlefield Scene
+    Ref<godot::PackedScene> default_battlefield = godot::ResourceLoader::get_singleton()->load(*DataManager::s_default_battlefield_path, "PackedScene");
+
+    if (default_battlefield.is_null()) {
+        godot::UtilityFunctions::push_error("Failed to load default battlefield scene.");
+        return godot::Error::ERR_CANT_CREATE;
+    }
+
     // Add Default Battlefield to Battle Singleton
-    BattleManager::s_current_battlefield = (godot::BattleField*)DataManager::s_default_battlefield->duplicate();
+    BattleManager::s_current_battlefield = (godot::BattleField*)default_battlefield->instantiate();
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_battlefield);
     return godot::Error::OK;
 }

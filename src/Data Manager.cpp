@@ -16,7 +16,7 @@ uint8_t* DataManager::s_max_battle_teams = nullptr;
 uint8_t* DataManager::s_max_team_size = nullptr;
 
 godot::ProjectSettings* DataManager::project_setting = nullptr;
-godot::BattleField* DataManager::s_default_battlefield = nullptr;
+godot::String* DataManager::s_default_battlefield_path = nullptr;
 godot::Node* DataManager::s_battle_singleton = nullptr;
 godot::Ref<godot::SpriteFrames> DataManager::s_creature_sprite_frames = nullptr;
 
@@ -124,26 +124,10 @@ void DataManager::update_project_settings() {
         return;
     }
 
-    // Check if the instanced loaded resource is BattleField, if not print error and return
-    godot::Object* instanced_battlefield = default_battlefield->instantiate();
-    godot::BattleField* battlefield = godot::Object::cast_to<godot::BattleField>(instanced_battlefield);
-    if (battlefield == nullptr) {
-        if (instanced_battlefield) {
-            godot::Node* node = godot::Object::cast_to<godot::Node>(instanced_battlefield);
-            if (node) node->queue_free();
-            else memdelete(instanced_battlefield);
-        }
-        godot::print_error("Default battlefield is not a valid BattleField scene");
-        return;
-    }
-    s_default_battlefield = battlefield;
+    s_default_battlefield_path = new godot::String(battlefield_path);
 }
 
 void DataManager::free_data() {
-    // Free any allocated resources or perform any necessary cleanup here
-    if (s_default_battlefield) {
-        memdelete(s_default_battlefield);
-    }
     if (s_creature_sprite_frames.is_valid()) {
         memdelete(s_creature_sprite_frames.ptr());
     }
