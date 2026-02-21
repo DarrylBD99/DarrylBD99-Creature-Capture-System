@@ -144,4 +144,7 @@ void DataManager::free_data() {
     if (s_default_battlefield) {
         memdelete(s_default_battlefield);
     }
+    if (s_creature_sprite_frames.is_valid()) {
+        memdelete(s_creature_sprite_frames.ptr());
+    }
 }
