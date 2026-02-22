@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw4fosareu7ds"]
+
+[sub_resource type="Theme" id="Theme_ohu4g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0oje"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.63529414, 0.6509804, 0.67058825, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.8175212, 0.81752133, 0.8175211, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.5882353)
+shadow_size = 1
+shadow_offset = Vector2(0, 5)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.75
+anchor_right = 0.6
+anchor_bottom = 0.969
+theme = SubResource("Theme_ohu4g")
+theme_override_styles/panel = SubResource("StyleBoxFlat_v0oje")

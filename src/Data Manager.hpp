@@ -31,6 +31,7 @@ class DataManager {
         static uint16_t* s_alternate_color_rarity;
 
         static godot::String* s_default_battlefield_path;
+        static godot::String* s_default_UI_path;
 };
 
 #endif // DATA_MANAGER_HPP

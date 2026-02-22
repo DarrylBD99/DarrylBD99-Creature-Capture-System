@@ -18,8 +18,11 @@ config/icon="res://icon.svg"
 
 creature_capture_system/sprite_frames/back="uid://cbhigoniplqrl"
 creature_capture_system/sprite_frames/front="uid://do6ayrb482jks"
+creature_capture_system/main/default_UI="uid://bqpvv2auaelcj"
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/default_filters/anisotropic_filtering_level=0

@@ -1,9 +1,11 @@
 #include "CreatureSprite3D.hpp"
 #include <godot_cpp/classes/engine.hpp>
 
+
 #include <Data Manager.hpp>
 
 using godot::CreatureSprite3D;
+
 
 CreatureSprite3D::CreatureSprite3D() {
     // Constructor code here
@@ -56,6 +58,7 @@ void CreatureSprite3D::SetSpeciesResource(Ref<SpeciesResource> resource) {
 
 void CreatureSprite3D::SetSprite(bool direction){
     godot::String animation_name = m_speciesId;
+
 
     if (direction){animation_name += "_Front";}
     else {animation_name += "_Back";}
