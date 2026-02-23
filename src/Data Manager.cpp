@@ -33,18 +33,24 @@ void DataManager::initialize_project_settings() {
     project_setting = godot::ProjectSettings::get_singleton();
 
     const std::map<std::vector<godot::String>, SettingProperty> default_settings = {
-        { // Store Sprite Frames to be used for AnimatedSprite Nodes
+        { // Creatures on Battlefield
             {
-                "darrylbd99/creature_capture_system/sprite_frames/front",
-                "darrylbd99/creature_capture_system/sprite_frames/back",
-                "darrylbd99/creature_capture_system/sprite_frames/front_alternate",
-                "darrylbd99/creature_capture_system/sprite_frames/back_alternate",
-                "darrylbd99/creature_capture_system/main/data_resource",
+                "darrylbd99/creature_capture_system/main/max_creatures_on_battlefield"
             }, SettingProperty{
-                Variant::STRING,
-                PropertyHint::PROPERTY_HINT_FILE,
-                "*.tres, *.res",
-                ""
+                Variant::INT,
+                PropertyHint::PROPERTY_HINT_RANGE,
+                "0," + godot::String::num_int64(MAX_RANDOM_8) + ",1",
+                2
+            }
+        },
+        { // Max Team Size
+            {
+                "darrylbd99/creature_capture_system/main/max_team_size"
+            }, SettingProperty{
+                Variant::INT,
+                PropertyHint::PROPERTY_HINT_RANGE,
+                "0," + godot::String::num_int64(MAX_RANDOM_8) + ",1",
+                6
             }
         },
         { // Default Battlefield
@@ -59,12 +65,26 @@ void DataManager::initialize_project_settings() {
         },
         { // Rarity Alternate Color Chance
             {
-                "darrylbd99/creature_capture_system/rarity/alternate_color)",
+                "darrylbd99/creature_capture_system/rarity/alternate_color",
             }, SettingProperty{
                 Variant::INT,
                 PropertyHint::PROPERTY_HINT_RANGE,
-                "0," + godot::String::num_int64(MAX_RANDOM) + ",1",
-                MAX_RANDOM / 8
+                "0," + godot::String::num_int64(MAX_RANDOM_16) + ",1",
+                MAX_RANDOM_16 / 8
+            }
+        },
+        { // Store Sprite Frames to be used for AnimatedSprite Nodes
+            {
+                "darrylbd99/creature_capture_system/sprite_frames/front",
+                "darrylbd99/creature_capture_system/sprite_frames/back",
+                "darrylbd99/creature_capture_system/sprite_frames/front_alternate",
+                "darrylbd99/creature_capture_system/sprite_frames/back_alternate",
+                "darrylbd99/creature_capture_system/main/data_resource",
+            }, SettingProperty{
+                Variant::STRING,
+                PropertyHint::PROPERTY_HINT_FILE,
+                "*.tres, *.res",
+                ""
             }
         },
     };
@@ -92,6 +112,8 @@ void DataManager::initialize_project_settings() {
 
 void DataManager::update_project_settings() {
     // Update static variables with current project setting values
+    s_max_creatures_on_battlefield = (uint8_t)project_setting->get_setting("darrylbd99/creature_capture_system/main/max_creatures_on_battlefield");
+    s_max_team_size = (uint8_t)project_setting->get_setting("darrylbd99/creature_capture_system/main/max_team_size");
     s_alternate_color_rarity = (uint16_t)project_setting->get_setting("darrylbd99/creature_capture_system/rarity/alternate_color");
 
     // Load SpriteFrames resources and store them in static variables

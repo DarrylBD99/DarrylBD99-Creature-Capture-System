@@ -41,7 +41,8 @@ void initialize(ModuleInitializationLevel p_level) {
 
     // Initialize project settings
     DataManager::initialize_project_settings();
-    // Check if in game
+
+    // Check if in game (not editor)
     if (!godot::Engine::get_singleton()->is_editor_hint()) {
         // Update Data
         DataManager::update_project_settings();
