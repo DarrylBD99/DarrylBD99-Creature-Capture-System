@@ -14,19 +14,18 @@
 using godot::Ref, godot::BattleTeam, godot::BattleCreature, std::vector;
 
 class BattleManager {
-    public:
-        BattleManager() = delete;
-        ~BattleManager() = delete;
-        static godot::BattleField* s_current_battlefield;
-
     private:
         struct BattleSide {
-            vector<Ref<BattleTeam>> teams = {};
-            vector<Ref<BattleCreature>> active_creatures = {};
+            vector<BattleTeam*> teams;
+            vector<BattleCreature*> active_creatures;
         };
-        
-        BattleSide m_ally;
-        BattleSide m_opponent;
+
+    public:
+        BattleManager() = delete;
+        static godot::BattleField* s_current_battlefield;
+        static BattleSide s_ally;
+        static BattleSide s_opp;
+
 };
 
 

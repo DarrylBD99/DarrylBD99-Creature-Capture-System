@@ -26,11 +26,11 @@ class DataManager {
 
         static godot::Ref<godot::SpriteFrames> s_creature_sprite_frames;
         
-        static uint8_t* s_max_battle_teams;
-        static uint8_t* s_max_team_size;
-        static uint16_t* s_alternate_color_rarity;
+        static uint8_t s_max_battle_teams;
+        static uint8_t s_max_team_size;
+        static uint16_t s_alternate_color_rarity;
 
-        static godot::String* s_default_battlefield_path;
+        static godot::String s_default_battlefield_path;
 };
 
 #endif // DATA_MANAGER_HPP
