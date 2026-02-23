@@ -75,10 +75,8 @@ void DataManager::initialize_project_settings() {
         },
         { // Store Sprite Frames to be used for AnimatedSprite Nodes
             {
-                "darrylbd99/creature_capture_system/sprite_frames/front",
-                "darrylbd99/creature_capture_system/sprite_frames/back",
-                "darrylbd99/creature_capture_system/sprite_frames/front_alternate",
-                "darrylbd99/creature_capture_system/sprite_frames/back_alternate",
+                "darrylbd99/creature_capture_system/sprite_frames/base",
+                "darrylbd99/creature_capture_system/sprite_frames/alternate",
                 "darrylbd99/creature_capture_system/main/data_resource",
             }, SettingProperty{
                 Variant::STRING,
@@ -117,11 +115,8 @@ void DataManager::update_project_settings() {
     s_alternate_color_rarity = (uint16_t)project_setting->get_setting("darrylbd99/creature_capture_system/rarity/alternate_color");
 
     // Load SpriteFrames resources and store them in static variables
-    if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/front"))
-        s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/front"), "SpriteFrames");
-
-    if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/back"))
-        s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/back"), "SpriteFrames");
+    if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/base"))
+        s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/base"), "SpriteFrames");
 
     s_default_battlefield_path = (godot::String)project_setting->get_setting("darrylbd99/creature_capture_system/main/default_battlefield");
 }
