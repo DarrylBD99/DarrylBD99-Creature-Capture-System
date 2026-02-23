@@ -127,7 +127,7 @@ void DataManager::update_project_settings() {
     Ref<godot::PackedScene> default_battlefield = godot::ResourceLoader::get_singleton()->load(battlefield_path, "PackedScene");
 
     //UI
-    godot::String UI_path = project_setting->get_setting("darrylbd99/creature_capture_system/main/default_UI");
+    godot::String UI_path = project_setting->get_setting("darrylbd99/creature_capture_system/main/default_healthbar_UI");
     Ref<godot::PackedScene> default_UI = godot::ResourceLoader::get_singleton()->load(UI_path, "PackedScene");
 
     if (default_battlefield.is_null())

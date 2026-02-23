@@ -79,11 +79,11 @@ godot::Error BattleInit::InitializeBattleField() {
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_battlefield);
 
     BattleManager::s_current_healthbarUI = (godot::HealthBar*)default_healthbar_UI->instantiate();
-    UserInterface::m_allys_container = nullptr;
+    godot::UserInterface::m_allys_container->add_child(BattleManager::s_current_healthbarUI);
+    godot::UtilityFunctions::print(BattleManager::s_current_healthbarUI);
+    BattleManager::s_current_healthbarUI->InitHealthbar("OINEROI",123,75);
 
-
-    
-    DataManager::s_battle_singleton->add_child(BattleManager::s_current_healthbarUI);
+    //DataManager::s_battle_singleton->add_child(BattleManager::s_current_healthbarUI);
     
     return godot::Error::OK;
 }

@@ -11,7 +11,7 @@ HealthBar::HealthBar() {
 HealthBar::~HealthBar() {
 }
 
-void HealthBar::InitHealthbar(String &name,int level,int health){
+void HealthBar::InitHealthbar(const String &name,int level,int health){
     SetCreatureName(name);
     SetCreatureLevel(level);
     SetCreatureHealth(health);

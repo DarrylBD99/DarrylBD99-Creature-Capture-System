@@ -25,7 +25,7 @@ namespace godot {
             virtual ~HealthBar();
             void _init();
         
-        void InitHealthbar(String &name,int level,int health);
+        void InitHealthbar(const String &name, int level,int health);
 
         //node
         void SetCreatureNameNode(Label *node);

@@ -13,8 +13,7 @@ namespace godot {
         GDCLASS(UserInterface, CanvasLayer);
 
         private:
-            static VBoxContainer *m_opponents_container;
-            static VBoxContainer *m_allys_container;
+
 
         protected:
             static void _bind_methods();
@@ -23,13 +22,16 @@ namespace godot {
             UserInterface();
             virtual ~UserInterface();
             void _init();
-        
-        //node
-        void SetOpponentsContainer(VBoxContainer *node);
-        VBoxContainer *GetOpponentsContainer() const;
 
-        void SetAllysContainer(VBoxContainer *node);
-        VBoxContainer *GetAllysContainer() const;
+            static VBoxContainer *m_opponents_container;
+            static VBoxContainer *m_allys_container;
+        
+            //node
+            void SetOpponentsContainer(VBoxContainer *node);
+            VBoxContainer *GetOpponentsContainer() const;
+
+            void SetAllysContainer(VBoxContainer *node);
+            VBoxContainer *GetAllysContainer() const;
 
     };
 };

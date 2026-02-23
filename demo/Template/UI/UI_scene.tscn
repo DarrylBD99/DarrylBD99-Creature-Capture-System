@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqpvv2auaelcj"]
-
-[ext_resource type="PackedScene" uid="uid://dmgxefr804qyq" path="res://Template/UI/healthbar ui.tscn" id="1_ccu88"]
+[gd_scene format=3 uid="uid://bqpvv2auaelcj"]
 
 [node name="CanvasGroup" type="UserInterface" node_paths=PackedStringArray("opponents_container", "allys_container")]
 opponents_container = NodePath("Enemy heath")
@@ -12,13 +10,7 @@ anchor_left = 0.75
 anchor_right = 0.98
 offset_right = -0.00012207031
 
-[node name="Control" parent="Enemy heath" instance=ExtResource("1_ccu88")]
-layout_mode = 2
-
 [node name="allys health" type="VBoxContainer" parent="."]
 anchors_preset = -1
 anchor_right = 0.25
 anchor_bottom = 0.125
-
-[node name="Control" parent="allys health" instance=ExtResource("1_ccu88")]
-layout_mode = 2
