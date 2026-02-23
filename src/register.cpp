@@ -3,6 +3,7 @@
 #include <Nodes/CreatureSprite3D.hpp>
 #include <Nodes/BattleField.hpp>
 #include <Nodes/HealthBar.hpp>
+#include <Nodes/UserInterface.hpp>
 
 #include <Resources/BattleTeam.hpp>
 #include <Resources/StaticData/Species.hpp>
@@ -28,6 +29,7 @@ void initialize(ModuleInitializationLevel p_level) {
     // Nodes
     GDREGISTER_CLASS(godot::CreatureSprite3D);
     GDREGISTER_CLASS(godot::BattleField);
+    GDREGISTER_CLASS(godot::UserInterface)
     GDREGISTER_CLASS(godot::HealthBar)
     
     // Static Data Resources

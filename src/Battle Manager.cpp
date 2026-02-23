@@ -4,4 +4,4 @@
 
 // Initialize static member
 godot::BattleField* BattleManager::s_current_battlefield = nullptr;
-godot::Node* BattleManager::s_current_UI = nullptr;
+godot::HealthBar* BattleManager::s_current_healthbarUI = nullptr;

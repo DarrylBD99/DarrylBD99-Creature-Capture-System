@@ -24,7 +24,10 @@ namespace godot {
             HealthBar();
             virtual ~HealthBar();
             void _init();
+        
+        void InitHealthbar(String &name,int level,int health);
 
+        //node
         void SetCreatureNameNode(Label *node);
         Label *GetCreatureNameNode() const;
 
@@ -33,6 +36,11 @@ namespace godot {
 
         void SetCreatureHealthbarNode(ProgressBar *node);
         ProgressBar *GetCreatureHealthbarNode() const;
+
+        //values
+        void SetCreatureName(const String &name);
+        void SetCreatureLevel(int level);
+        void SetCreatureHealth(int health);
 
     };
 };

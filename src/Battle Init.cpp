@@ -2,6 +2,7 @@
 
 #include "Battle Manager.hpp"
 #include "Data Manager.hpp"
+#include "Nodes/UserInterface.hpp"
 
 #include <nodes/CreatureSprite3D.hpp>
 
@@ -61,14 +62,14 @@ godot::Error BattleInit::InitializeBattleField() {
     
     // Load Default Battlefield Scene
     Ref<godot::PackedScene> default_battlefield = godot::ResourceLoader::get_singleton()->load(*DataManager::s_default_battlefield_path, "PackedScene");
-    Ref<godot::PackedScene> default_UI = godot::ResourceLoader::get_singleton()->load(*DataManager::s_default_UI_path, "PackedScene");
+    Ref<godot::PackedScene> default_healthbar_UI = godot::ResourceLoader::get_singleton()->load(*DataManager::s_default_healthbar_UI, "PackedScene");
 
     if (default_battlefield.is_null()) {
         godot::UtilityFunctions::push_error("Failed to load default battlefield scene.");
         return godot::Error::ERR_CANT_CREATE;
     }
-    if (default_UI.is_null()) {
-    godot::UtilityFunctions::push_error("Failed to load default UI scene.");
+    if (default_healthbar_UI.is_null()) {
+    godot::UtilityFunctions::push_error("Failed to load default healthbar UI scene.");
     return godot::Error::ERR_CANT_CREATE;
     }
     
@@ -77,8 +78,12 @@ godot::Error BattleInit::InitializeBattleField() {
     BattleManager::s_current_battlefield = (godot::BattleField*)default_battlefield->instantiate();
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_battlefield);
 
-    BattleManager::s_current_UI = (godot::Node*)default_UI->instantiate();
-    DataManager::s_battle_singleton->add_child(BattleManager::s_current_UI);
+    BattleManager::s_current_healthbarUI = (godot::HealthBar*)default_healthbar_UI->instantiate();
+    UserInterface::m_allys_container = nullptr;
+
+
+    
+    DataManager::s_battle_singleton->add_child(BattleManager::s_current_healthbarUI);
     
     return godot::Error::OK;
 }
@@ -91,6 +96,7 @@ void BattleInit::InitCreatures(godot::StringName species,bool opponent){
     godot::CreatureSprite3D* creature_sprite = memnew(godot::CreatureSprite3D());
     creature_sprite->SetSpeciesId(species);
     creature_sprite->SetSprite(opponent);
+    
 
     BattleManager::s_current_battlefield->AddSprites(creature_sprite,opponent);
 

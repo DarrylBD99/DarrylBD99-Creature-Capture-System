@@ -10,6 +10,7 @@
 #include <Resources/BattleCreature.hpp>
 
 #include <Nodes/BattleField.hpp>
+#include <Nodes/HealthBar.hpp>
 
 using godot::Ref, godot::BattleTeam, godot::BattleCreature, std::vector;
 
@@ -18,7 +19,7 @@ class BattleManager {
         BattleManager() = delete;
         ~BattleManager() = delete;
         static godot::BattleField* s_current_battlefield;
-        static godot::Node* s_current_UI;
+        static godot::HealthBar* s_current_healthbarUI;
 
     private:
         struct BattleSide {

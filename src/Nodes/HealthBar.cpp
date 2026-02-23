@@ -11,6 +11,12 @@ HealthBar::HealthBar() {
 HealthBar::~HealthBar() {
 }
 
+void HealthBar::InitHealthbar(String &name,int level,int health){
+    SetCreatureName(name);
+    SetCreatureLevel(level);
+    SetCreatureHealth(health);
+}
+
 void HealthBar::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("set_creature_name_node", "node"),
@@ -47,23 +53,35 @@ void HealthBar::_bind_methods() {
 void HealthBar::SetCreatureNameNode(Label *node) {
     m_creature_name = node;
 }
-
 Label *HealthBar::GetCreatureNameNode() const {
     return m_creature_name;
 }
-
 void HealthBar::SetCreatureLevelNode(Label *node) {
     m_creature_level = node;
 }
-
 Label *HealthBar::GetCreatureLevelNode() const {
     return m_creature_level;
 }
-
 void HealthBar::SetCreatureHealthbarNode(ProgressBar *node) {
     m_creature_healthbar = node;
 }
-
 ProgressBar *HealthBar::GetCreatureHealthbarNode() const {
     return m_creature_healthbar;
+}
+
+
+
+void HealthBar::SetCreatureName(const String &name) {
+    if (m_creature_name)
+        m_creature_name->set_text(name);
+}
+
+void HealthBar::SetCreatureLevel(int level) {
+    if (m_creature_level)
+        m_creature_level->set_text("Lv. " + String::num_int64(level));
+}
+
+void HealthBar::SetCreatureHealth(int health) {
+    if (m_creature_healthbar)
+        m_creature_healthbar->set_value(health);
 }

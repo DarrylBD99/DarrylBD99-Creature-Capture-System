@@ -17,7 +17,7 @@ uint8_t* DataManager::s_max_team_size = nullptr;
 
 godot::ProjectSettings* DataManager::project_setting = nullptr;
 godot::String* DataManager::s_default_battlefield_path = nullptr;
-godot::String* DataManager::s_default_UI_path = nullptr;
+godot::String* DataManager::s_default_healthbar_UI = nullptr;
 godot::Node* DataManager::s_battle_singleton = nullptr;
 godot::Ref<godot::SpriteFrames> DataManager::s_creature_sprite_frames = nullptr;
 
@@ -63,14 +63,14 @@ void DataManager::initialize_project_settings() {
                 "res://Template/BattleField.scn"
             }
         },
-                { // Default ui
+                { // Default healthbar ui
             {
-                "darrylbd99/creature_capture_system/main/default_UI"
+                "darrylbd99/creature_capture_system/main/default_healthbar_UI"
             }, SettingProperty{
                 Variant::STRING,
                 PropertyHint::PROPERTY_HINT_FILE,
                 "*.tscn, *.scn",
-                ""
+                "res://Template/UI/healthbar ui.tscn"
             }
         },
         { // Rarity Alternate Color Chance
@@ -140,7 +140,7 @@ void DataManager::update_project_settings() {
     
 
     if (default_UI.is_null()){
-        default_UI = godot::ResourceLoader::get_singleton()->load("res://Template/UI_scene.tscn", "PackedScene");
+        default_UI = godot::ResourceLoader::get_singleton()->load("res://Template/UI/healthbar ui.tscn", "PackedScene");
     }
     if (default_UI.is_null()) {
         godot::print_error("Failed to load default ui");
@@ -148,7 +148,7 @@ void DataManager::update_project_settings() {
     }
 
     s_default_battlefield_path = new godot::String(battlefield_path);
-    s_default_UI_path = new godot::String(UI_path);
+    s_default_healthbar_UI = new godot::String(UI_path);
 }
 
 void DataManager::free_data() {
