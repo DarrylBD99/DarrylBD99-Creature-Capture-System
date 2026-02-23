@@ -1,25 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqpvv2auaelcj"]
+[gd_scene load_steps=2 format=3 uid="uid://bqpvv2auaelcj"]
 
 [ext_resource type="PackedScene" uid="uid://dmgxefr804qyq" path="res://healthbar ui.tscn" id="1_owikt"]
-[ext_resource type="PackedScene" uid="uid://cw4fosareu7ds" path="res://lowerthingy UI.tscn" id="2_8vxym"]
 
 [node name="Node" type="Node"]
 
 [node name="CanvasGroup" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="CanvasGroup" instance=ExtResource("1_owikt")]
+[node name="Enemy heath" type="VBoxContainer" parent="CanvasGroup"]
 anchors_preset = -1
-anchor_left = 0.086
-anchor_top = 0.173
-anchor_right = 0.368
-anchor_bottom = 0.28
+anchor_left = 0.75
+anchor_right = 0.98
+offset_right = -0.00012207031
 
-[node name="Control2" parent="CanvasGroup" instance=ExtResource("1_owikt")]
+[node name="Control" parent="CanvasGroup/Enemy heath" instance=ExtResource("1_owikt")]
+layout_mode = 2
+
+[node name="allys health" type="VBoxContainer" parent="CanvasGroup"]
 anchors_preset = -1
-anchor_left = 0.566
-anchor_top = 0.043
-anchor_right = 0.868
-anchor_bottom = 0.256
-metadata/_edit_use_anchors_ = true
+anchor_right = 0.25
+anchor_bottom = 0.125
+offset_right = -13.0
+offset_bottom = 122.0
 
-[node name="Control3" parent="CanvasGroup" instance=ExtResource("2_8vxym")]
+[node name="Control" parent="CanvasGroup/allys health" instance=ExtResource("1_owikt")]
+layout_mode = 2
