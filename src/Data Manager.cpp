@@ -12,7 +12,6 @@
 
 // Static member definitions
 godot::ProjectSettings* DataManager::project_setting = nullptr;
-godot::String* DataManager::s_default_battlefield_path = nullptr;
 godot::String* DataManager::s_userinterface = nullptr;
 godot::Node* DataManager::s_battle_singleton = nullptr;
 godot::Ref<godot::SpriteFrames> DataManager::s_creature_sprite_frames = nullptr;
