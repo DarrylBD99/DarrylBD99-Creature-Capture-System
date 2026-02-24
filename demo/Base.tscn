@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://butfvjgmmpy0i"]
+
+[sub_resource type="GDScript" id="GDScript_65yaf"]
+script/source = "extends Node
+
+func _ready() -> void:
+	CCS_Battle.initialize_battle_singleton()
+	CCS_Battle.wild_battle(&\"Bloom\", 5)
+	pass
+"
+
+[node name="Node" type="Node"]
+script = SubResource("GDScript_65yaf")
