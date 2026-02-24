@@ -11,22 +11,23 @@
 #include <godot_cpp/classes/sprite_frames.hpp>
 
 // Static member definitions
-uint16_t* DataManager::s_alternate_color_rarity = nullptr;
-uint8_t* DataManager::s_max_battle_teams = nullptr;
-uint8_t* DataManager::s_max_team_size = nullptr;
-
 godot::ProjectSettings* DataManager::project_setting = nullptr;
 godot::String* DataManager::s_default_battlefield_path = nullptr;
 godot::String* DataManager::s_userinterface = nullptr;
 godot::Node* DataManager::s_battle_singleton = nullptr;
 godot::Ref<godot::SpriteFrames> DataManager::s_creature_sprite_frames = nullptr;
 
-using godot::Variant, godot::PropertyHint, godot::PropertyUsageFlags, godot::String;
+godot::String* DataManager::s_default_battlefield_path = nullptr;
+uint16_t DataManager::s_alternate_color_rarity = 0;
+uint8_t DataManager::s_max_team_size = 0;
+uint8_t DataManager::s_max_creatures_on_battlefield = 0;
+
+using godot::Variant, godot::PropertyHint, godot::PropertyUsageFlags;
 
 struct SettingProperty {
     Variant::Type type;
     PropertyHint hint;
-    String hint_string;
+    godot::String hint_string;
     Variant default_value;
     
 
@@ -38,19 +39,25 @@ struct SettingProperty {
 void DataManager::initialize_project_settings() {
     project_setting = godot::ProjectSettings::get_singleton();
 
-    const std::map<std::vector<String>, SettingProperty> default_settings = {
-        { // Store Sprite Frames to be used for AnimatedSprite Nodes
+    const std::map<std::vector<godot::String>, SettingProperty> default_settings = {
+        { // Creatures on Battlefield
             {
-                "darrylbd99/creature_capture_system/sprite_frames/front",
-                "darrylbd99/creature_capture_system/sprite_frames/back",
-                "darrylbd99/creature_capture_system/sprite_frames/front_alternate",
-                "darrylbd99/creature_capture_system/sprite_frames/back_alternate",
-                "darrylbd99/creature_capture_system/main/data_resource",
+                "darrylbd99/creature_capture_system/main/max_creatures_on_battlefield"
             }, SettingProperty{
-                Variant::STRING,
-                PropertyHint::PROPERTY_HINT_FILE,
-                "*.tres, *.res",
-                ""
+                Variant::INT,
+                PropertyHint::PROPERTY_HINT_RANGE,
+                "0," + godot::String::num_int64(MAX_RANDOM_8) + ",1",
+                2
+            }
+        },
+        { // Max Team Size
+            {
+                "darrylbd99/creature_capture_system/main/max_team_size"
+            }, SettingProperty{
+                Variant::INT,
+                PropertyHint::PROPERTY_HINT_RANGE,
+                "0," + godot::String::num_int64(MAX_RANDOM_8) + ",1",
+                6
             }
         },
         { // Default Battlefield
@@ -75,18 +82,30 @@ void DataManager::initialize_project_settings() {
         },
         { // Rarity Alternate Color Chance
             {
-                "darrylbd99/creature_capture_system/rarity/alternate_color)",
+                "darrylbd99/creature_capture_system/rarity/alternate_color",
             }, SettingProperty{
                 Variant::INT,
                 PropertyHint::PROPERTY_HINT_RANGE,
-                "0," + String::num_int64(MAX_RANDOM) + ",1",
-                MAX_RANDOM / 8
+                "0," + godot::String::num_int64(MAX_RANDOM_16) + ",1",
+                MAX_RANDOM_16 / 8
+            }
+        },
+        { // Store Sprite Frames to be used for AnimatedSprite Nodes
+            {
+                "darrylbd99/creature_capture_system/sprite_frames/base",
+                "darrylbd99/creature_capture_system/sprite_frames/alternate",
+                "darrylbd99/creature_capture_system/main/data_resource",
+            }, SettingProperty{
+                Variant::STRING,
+                PropertyHint::PROPERTY_HINT_FILE,
+                "*.tres, *.res",
+                ""
             }
         },
     };
 
     for (const auto&[names, setting] : default_settings) {
-        for (const String& name : names) {
+        for (const godot::String& name : names) {
             // Set up setting property info
             godot::Dictionary properties = godot::Dictionary();
             properties["name"] = name;
@@ -108,21 +127,14 @@ void DataManager::initialize_project_settings() {
 
 void DataManager::update_project_settings() {
     // Update static variables with current project setting values
-    godot::Variant s_alternate_color_rarity_variant = project_setting->get_setting("darrylbd99/creature_capture_system/rarity/alternate_color");
-    uint16_t s_alternate_color_rarity_value = static_cast<uint16_t>(s_alternate_color_rarity_variant);
-    s_alternate_color_rarity = new uint16_t(s_alternate_color_rarity_value);
+    s_max_creatures_on_battlefield = (uint8_t)project_setting->get_setting("darrylbd99/creature_capture_system/main/max_creatures_on_battlefield");
+    s_max_team_size = (uint8_t)project_setting->get_setting("darrylbd99/creature_capture_system/main/max_team_size");
+    s_alternate_color_rarity = (uint16_t)project_setting->get_setting("darrylbd99/creature_capture_system/rarity/alternate_color");
 
     // Load SpriteFrames resources and store them in static variables
+    if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/base"))
+        s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/base"), "SpriteFrames");
 
-    if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/front")) {
-        s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/front"), "SpriteFrames");
-    }
-
-    if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/back")) {
-        s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/back"), "SpriteFrames");
-    }
-    
-    // Load default battlefield as PackedScene and store it in BattleManager
     godot::String battlefield_path = project_setting->get_setting("darrylbd99/creature_capture_system/main/default_battlefield");
     Ref<godot::PackedScene> default_battlefield = godot::ResourceLoader::get_singleton()->load(battlefield_path, "PackedScene");
 

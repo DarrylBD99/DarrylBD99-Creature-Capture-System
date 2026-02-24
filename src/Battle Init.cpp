@@ -57,7 +57,7 @@ godot::Error BattleInit::InitializeBattleField() {
     }
 
     // Check if Default Battlefield is initialized
-    if (DataManager::s_default_battlefield_path == nullptr) {
+    if (DataManager::s_default_battlefield_path == nullptr || DataManager::s_default_battlefield_path->is_empty()) {
         godot::UtilityFunctions::push_error("Default Battlefield not initialized. Please initialize the default battlefield before starting a battle.");
         return godot::Error::ERR_CANT_CREATE;
     }

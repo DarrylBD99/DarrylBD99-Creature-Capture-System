@@ -25,8 +25,6 @@ void CCS_Battle::initialize_battle_singleton() {
  * This node is used to store the current battle state and is automatically added to the scene tree.
  * This function should be called before starting a battle.
  */
-
-
     DataManager::s_battle_singleton = memnew(godot::Node);
     DataManager::s_battle_singleton->set_name("CCS_Singleton");
     
