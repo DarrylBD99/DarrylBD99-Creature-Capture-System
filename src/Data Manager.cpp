@@ -15,7 +15,7 @@ godot::ProjectSettings* DataManager::project_setting = nullptr;
 godot::Node* DataManager::s_battle_singleton = nullptr;
 godot::Ref<godot::SpriteFrames> DataManager::s_creature_sprite_frames = nullptr;
 
-godot::String DataManager::s_default_battlefield_path = "";
+godot::String* DataManager::s_default_battlefield_path = nullptr;
 uint16_t DataManager::s_alternate_color_rarity = 0;
 uint8_t DataManager::s_max_team_size = 0;
 uint8_t DataManager::s_max_creatures_on_battlefield = 0;
@@ -123,7 +123,8 @@ void DataManager::update_project_settings() {
     if (project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/base"))
         s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/base"), "SpriteFrames");
 
-    s_default_battlefield_path = (godot::String)project_setting->get_setting("darrylbd99/creature_capture_system/main/default_battlefield");
+    godot::String battlefield_path = project_setting->get_setting("darrylbd99/creature_capture_system/main/default_battlefield");
+    s_default_battlefield_path = new godot::String(battlefield_path);
 }
 
 void DataManager::free_data() {

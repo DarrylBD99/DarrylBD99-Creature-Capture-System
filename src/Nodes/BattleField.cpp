@@ -62,11 +62,15 @@ void BattleField::AddSprites(CreatureSprite3D* sprite,bool opponent) {
 void BattleField::AdjustSprite(CreatureSprite3D* sprite){
     //should probably have checks
     Ref<SpriteFrames> frames = sprite->get_sprite_frames();
+    if (frames.is_null()) {
+        godot::UtilityFunctions::push_error("SpriteFrames resource is null. Cannot adjust sprite.");
+        return;
+    }
+
     StringName anim = sprite->get_animation();
     int frame = sprite->get_frame();
     
     Ref<Texture2D> tex = frames->get_frame_texture(anim, frame);
     float h = tex->get_height();
     sprite->set_offset(Vector2(0, h * 0.5f));
-    // sprite->set_billboard_mode(BaseMaterial3D::BILLBOARD_ENABLED);
 }

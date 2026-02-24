@@ -53,13 +53,13 @@ godot::Error BattleInit::InitializeBattleField() {
     }
 
     // Check if Default Battlefield is initialized
-    if (DataManager::s_default_battlefield_path.is_empty()) {
+    if (DataManager::s_default_battlefield_path == nullptr || DataManager::s_default_battlefield_path->is_empty()) {
         godot::UtilityFunctions::push_error("Default Battlefield not initialized. Please initialize the default battlefield before starting a battle.");
         return godot::Error::ERR_CANT_CREATE;
     }
     
     // Load Default Battlefield Scene
-    Ref<godot::PackedScene> default_battlefield = godot::ResourceLoader::get_singleton()->load(DataManager::s_default_battlefield_path, "PackedScene");
+    Ref<godot::PackedScene> default_battlefield = godot::ResourceLoader::get_singleton()->load(*DataManager::s_default_battlefield_path, "PackedScene");
 
     if (default_battlefield.is_null()) {
         godot::UtilityFunctions::push_error("Failed to load default battlefield scene.");
