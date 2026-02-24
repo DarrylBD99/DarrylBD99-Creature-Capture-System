@@ -11,6 +11,7 @@ using namespace godot;
 
 VBoxContainer *UserInterface::m_opponents_container = nullptr;
 VBoxContainer *UserInterface::m_allys_container = nullptr;
+Ref<PackedScene> UserInterface::m_healthbar_scene;
 UserInterface* UserInterface::s_instance = nullptr;
 
 UserInterface::UserInterface() {
@@ -35,6 +36,12 @@ void UserInterface::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_allys_container"),
         &UserInterface::GetAllysContainer);
 
+    ClassDB::bind_method(D_METHOD("set_healthbar_scene", "scene"),
+                     &UserInterface::SetHealthbarScene);
+
+    ClassDB::bind_method(D_METHOD("get_healthbar_scene"),
+                     &UserInterface::GetHealthbarScene);
+
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "opponents_container",
         PROPERTY_HINT_NODE_TYPE, "VBoxContainer"),
         "set_opponents_container",
@@ -44,6 +51,13 @@ void UserInterface::_bind_methods() {
         PROPERTY_HINT_NODE_TYPE, "VBoxContainer"),
         "set_allys_container",
         "get_allys_container");
+
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT,
+                          "healthbar_scene",
+                          PROPERTY_HINT_RESOURCE_TYPE,
+                          "PackedScene"),
+             "set_healthbar_scene",
+             "get_healthbar_scene");
 }
 
 void UserInterface::_init() {
@@ -65,6 +79,13 @@ VBoxContainer *UserInterface::GetAllysContainer() const {
 UserInterface* UserInterface::GetInstance() {
     return s_instance;
 }
+void UserInterface::SetHealthbarScene(Ref<PackedScene> healthbar) {
+    m_healthbar_scene = healthbar;
+}
+
+Ref<PackedScene> UserInterface::GetHealthbarScene() const {
+    return m_healthbar_scene;
+}
 
 void UserInterface::InitHealthbar(const String &name,int level,int health,bool opponent){
 
@@ -73,15 +94,15 @@ void UserInterface::InitHealthbar(const String &name,int level,int health,bool o
     //return godot::Error::ERR_CANT_CREATE;
     //}
 
-    Ref<godot::PackedScene> default_healthbar_UI = godot::ResourceLoader::get_singleton()->load(*DataManager::s_default_healthbar_UI, "PackedScene");
 
-    BattleManager::s_current_healthbarUI = (godot::HealthBar*)default_healthbar_UI->instantiate();
-    if (opponent){godot::UserInterface::m_opponents_container->add_child(BattleManager::s_current_healthbarUI);}
-    else{godot::UserInterface::m_allys_container->add_child(BattleManager::s_current_healthbarUI);}
+    HealthBar* healthbar = Object::cast_to<HealthBar>(m_healthbar_scene->instantiate());
 
-    BattleManager::s_current_healthbarUI->SetCreatureName(name);
-    BattleManager::s_current_healthbarUI->SetCreatureLevel(level);
-    BattleManager::s_current_healthbarUI->SetCreatureHealth(health);
+    if (opponent){godot::UserInterface::m_opponents_container->add_child(healthbar);}
+    else{godot::UserInterface::m_allys_container->add_child(healthbar);}
+
+    healthbar->SetCreatureName(name);
+    healthbar->SetCreatureLevel(level);
+    healthbar->SetCreatureHealth(health);
 }
 
 

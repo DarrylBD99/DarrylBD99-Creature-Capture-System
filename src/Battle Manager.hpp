@@ -20,7 +20,7 @@ class BattleManager {
         BattleManager() = delete;
         ~BattleManager() = delete;
         static godot::BattleField* s_current_battlefield;
-        static godot::HealthBar* s_current_healthbarUI;
+        static godot::UserInterface* s_current_userinterface;
 
     private:
         struct BattleSide {

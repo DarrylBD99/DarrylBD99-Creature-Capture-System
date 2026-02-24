@@ -29,10 +29,12 @@ void BattleInit::WildBattle(godot::StringName species, uint8_t level) {
         return;
     }
 
+    InitUserInterface();
+
     // Set Wild Battle Species and Level (add in later)   
 
     InitCreatures(species,level,true);
-    InitCreatures(species,10,false); //temp in place of a player's creature
+    InitCreatures(species,10,false); ////temp in place of a player's creature
 
 }
 
@@ -86,11 +88,19 @@ void BattleInit::InitCreatures(godot::StringName species,int level,bool opponent
     creature_sprite->SetSpeciesId(species);
     creature_sprite->SetSprite(opponent);
 
-    if (opponent){godot::UserInterface::GetInstance()->InitHealthbar(species,level,33,false);}
-    else {godot::UserInterface::GetInstance()->InitHealthbar(species,level,75,true);}
-    
+    godot::UserInterface::GetInstance()->InitHealthbar(species,level,33,opponent);
 
     BattleManager::s_current_battlefield->AddSprites(creature_sprite,opponent);
+
+}
+
+void BattleInit::InitUserInterface(){
+
+    Ref<godot::PackedScene> default_userinterface = godot::ResourceLoader::get_singleton()->load(*DataManager::s_userinterface, "PackedScene");
+
+    BattleManager::s_current_userinterface = (godot::UserInterface*)default_userinterface->instantiate();
+
+    DataManager::s_battle_singleton->add_child(BattleManager::s_current_userinterface);
 
 }
 

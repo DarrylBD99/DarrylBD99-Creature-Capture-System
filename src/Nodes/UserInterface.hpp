@@ -4,6 +4,8 @@
 //#include <godot_cpp/classes/control.hpp>
 #include <godot_cpp/classes/canvas_layer.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/classes/ref.hpp>
 
 #include "HealthBar.hpp"
@@ -31,6 +33,8 @@ namespace godot {
 
             static VBoxContainer *m_opponents_container;
             static VBoxContainer *m_allys_container;
+
+            static Ref<PackedScene> m_healthbar_scene;
         
             //node
             void SetOpponentsContainer(VBoxContainer *node);
@@ -38,6 +42,10 @@ namespace godot {
 
             void SetAllysContainer(VBoxContainer *node);
             VBoxContainer *GetAllysContainer() const;
+
+            void SetHealthbarScene(Ref<PackedScene> healthbar);
+            Ref<PackedScene> GetHealthbarScene() const;
+            
             
 
             //healthbar
