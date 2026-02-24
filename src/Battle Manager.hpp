@@ -10,6 +10,7 @@
 #include <Resources/BattleCreature.hpp>
 
 #include <Nodes/BattleField.hpp>
+#include <Nodes/UserInterface.hpp>
 #include <Nodes/HealthBar.hpp>
 
 using godot::Ref, godot::BattleTeam, godot::BattleCreature, std::vector;

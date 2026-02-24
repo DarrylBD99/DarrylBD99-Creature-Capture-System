@@ -14,6 +14,9 @@ namespace godot {
 
         private:
 
+            static UserInterface* s_instance;
+            
+
 
         protected:
             static void _bind_methods();
@@ -22,6 +25,9 @@ namespace godot {
             UserInterface();
             virtual ~UserInterface();
             void _init();
+            void _ready() override;
+
+            static UserInterface* GetInstance();
 
             static VBoxContainer *m_opponents_container;
             static VBoxContainer *m_allys_container;
@@ -32,6 +38,11 @@ namespace godot {
 
             void SetAllysContainer(VBoxContainer *node);
             VBoxContainer *GetAllysContainer() const;
+            
+
+            //healthbar
+
+            void InitHealthbar(const String &name, int level,int health,bool ally);
 
     };
 };

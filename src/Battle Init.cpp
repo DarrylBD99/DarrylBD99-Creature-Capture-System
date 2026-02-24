@@ -31,8 +31,8 @@ void BattleInit::WildBattle(godot::StringName species, uint8_t level) {
 
     // Set Wild Battle Species and Level (add in later)   
 
-    InitCreatures(species,true);
-    InitCreatures(species,false); //temp in place of a player's creature
+    InitCreatures(species,level,true);
+    InitCreatures(species,10,false); //temp in place of a player's creature
 
 }
 
@@ -62,15 +62,10 @@ godot::Error BattleInit::InitializeBattleField() {
     
     // Load Default Battlefield Scene
     Ref<godot::PackedScene> default_battlefield = godot::ResourceLoader::get_singleton()->load(*DataManager::s_default_battlefield_path, "PackedScene");
-    Ref<godot::PackedScene> default_healthbar_UI = godot::ResourceLoader::get_singleton()->load(*DataManager::s_default_healthbar_UI, "PackedScene");
 
     if (default_battlefield.is_null()) {
         godot::UtilityFunctions::push_error("Failed to load default battlefield scene.");
         return godot::Error::ERR_CANT_CREATE;
-    }
-    if (default_healthbar_UI.is_null()) {
-    godot::UtilityFunctions::push_error("Failed to load default healthbar UI scene.");
-    return godot::Error::ERR_CANT_CREATE;
     }
     
 
@@ -78,24 +73,21 @@ godot::Error BattleInit::InitializeBattleField() {
     BattleManager::s_current_battlefield = (godot::BattleField*)default_battlefield->instantiate();
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_battlefield);
 
-    BattleManager::s_current_healthbarUI = (godot::HealthBar*)default_healthbar_UI->instantiate();
-    godot::UserInterface::m_allys_container->add_child(BattleManager::s_current_healthbarUI);
-    godot::UtilityFunctions::print(BattleManager::s_current_healthbarUI);
-    BattleManager::s_current_healthbarUI->InitHealthbar("OINEROI",123,75);
-
-    //DataManager::s_battle_singleton->add_child(BattleManager::s_current_healthbarUI);
     
     return godot::Error::OK;
 }
 
 
-void BattleInit::InitCreatures(godot::StringName species,bool opponent){
+void BattleInit::InitCreatures(godot::StringName species,int level,bool opponent){
     // will init all creatures here later
 
     // Create Battle Creature sprite
     godot::CreatureSprite3D* creature_sprite = memnew(godot::CreatureSprite3D());
     creature_sprite->SetSpeciesId(species);
     creature_sprite->SetSprite(opponent);
+
+    if (opponent){godot::UserInterface::GetInstance()->InitHealthbar(species,level,33,false);}
+    else {godot::UserInterface::GetInstance()->InitHealthbar(species,level,75,true);}
     
 
     BattleManager::s_current_battlefield->AddSprites(creature_sprite,opponent);
