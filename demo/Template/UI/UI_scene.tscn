@@ -1,6 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqpvv2auaelcj"]
+[gd_scene load_steps=4 format=3 uid="uid://bqpvv2auaelcj"]
 
 [ext_resource type="PackedScene" uid="uid://dmgxefr804qyq" path="res://Template/UI/healthbar ui.tscn" id="1_ccu88"]
+[ext_resource type="FontFile" uid="uid://b1g2ghfcejbdg" path="res://Template/other/ark-pixel-16px-monospaced-latin.woff2" id="2_x04xn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rl7e8"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.63529414, 0.6509804, 0.67058825, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.8175212, 0.81752133, 0.8175211, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.5882353)
+shadow_size = 1
+shadow_offset = Vector2(0, 5)
 
 [node name="CanvasGroup" type="UserInterface" node_paths=PackedStringArray("opponents_container", "allys_container")]
 opponents_container = NodePath("Enemy heath")
@@ -17,3 +39,45 @@ offset_right = -0.00012207031
 anchors_preset = -1
 anchor_right = 0.25
 anchor_bottom = 0.125
+
+[node name="Control" type="HealthBar" parent="." node_paths=PackedStringArray("creature_name_node")]
+creature_name_node = NodePath("Panel/NameLabel")
+custom_minimum_size = Vector2(275, 65)
+anchors_preset = -1
+anchor_right = 0.312
+anchor_bottom = 0.123
+offset_right = -84.42401
+offset_bottom = -14.704002
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.99100006
+anchor_bottom = 2.634
+offset_left = -83.5
+offset_top = 479.0
+offset_right = 473.47498
+offset_bottom = 446.28998
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rl7e8")
+
+[node name="NameLabel" type="Label" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.028
+anchor_top = 0.26000002
+anchor_right = 0.67200005
+anchor_bottom = 0.65400004
+offset_left = -5.6920013
+offset_top = -19.010002
+offset_right = -5.6920166
+offset_bottom = 11.30497
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("2_x04xn")
+theme_override_font_sizes/font_size = 40
+text = "What should Bloom do?"

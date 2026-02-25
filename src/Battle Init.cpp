@@ -96,7 +96,17 @@ void BattleInit::InitCreatures(godot::StringName species,int level,bool opponent
 
 void BattleInit::InitUserInterface(){
 
+    if (DataManager::s_userinterface == nullptr || DataManager::s_userinterface->is_empty()) {
+        godot::UtilityFunctions::push_error("UserInterface path not set");
+        return;
+    }
+
     Ref<godot::PackedScene> default_userinterface = godot::ResourceLoader::get_singleton()->load(*DataManager::s_userinterface, "PackedScene");
+
+    if (default_userinterface.is_null()) {
+        godot::UtilityFunctions::push_error("Failed to load UI scene");
+        return;
+    }
 
     BattleManager::s_current_userinterface = (godot::UserInterface*)default_userinterface->instantiate();
 

@@ -89,13 +89,29 @@ Ref<PackedScene> UserInterface::GetHealthbarScene() const {
 
 void UserInterface::InitHealthbar(const String &name,int level,int health,bool opponent){
 
-    //if (default_healthbar_UI.is_null()) {
-    //godot::UtilityFunctions::push_error("Failed to load default healthbar UI scene.");
-    //return godot::Error::ERR_CANT_CREATE;
-    //}
+    
+    if (m_healthbar_scene.is_null()) {
+        UtilityFunctions::push_error("HealthBar scene not set");
+        return;
+    }
+    
+    Node* instance = m_healthbar_scene->instantiate();
+    if (!instance) {
+        UtilityFunctions::push_error("Failed to instantiate HealthBar scene");
+        return;
+    }
 
+    HealthBar* healthbar = Object::cast_to<HealthBar>(instance);
+    if (!healthbar) {
+        UtilityFunctions::push_error("HealthBar scene's root does not inherit from HealthBar class");
+        return;
+    }
 
-    HealthBar* healthbar = Object::cast_to<HealthBar>(m_healthbar_scene->instantiate());
+    if (!m_allys_container || !m_opponents_container){
+        UtilityFunctions::push_error("containers were not set");
+        memdelete(healthbar);
+        return;
+    }
 
     if (opponent){godot::UserInterface::m_opponents_container->add_child(healthbar);}
     else{godot::UserInterface::m_allys_container->add_child(healthbar);}
