@@ -4,6 +4,7 @@
 #include <Nodes/BattleField.hpp>
 #include <Nodes/HealthBar.hpp>
 #include <Nodes/UserInterface.hpp>
+#include <Nodes/DialogueBox.hpp>
 
 #include <Resources/BattleTeam.hpp>
 #include <Resources/StaticData/Species.hpp>
@@ -31,6 +32,7 @@ void initialize(ModuleInitializationLevel p_level) {
     GDREGISTER_CLASS(godot::BattleField);
     GDREGISTER_CLASS(godot::UserInterface)
     GDREGISTER_CLASS(godot::HealthBar)
+    GDREGISTER_CLASS(godot::DialogueBox)
     
     // Static Data Resources
     GDREGISTER_CLASS(godot::SpeciesResource);

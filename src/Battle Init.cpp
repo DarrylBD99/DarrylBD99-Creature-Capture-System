@@ -3,6 +3,7 @@
 #include "Battle Manager.hpp"
 #include "Data Manager.hpp"
 #include "Nodes/UserInterface.hpp"
+#include "Nodes/DialogueBox.hpp"
 
 #include <nodes/CreatureSprite3D.hpp>
 
@@ -96,6 +97,7 @@ void BattleInit::InitCreatures(godot::StringName species,int level,bool opponent
 
 void BattleInit::InitUserInterface(){
 
+
     if (DataManager::s_userinterface == nullptr || DataManager::s_userinterface->is_empty()) {
         godot::UtilityFunctions::push_error("UserInterface path not set");
         return;
@@ -112,5 +114,6 @@ void BattleInit::InitUserInterface(){
 
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_userinterface);
 
+    godot::UserInterface::GetInstance()->InitDialogueBox("pirngoinrignpewrogniewrgnoirewngoweprgnrewoignrewoipgnewroignweri;g");
 }
 
