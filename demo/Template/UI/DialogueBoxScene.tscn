@@ -24,7 +24,8 @@ shadow_size = 1
 shadow_offset = Vector2(0, 5)
 
 [node name="Control" type="DialogueBox" node_paths=PackedStringArray("dialouge_label_node")]
-dialouge_label_node = NodePath("Panel/LevelLabel")
+dialouge_label_node = NodePath("Panel/MarginContainer/LevelLabel")
+character_time = 0.04
 anchors_preset = -1
 anchor_right = 0.31300002
 anchor_bottom = 0.201
@@ -42,19 +43,28 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rl7e8")
 
-[node name="LevelLabel" type="Label" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -349.57602
-offset_bottom = -96.248
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="LevelLabel" type="Label" parent="Panel/MarginContainer"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("1_2736r")
 theme_override_font_sizes/font_size = 23
-text = "wrigjwreoigjweropgjowej"
+text = "[insert text here]"
 vertical_alignment = 3
+autowrap_mode = 3
+text_direction = 1

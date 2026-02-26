@@ -13,12 +13,14 @@ namespace godot {
 
         private:
             Label *m_dialogue_label = nullptr;
+            float m_char_time = 0.04f; //seconds per character
+            float m_dialogue_end_delay;
 
-            float m_char_time = 0.1f; //seconds per character
-            float m_counter = 0.0f;
-            int m_text_length = 0;
-            String m_full_text;
+            float counter = 0.0f;
+            int text_length = 0;
+            String full_text;
 
+            
         protected:
             static void _bind_methods();
         
@@ -30,6 +32,9 @@ namespace godot {
         //node
         void SetDialogueLabelNode(Label *node);
         Label *GetDialogueLabelNode() const;
+
+        void SetCharacterTime(float time);
+        float GetCharacterTime() const;
 
         void StartDialogue(const String &text);
         void _process(double delta) override;
