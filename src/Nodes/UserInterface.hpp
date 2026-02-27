@@ -17,10 +17,7 @@ namespace godot {
         GDCLASS(UserInterface, CanvasLayer);
 
         private:
-
             static UserInterface* s_instance;
-            
-
 
         protected:
             static void _bind_methods();
@@ -37,8 +34,8 @@ namespace godot {
             static VBoxContainer *m_allys_container;
             static HBoxContainer *m_dialogue_box_container;
 
-            static Ref<PackedScene> m_healthbar_scene;
-            static Ref<PackedScene> m_dialogue_box_scene;
+            static Ref<PackedScene> s_healthbar_scene;
+            static Ref<PackedScene> s_dialogue_box_scene;
         
             //node
             void SetOpponentsContainer(VBoxContainer *node);

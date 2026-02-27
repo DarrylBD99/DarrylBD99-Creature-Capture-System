@@ -12,8 +12,8 @@ using namespace godot;
 VBoxContainer *UserInterface::m_opponents_container = nullptr;
 VBoxContainer *UserInterface::m_allys_container = nullptr;
 HBoxContainer *UserInterface::m_dialogue_box_container = nullptr;
-Ref<PackedScene> UserInterface::m_healthbar_scene;
-Ref<PackedScene> UserInterface::m_dialogue_box_scene;
+Ref<PackedScene> UserInterface::s_healthbar_scene;
+Ref<PackedScene> UserInterface::s_dialogue_box_scene;
 
 UserInterface* UserInterface::s_instance = nullptr;
 
@@ -87,16 +87,16 @@ UserInterface* UserInterface::GetInstance() {
     return s_instance;
 }
 void UserInterface::SetHealthbarScene(Ref<PackedScene> healthbar) {
-    m_healthbar_scene = healthbar;
+    s_healthbar_scene = healthbar;
 }
 Ref<PackedScene> UserInterface::GetHealthbarScene() const {
-    return m_healthbar_scene;
+    return s_healthbar_scene;
 }
 void UserInterface::SetDialogueBoxScene(Ref<PackedScene> scene) {
-    m_dialogue_box_scene = scene;
+    s_dialogue_box_scene = scene;
 }
 Ref<PackedScene> UserInterface::GetDialogueBoxScene() const {
-    return m_dialogue_box_scene;
+    return s_dialogue_box_scene;
 }
 
 void UserInterface::InitHealthbar(const String &name,int level,int health,bool opponent){
@@ -105,11 +105,11 @@ void UserInterface::InitHealthbar(const String &name,int level,int health,bool o
 
 
     
-    if (m_healthbar_scene.is_null()) {
+    if (s_healthbar_scene.is_null()) {
         UtilityFunctions::push_error("HealthBar scene not set");
         return;}
     
-    Node* instance = m_healthbar_scene->instantiate();
+    Node* instance = s_healthbar_scene->instantiate();
     if (!instance) {
         UtilityFunctions::push_error("Failed to instantiate HealthBar scene");
         return;}
@@ -137,7 +137,7 @@ void UserInterface::InitHealthbar(const String &name,int level,int health,bool o
 void UserInterface::InitDialogueBox(const String &text){
     //if (!m_dialogue_box_scene)
 
-    Node* diabox_instance = m_dialogue_box_scene->instantiate();
+    Node* diabox_instance = s_dialogue_box_scene->instantiate();
     DialogueBox* dialoguebox = Object::cast_to<DialogueBox>(diabox_instance);
 
     godot::UserInterface::m_dialogue_box_container->add_child(dialoguebox);
