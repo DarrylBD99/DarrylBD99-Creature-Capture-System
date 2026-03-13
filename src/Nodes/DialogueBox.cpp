@@ -6,16 +6,18 @@
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/variant/callable.hpp>
 #include <godot_cpp/classes/scene_tree_timer.hpp>
+#include <godot_cpp/classes/input_event_key.hpp>
+#include <godot_cpp/classes/input_event_mouse_button.hpp>
 
 using namespace godot;
 
 DialogueBox::DialogueBox() {
     set_process(true);
+    set_process_unhandled_input(true);
 }
 
 DialogueBox::~DialogueBox() {
 }
-
 void DialogueBox::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("set_dialouge_label_node", "node"),
@@ -32,6 +34,8 @@ void DialogueBox::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("StartDialogue"),
         &DialogueBox::StartDialogue);
+    
+    ClassDB::bind_method(D_METHOD("AdvanceDialogue"), &DialogueBox::AdvanceDialogue);
 
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT,
         "dialouge_label_node",
@@ -61,86 +65,104 @@ float DialogueBox::GetCharacterTime() const {
     return m_char_time;
 }
 
+void DialogueBox::_unhandled_input(const Ref<InputEvent> &event) {
+
+    if (!dialogue_enabled){return;}
+    if (!event.is_valid()){return;}
+    if (!m_dialogue_label) {return;}
+
+    if (event->is_action_pressed("ui_accept")) {
+        
+        int current = m_dialogue_label->get_visible_characters();
+
+        if (current < text_length)
+            {m_dialogue_label->set_visible_characters(text_length);
+            if (!waiting_to_advance) {
+                waiting_to_advance = true; 
+                AdvanceDialogueStartDelay(dialogue_delay);
+            }
+        } 
+        else {AdvanceDialogue();}
+    }
+}
+
 void DialogueBox::AddTextToQueue(const String &text){
-    if (!m_dialogue_enabled){return;}
-    m_dialogue_queue.append(text);
-    UtilityFunctions::print(m_dialogue_queue);
+    if (!dialogue_enabled){return;}
 
-    int current = m_dialogue_label->get_visible_characters();
+    dialogue_queue.append(text);
+    UtilityFunctions::print(dialogue_queue);
 
-
-    current = 0; //TEMP
-
-    if (current == 0){
+    if (dialogue_queue.size() == 1){
         StartDialogue();
     }
 
 }
 
 void DialogueBox::StartDialogue(){
-    if (!m_dialogue_enabled){return;}
-
-    if (!m_dialogue_label)
-        return;
+    if (!dialogue_enabled){return;}
+    if (!m_dialogue_label){return;}
     
-    if (m_dialogue_queue.size() == 0){
+    if (dialogue_queue.size() == 0){
         return;
-        //DO SOMETHING HERE TO INDICATE THAT THE QUEUE IS FINISHED AND TO PROGRESS
+        //DO SOMETHING HERE TO INDICATE THAT THE QUEUE IS FINISHED AND TO PROGRESS (signal)
     }
     
-    String text = m_dialogue_queue[0];
+    String text = dialogue_queue[0];
     UtilityFunctions::print(text);
 
-    m_dialogue_label->set_text(m_dialogue_queue[0]);
+    m_dialogue_label->set_text(dialogue_queue[0]);
 
-    m_text_length = text.length();
-    m_counter = 0.0f;
+    text_length = text.length();
+    counter = 0.0f;
 
-    // reset before animation
+    // reset before animating
     m_dialogue_label->set_visible_characters(0);
     m_dialogue_label->set_visible_ratio(0.0);
 
 }
 
 void DialogueBox::_process(double delta) {
-    if (!m_dialogue_enabled){return;}
+    if (!dialogue_enabled){return;}
 
-    if (m_dialogue_queue.size() > 0){
+    if (dialogue_queue.size() > 0){
     }
 
     if (!m_dialogue_label)
         return;
-    if (m_text_length <= 0)
+    if (text_length <= 0)
         return;
 
     int current = m_dialogue_label->get_visible_characters();
 
     if (current < 0){current = 0;}
-    if (current >= m_text_length){return;}
+    if (current >= text_length){return;}
 
-    UtilityFunctions::print("delta:", delta);
+    counter += delta;
 
-    m_counter += delta;
-
-    while (m_counter >= m_char_time && current < m_text_length) {
+    while (counter >= m_char_time && current < text_length) {
         current++;
         m_dialogue_label->set_visible_characters(current);
-        m_counter -= m_char_time;
+        counter -= m_char_time;
     }
 
-    if (current >= m_text_length && !m_waiting_to_advance){
-        AdvanceDialogueStartDelay(m_dialogue_delay);
-        m_waiting_to_advance = true; //so it doesn't get called multiple times, althought TODO make sure this isn't fragile
+    if (current >= text_length && !waiting_to_advance){
+        waiting_to_advance = true; //so it doesn't get called multiple times, although TODO make sure this isn't fragile
+        AdvanceDialogueStartDelay(dialogue_delay);
+         
     }
 }
 
 void DialogueBox::AdvanceDialogueStartDelay(float delay){
-    auto timer = get_tree()->create_timer(delay);
+    if (timer.is_valid()){
+        timer->disconnect("timeout", Callable(this, "AdvanceDialogue"));
+        timer = Ref<SceneTreeTimer>();}
+     
+    timer = get_tree()->create_timer(delay);
     timer->connect("timeout", Callable(this, "AdvanceDialogue"));
 }
 void DialogueBox::AdvanceDialogue(){
-    m_waiting_to_advance = false;
-    if (m_dialogue_queue.size() > 0){m_dialogue_queue.remove_at(0);}
+    waiting_to_advance = false;
+    if (dialogue_queue.size() > 0){dialogue_queue.remove_at(0);}
     StartDialogue();
 }
 

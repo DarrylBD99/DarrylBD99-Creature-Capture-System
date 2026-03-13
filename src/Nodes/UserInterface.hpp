@@ -55,7 +55,7 @@ namespace godot {
 
 
             void InitHealthbar(const String &name, int level,int health,bool ally);
-            void InitDialogueBox(const String &text);
+            void InitDialogueBox();
 
     };
 };

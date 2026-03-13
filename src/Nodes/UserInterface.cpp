@@ -101,9 +101,6 @@ Ref<PackedScene> UserInterface::GetDialogueBoxScene() const {
 
 void UserInterface::InitHealthbar(const String &name,int level,int health,bool opponent){
 
-     //m_dialogue_box_scene->StartDialogue("[weoifbio2rnogin2reio;vniernvoin3rivnpeirniowernionewriogniornvoiewrnviewrnv;oiewrnvklewrnvoiewrnivnewrjvbweruov]");
-
-
     
     if (s_healthbar_scene.is_null()) {
         UtilityFunctions::push_error("HealthBar scene not set");
@@ -134,15 +131,29 @@ void UserInterface::InitHealthbar(const String &name,int level,int health,bool o
     healthbar->SetCreatureHealth(health);
 }
 
-void UserInterface::InitDialogueBox(const String &text){
-    //if (!m_dialogue_box_scene)
+void UserInterface::InitDialogueBox(){
+    if (!m_dialogue_box_container){return;}
+    if (!s_dialogue_box_scene.is_valid()){return;}
 
     Node* diabox_instance = s_dialogue_box_scene->instantiate();
     DialogueBox* dialoguebox = Object::cast_to<DialogueBox>(diabox_instance);
 
     godot::UserInterface::m_dialogue_box_container->add_child(dialoguebox);
 
-    dialoguebox->AddTextToQueue(text);
+
+    //temp test
+    dialoguebox->AddTextToQueue("Hello? Hello, hello?");
+    dialoguebox->AddTextToQueue("Uh, I wanted to record a message for you to help you get settled in on your first night.");
+    dialoguebox->AddTextToQueue("Um, I actually worked in that office before you. I'm finishing up my last week now, as a matter of fact.");
+    dialoguebox->AddTextToQueue("So, I know it can be a bit overwhelming, but I'm here to tell you there's nothing to worry about.");
+    dialoguebox->AddTextToQueue("The animatronic characters here do get a bit quirky at night, but do I blame them? No.");
+    dialoguebox->AddTextToQueue("If I were forced to sing those same stupid songs for twenty years and I never got a bath...");
+    dialoguebox->AddTextToQueue("I'd probably get a little angry at night too.");
+    dialoguebox->AddTextToQueue("Heh, hey, what are you, uh, still here? I should probably tell you about your first night.");
+    dialoguebox->AddTextToQueue("Uh, the main thing to remember is to keep an eye on the cameras.");
+    dialoguebox->AddTextToQueue("Uh, the animatronics do tend to wander a bit...");
+    dialoguebox->AddTextToQueue("Uh, I should also mention that, uh, the parts and service rooms are off-limits, okay?");
+    dialoguebox->AddTextToQueue("Well, good luck, and I'll talk to you tomorrow.");
 }
 
 
