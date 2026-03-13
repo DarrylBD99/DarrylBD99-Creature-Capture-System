@@ -24,17 +24,13 @@ void DialogueBox::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_dialouge_label_node"),
         &DialogueBox::GetDialogueLabelNode);
     
-<<<<<<< Updated upstream
     ClassDB::bind_method(D_METHOD("set_character_time", "time"),
         &DialogueBox::SetCharacterTime);
     
     ClassDB::bind_method(D_METHOD("get_character_time"),
         &DialogueBox::GetCharacterTime);
 
-    ClassDB::bind_method(D_METHOD("StartDialogue", "text"),
-=======
     ClassDB::bind_method(D_METHOD("StartDialogue"),
->>>>>>> Stashed changes
         &DialogueBox::StartDialogue);
 
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT,
@@ -57,7 +53,6 @@ Label *DialogueBox::GetDialogueLabelNode() const {
     return m_dialogue_label;
 }
 
-<<<<<<< Updated upstream
 void DialogueBox::SetCharacterTime(float time) {
     m_char_time = time;
 }
@@ -66,8 +61,6 @@ float DialogueBox::GetCharacterTime() const {
     return m_char_time;
 }
 
-void DialogueBox::StartDialogue(const String &text) {
-=======
 void DialogueBox::AddTextToQueue(const String &text){
     if (!m_dialogue_enabled){return;}
     m_dialogue_queue.append(text);
@@ -86,7 +79,6 @@ void DialogueBox::AddTextToQueue(const String &text){
 
 void DialogueBox::StartDialogue(){
     if (!m_dialogue_enabled){return;}
->>>>>>> Stashed changes
 
     if (!m_dialogue_label)
         return;
@@ -101,8 +93,8 @@ void DialogueBox::StartDialogue(){
 
     m_dialogue_label->set_text(m_dialogue_queue[0]);
 
-    text_length = text.length();
-    counter = 0.0f;
+    m_text_length = text.length();
+    m_counter = 0.0f;
 
     // reset before animation
     m_dialogue_label->set_visible_characters(0);
@@ -118,30 +110,22 @@ void DialogueBox::_process(double delta) {
 
     if (!m_dialogue_label)
         return;
-    if (text_length <= 0)
+    if (m_text_length <= 0)
         return;
 
     int current = m_dialogue_label->get_visible_characters();
 
-<<<<<<< Updated upstream
-    if (current < 0)
-        current = 0;
-    
-    if (current >= text_length)
-        return;
-=======
     if (current < 0){current = 0;}
     if (current >= m_text_length){return;}
 
     UtilityFunctions::print("delta:", delta);
->>>>>>> Stashed changes
 
-    counter += delta;
+    m_counter += delta;
 
-    while (counter >= m_char_time && current < text_length) {
+    while (m_counter >= m_char_time && current < m_text_length) {
         current++;
         m_dialogue_label->set_visible_characters(current);
-        counter -= m_char_time;
+        m_counter -= m_char_time;
     }
 
     if (current >= m_text_length && !m_waiting_to_advance){

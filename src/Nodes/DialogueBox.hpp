@@ -15,13 +15,6 @@ namespace godot {
             Label *m_dialogue_label = nullptr;
             float m_char_time = 0.04f; //seconds per character
             float m_dialogue_end_delay;
-
-<<<<<<< Updated upstream
-            float counter = 0.0f;
-            int text_length = 0;
-            String full_text;
-=======
-            float m_char_time = 0.1f; //seconds per character
             float m_counter = 0.0f; //visible characters
             int m_current_dialogue;
             int m_text_length = 0;
@@ -30,7 +23,6 @@ namespace godot {
             bool m_dialogue_enabled = true;
             Array m_dialogue_queue;
             String m_full_text;
->>>>>>> Stashed changes
 
             
         protected:
@@ -45,17 +37,13 @@ namespace godot {
         void SetDialogueLabelNode(Label *node);
         Label *GetDialogueLabelNode() const;
 
-<<<<<<< Updated upstream
         void SetCharacterTime(float time);
         float GetCharacterTime() const;
 
-        void StartDialogue(const String &text);
-=======
         void StartDialogue();
         void AdvanceDialogueStartDelay(float delay = 1.0f);
         void AdvanceDialogue();
         void AddTextToQueue(const String &text);
->>>>>>> Stashed changes
         void _process(double delta) override;
 
     };

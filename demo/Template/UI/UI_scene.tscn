@@ -1,6 +1,14 @@
-[gd_scene format=3 uid="uid://bqpvv2auaelcj"]
+[gd_scene load_steps=3 format=3 uid="uid://bqpvv2auaelcj"]
 
-[node name="CanvasGroup" type="UserInterface"]
+[ext_resource type="PackedScene" uid="uid://dmgxefr804qyq" path="res://Template/UI/healthbar ui.tscn" id="1_ccu88"]
+[ext_resource type="PackedScene" uid="uid://cuc04femhe2re" path="res://Template/UI/DialogueBoxScene.tscn" id="2_x04xn"]
+
+[node name="CanvasGroup" type="UserInterface" node_paths=PackedStringArray("opponents_container", "allys_container", "dialogue_box_container")]
+opponents_container = NodePath("Enemy heath")
+allys_container = NodePath("allys health")
+dialogue_box_container = NodePath("HboxContainer")
+healthbar_scene = ExtResource("1_ccu88")
+dialogue_box_scene = ExtResource("2_x04xn")
 
 [node name="Enemy heath" type="VBoxContainer" parent="."]
 anchors_preset = -1
