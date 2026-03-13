@@ -114,6 +114,6 @@ void BattleInit::InitUserInterface(){
 
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_userinterface);
 
-    godot::UserInterface::GetInstance()->InitDialogueBox("pirngoinrignpewrogniewrgnoirewngoweprgnrewoignrewoipgnewroignweri;g");
+    godot::UserInterface::GetInstance()->InitDialogueBox("According to all known laws of aviation, there is no way a bee should be able to fly.");
 }
 

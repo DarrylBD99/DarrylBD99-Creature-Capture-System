@@ -142,7 +142,7 @@ void UserInterface::InitDialogueBox(const String &text){
 
     godot::UserInterface::m_dialogue_box_container->add_child(dialoguebox);
 
-    dialoguebox->StartDialogue(text);
+    dialoguebox->AddTextToQueue(text);
 }
 
 

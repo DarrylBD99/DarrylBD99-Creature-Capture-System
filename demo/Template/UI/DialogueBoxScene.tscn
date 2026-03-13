@@ -45,6 +45,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_rl7e8")
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
+<<<<<<< Updated upstream
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -59,12 +60,22 @@ theme_override_constants/margin_bottom = 8
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 size_flags_vertical = 0
+=======
+offset_right = 531.0
+offset_bottom = 51.0
+size_flags_horizontal = 3
+>>>>>>> Stashed changes
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("1_2736r")
+<<<<<<< Updated upstream
 theme_override_font_sizes/font_size = 23
 text = "[insert text here]"
 vertical_alignment = 3
 autowrap_mode = 3
 text_direction = 1
+=======
+theme_override_font_sizes/font_size = 40
+autowrap_mode = 3
+>>>>>>> Stashed changes

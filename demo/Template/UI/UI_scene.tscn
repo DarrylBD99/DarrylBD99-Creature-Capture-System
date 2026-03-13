@@ -15,10 +15,9 @@ anchor_bottom = 0.125
 
 [node name="HboxContainer" type="HBoxContainer" parent="."]
 anchors_preset = -1
-anchor_left = 0.034
-anchor_top = 0.665
-anchor_right = 0.605
-anchor_bottom = 0.95100003
+anchor_top = 0.7
+anchor_right = 1.0
+anchor_bottom = 0.95
 offset_right = 0.039978027
 offset_bottom = -0.24804688
 grow_horizontal = 2
