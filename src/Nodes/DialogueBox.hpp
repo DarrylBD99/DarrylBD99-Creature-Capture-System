@@ -19,7 +19,7 @@ namespace godot {
             Label *m_dialogue_label = nullptr;
 
             float m_char_time = 0.04f; //seconds per character
-            
+
             float dialogue_end_delay;
             float counter = 0.0f; //visible characters
             int current_dialogue;
@@ -29,7 +29,9 @@ namespace godot {
             bool dialogue_enabled = true;
             Array dialogue_queue;
             String full_text;
-            Ref<SceneTreeTimer> timer;
+
+            float timer;
+            bool timer_enabled;
             
 
             
@@ -50,7 +52,7 @@ namespace godot {
         float GetCharacterTime() const;
 
         void StartDialogue();
-        void AdvanceDialogueStartDelay(float delay = 1.0f);
+        void AdvanceDialogueStartTimer(float delay = 1.0f,bool enabled = true);
         void AdvanceDialogue();
         void AddTextToQueue(const String &text);
         void _process(double delta) override;

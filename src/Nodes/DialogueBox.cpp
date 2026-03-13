@@ -77,9 +77,8 @@ void DialogueBox::_unhandled_input(const Ref<InputEvent> &event) {
 
         if (current < text_length)
             {m_dialogue_label->set_visible_characters(text_length);
-            if (!waiting_to_advance) {
-                waiting_to_advance = true; 
-                AdvanceDialogueStartDelay(dialogue_delay);
+            if (!timer_enabled) {
+                AdvanceDialogueStartTimer(dialogue_delay,true);
             }
         } 
         else {AdvanceDialogue();}
@@ -106,6 +105,8 @@ void DialogueBox::StartDialogue(){
         return;
         //DO SOMETHING HERE TO INDICATE THAT THE QUEUE IS FINISHED AND TO PROGRESS (signal)
     }
+
+    AdvanceDialogueStartTimer(dialogue_delay,false);
     
     String text = dialogue_queue[0];
     UtilityFunctions::print(text);
@@ -132,6 +133,15 @@ void DialogueBox::_process(double delta) {
     if (text_length <= 0)
         return;
 
+    if (timer_enabled){
+        if (timer <= 0){
+            AdvanceDialogue();
+            timer_enabled = false;}
+        else 
+            {timer -= delta;}
+    }
+
+
     int current = m_dialogue_label->get_visible_characters();
 
     if (current < 0){current = 0;}
@@ -145,23 +155,16 @@ void DialogueBox::_process(double delta) {
         counter -= m_char_time;
     }
 
-    if (current >= text_length && !waiting_to_advance){
-        waiting_to_advance = true; //so it doesn't get called multiple times, although TODO make sure this isn't fragile
-        AdvanceDialogueStartDelay(dialogue_delay);
-         
+    if (current >= text_length && !timer_enabled){
+        AdvanceDialogueStartTimer(dialogue_delay,true);
     }
 }
 
-void DialogueBox::AdvanceDialogueStartDelay(float delay){
-    if (timer.is_valid()){
-        timer->disconnect("timeout", Callable(this, "AdvanceDialogue"));
-        timer = Ref<SceneTreeTimer>();}
-     
-    timer = get_tree()->create_timer(delay);
-    timer->connect("timeout", Callable(this, "AdvanceDialogue"));
+void DialogueBox::AdvanceDialogueStartTimer(float delay,bool enabled){
+    timer = dialogue_delay;
+    timer_enabled = enabled;
 }
 void DialogueBox::AdvanceDialogue(){
-    waiting_to_advance = false;
     if (dialogue_queue.size() > 0){dialogue_queue.remove_at(0);}
     StartDialogue();
 }
