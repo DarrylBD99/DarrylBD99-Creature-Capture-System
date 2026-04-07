@@ -32,3 +32,66 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="ActionsContainer" type="GridContainer" parent="."]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -33.0
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+columns = 2
+
+[node name="fight" type="Button" parent="ActionsContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "FIGHT"
+
+[node name="creatures" type="Button" parent="ActionsContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "CREATUTRES
+"
+
+[node name="bag" type="Button" parent="ActionsContainer"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+text = "BAG
+"
+
+[node name="FLEE" type="Button" parent="ActionsContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "FLEE"
+
+[node name="bag" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 500)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="bag"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Close"
+
+[connection signal="pressed" from="ActionsContainer/fight" to="ActionsContainer" method="_on_fight_button_pressed"]
+[connection signal="pressed" from="ActionsContainer/creatures" to="ActionsContainer" method="_on_creatures_button_pressed"]
+[connection signal="pressed" from="ActionsContainer/bag" to="ActionsContainer" method="_on_bag_button_pressed"]
+[connection signal="pressed" from="ActionsContainer/FLEE" to="ActionsContainer" method="_on_flee_button_pressed"]
+[connection signal="pressed" from="bag/Button" to="ActionsContainer" method="_on_bag_close_button_pressed"]
