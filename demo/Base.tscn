@@ -4,6 +4,7 @@
 script/source = "extends Node
 
 func _ready() -> void:
+	CCS_Battle.update_project_settings()
 	CCS_Battle.initialize_battle_singleton()
 	CCS_Battle.wild_battle(&\"Bloom\", 5)
 	pass

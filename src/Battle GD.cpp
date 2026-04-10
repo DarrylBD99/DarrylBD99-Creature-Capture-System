@@ -17,6 +17,7 @@ void CCS_Battle::_bind_methods() {
     ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("initialize_battle_singleton"), &initialize_battle_singleton);
     ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("single_battle"), &BattleInit::SingleBattle);
     ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("wild_battle", "species", "level"), &BattleInit::WildBattle);
+    ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("update_project_settings"), &DataManager::update_project_settings);
 }
 
 void CCS_Battle::initialize_battle_singleton() {
