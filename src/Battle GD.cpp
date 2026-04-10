@@ -4,6 +4,7 @@
 
 #include <godot_cpp/core/class_db.hpp>
 
+#include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/window.hpp>
@@ -31,4 +32,8 @@ void CCS_Battle::initialize_battle_singleton() {
     
     godot::SceneTree *tree = godot::Object::cast_to<godot::SceneTree>(godot::Engine::get_singleton()->get_main_loop());
     tree->get_root()->call_deferred("add_child", DataManager::s_battle_singleton);
+}
+
+void CCS_Battle::main_battle_loop(){
+    
 }

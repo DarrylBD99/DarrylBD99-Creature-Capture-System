@@ -1,6 +1,7 @@
 #ifndef BATTLE_GD_HPP
 #define BATTLE_GD_HPP
 
+#include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/classes/ref_counted.hpp>
 
 namespace godot {
@@ -9,6 +10,7 @@ namespace godot {
         
         public:
             static void initialize_battle_singleton();
+            static void main_battle_loop();
 
         protected:
             static void _bind_methods();

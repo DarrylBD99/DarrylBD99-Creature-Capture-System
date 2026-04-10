@@ -1,14 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://butfvjgmmpy0i"]
+[gd_scene load_steps=6 format=3 uid="uid://butfvjgmmpy0i"]
+
+[ext_resource type="SpriteFrames" uid="uid://cbhigoniplqrl" path="res://Template/SpriteFrames/Base.tres" id="1_nfj5t"]
 
 [sub_resource type="GDScript" id="GDScript_65yaf"]
 script/source = "extends Node
 
+@export var thingy2 : BattleTeam
+
 func _ready() -> void:
 	CCS_Battle.update_project_settings()
 	CCS_Battle.initialize_battle_singleton()
-	CCS_Battle.wild_battle(&\"Bloom\", 5)
+	CCS_Battle.wild_battle(thingy2, 5)
 	pass
 "
 
+[sub_resource type="SpeciesResource" id="SpeciesResource_65yaf"]
+species_id = &"bloom"
+species_sprites = ExtResource("1_nfj5t")
+
+[sub_resource type="BattleCreature" id="BattleCreature_nfj5t"]
+species_resource = SubResource("SpeciesResource_65yaf")
+
+[sub_resource type="BattleTeam" id="BattleTeam_65yaf"]
+team_name = "bazinga"
+members = Array[BattleCreature]([SubResource("BattleCreature_nfj5t")])
+
 [node name="Node" type="Node"]
 script = SubResource("GDScript_65yaf")
+thingy2 = SubResource("BattleTeam_65yaf")

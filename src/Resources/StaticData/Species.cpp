@@ -8,6 +8,8 @@ void SpeciesResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_species_id", "id"), &SpeciesResource::SetSpeciesId);
     ClassDB::bind_method(D_METHOD("get_species_sound"), &SpeciesResource::GetSpeciesSound);
     ClassDB::bind_method(D_METHOD("set_species_sound", "stream"), &SpeciesResource::SetSpeciesSound);
+    ClassDB::bind_method(D_METHOD("get_species_sprites"), &SpeciesResource::GetSpeciesSprites);
+    ClassDB::bind_method(D_METHOD("set_species_sprites", "SpriteFrames"), &SpeciesResource::SetSpeciesSprites);
     //types
     //1
     ClassDB::bind_method(D_METHOD("get_species_type_1"), &SpeciesResource::GetSpeciesType1);
@@ -44,6 +46,7 @@ void SpeciesResource::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::INT, "stats/spdef", PROPERTY_HINT_RANGE, "0,255,1"),"set_species_spdef","get_species_spdef");
     ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "species_id"), "set_species_id", "get_species_id");
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "species_sound", PROPERTY_HINT_RESOURCE_TYPE, "AudioStream"), "set_species_sound", "get_species_sound");
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "species_sprites", PROPERTY_HINT_RESOURCE_TYPE, "SpriteFrames"), "set_species_sprites", "get_species_sprites");
 
 }
 
@@ -63,12 +66,20 @@ void SpeciesResource::SetSpeciesId(const StringName& id) {
     m_species_id = id;
 }
 
+void SpeciesResource::SetSpeciesSprites(const Ref<SpriteFrames> sprites){
+    m_species_sprites = sprites;
+}
+
 godot::Ref<godot::AudioStream> SpeciesResource::GetSpeciesSound() const {
     return m_species_sound;
 }
 
 void SpeciesResource::SetSpeciesSound(Ref<AudioStream> stream) {
     this->m_species_sound = stream;
+}
+
+godot::Ref<godot::SpriteFrames> SpeciesResource::GetSpeciesSprites() const {
+    return m_species_sprites;
 }
 
 //Types
@@ -89,48 +100,48 @@ void SpeciesResource::SetSpeciesType2(const StringName& type) {
 
 // HP
 int SpeciesResource::GetSpeciesHP() const {
-    return m_species_HP_iv;
+    return m_species_base_HP;
 }
 void SpeciesResource::SetSpeciesHP(int value) {
-    m_species_HP_iv = value;
+    m_species_base_HP = value;
 }
 
 // ATK
 int SpeciesResource::GetSpeciesATK() const {
-    return m_species_ATK_iv;
+    return m_species_base_ATK;
 }
 void SpeciesResource::SetSpeciesATK(int value) {
-    m_species_ATK_iv = value;
+    m_species_base_ATK = value;
 }
 
 // SPATK
 int SpeciesResource::GetSpeciesSPATK() const {
-    return m_species_SPATK_iv;
+    return m_species_base_SPATK;
 }
 void SpeciesResource::SetSpeciesSPATK(int value) {
-    m_species_SPATK_iv = value;
+    m_species_base_SPATK = value;
 }
 
 // SPEED
 int SpeciesResource::GetSpeciesSPEED() const {
-    return m_species_SPEED_iv;
+    return m_species_base_SPEED;
 }
 void SpeciesResource::SetSpeciesSPEED(int value) {
-    m_species_SPEED_iv = value;
+    m_species_base_SPEED = value;
 }
 
 // DEF
 int SpeciesResource::GetSpeciesDEF() const {
-    return m_species_DEF_iv;
+    return m_species_base_DEF;
 }
 void SpeciesResource::SetSpeciesDEF(int value) {
-    m_species_DEF_iv = value;
+    m_species_base_DEF = value;
 }
 
 // SPDEF
 int SpeciesResource::GetSpeciesSPDEF() const {
-    return m_species_SPDEF_iv;
+    return m_species_base_SPDEF;
 }
 void SpeciesResource::SetSpeciesSPDEF(int value) {
-    m_species_SPDEF_iv = value;
+    m_species_base_SPDEF = value;
 }

@@ -5,8 +5,12 @@
 #include "Nodes/UserInterface.hpp"
 #include "Nodes/DialogueBox.hpp"
 
-#include <nodes/CreatureSprite3D.hpp>
 
+#include <nodes/CreatureSprite3D.hpp>
+#include <Resources/BattleCreature.hpp>
+#include <Resources/BattleTeam.hpp>
+
+#include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
@@ -18,9 +22,9 @@
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/node.hpp>
 
-void BattleInit::WildBattle(godot::StringName species, uint8_t level) {
+void BattleInit::WildBattle(godot::Ref<godot::BattleTeam> battle_team, uint8_t level) {
     // Temporary until battle system is implemented
-    godot::UtilityFunctions::print("Wild Battle Initialized: " + species + " (Level. " + godot::String::num(level) + ")");
+    //godot::UtilityFunctions::print("Wild Battle Initialized: " + battle_team.get) + " (Level. " + godot::String::num(level) + ")");
 
     // Check if Species exist (add later)
     
@@ -31,11 +35,16 @@ void BattleInit::WildBattle(godot::StringName species, uint8_t level) {
     }
 
     InitUserInterface();
+    
+    if (battle_team->get_member_count() != 1){
+        return; //TEMPORARY
+    }
 
     // Set Wild Battle Species and Level (add in later)   
 
-    InitCreatures(species,level,true);
-    InitCreatures(species,10,false); ////temp in place of a player's creature
+    InitCreatures(battle_team->get_member(0),level,true);
+    
+    InitCreatures(battle_team->get_member(0),level,false); ////temp in place of a player's creature
 
 }
 
@@ -81,15 +90,18 @@ godot::Error BattleInit::InitializeBattleField() {
 }
 
 
-void BattleInit::InitCreatures(godot::StringName species,int level,bool opponent){
+void BattleInit::InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature,int level,bool opponent){
     // will init all creatures here later
-
     // Create Battle Creature sprite
+
+    BattleCreature->InitBattleCreature();
+
+
     godot::CreatureSprite3D* creature_sprite = memnew(godot::CreatureSprite3D());
-    creature_sprite->SetSpeciesId(species);
+    creature_sprite->SetSpeciesResource(BattleCreature->get_species_resource());
     creature_sprite->SetSprite(opponent);
 
-    godot::UserInterface::GetInstance()->InitHealthbar(species,level,33,opponent);
+    godot::UserInterface::GetInstance()->InitHealthbar(BattleCreature->get_creature_name(),level,33,opponent);
 
     BattleManager::s_current_battlefield->AddSprites(creature_sprite,opponent);
 

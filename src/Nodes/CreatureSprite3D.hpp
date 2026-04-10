@@ -16,8 +16,6 @@ namespace godot {
             virtual ~CreatureSprite3D();
             void _init();
 
-            StringName GetSpeciesId() const;
-            void SetSpeciesId(const StringName& id);
             Ref<SpeciesResource> GetSpeciesResource() const;
             void SetSpeciesResource(Ref<SpeciesResource> resource);
             void SetSprite(bool direction);

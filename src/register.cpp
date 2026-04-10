@@ -41,6 +41,7 @@ void initialize(ModuleInitializationLevel p_level) {
     
     // // Battle Resources
     GDREGISTER_CLASS(godot::BattleTeam);
+    GDREGISTER_CLASS(godot::BattleCreature);
     
     // Static Class
     GDREGISTER_CLASS(godot::CCS_Battle);

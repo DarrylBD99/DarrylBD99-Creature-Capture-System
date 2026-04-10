@@ -84,7 +84,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_xq4h8")
 }],
 "loop": true,
-"name": &"Bloom_Back",
+"name": &"Back",
 "speed": 10.0
 }, {
 "frames": [{
@@ -110,6 +110,6 @@ animations = [{
 "texture": SubResource("AtlasTexture_0f1vs")
 }],
 "loop": true,
-"name": &"Bloom_Front",
+"name": &"Front",
 "speed": 10.0
 }]

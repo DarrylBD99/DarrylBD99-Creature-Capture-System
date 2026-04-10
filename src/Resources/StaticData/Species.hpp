@@ -14,19 +14,19 @@ namespace godot {
         private:
             StringName m_species_id;
             Ref<AudioStream> m_species_sound;
-            Ref<SpriteFrames> m_species_sprite;
+            Ref<SpriteFrames> m_species_sprites;
 
 
             StringName m_species_type_1;
             StringName m_species_type_2;
 
 
-            int m_species_HP_iv = 0;
-            int m_species_ATK_iv = 0;
-            int m_species_SPATK_iv = 0;
-            int m_species_SPEED_iv = 0;
-            int m_species_DEF_iv = 0;
-            int m_species_SPDEF_iv = 0;
+            int m_species_base_HP = 100;
+            int m_species_base_ATK = 1;
+            int m_species_base_SPATK = 1;
+            int m_species_base_SPEED = 1;
+            int m_species_base_DEF = 1;
+            int m_species_base_SPDEF = 1;
 
 
 
@@ -40,8 +40,8 @@ namespace godot {
             void SetSpeciesId(const StringName& id);
             Ref<AudioStream> GetSpeciesSound() const;
             void SetSpeciesSound(Ref<AudioStream> stream);
-            Ref<SpriteFrames> GetSpeciesSprite() const;
-            void SetSpeciesSprite(const Ref<SpriteFrames>& sprite);
+            Ref<SpriteFrames> GetSpeciesSprites() const;
+            void SetSpeciesSprites(const Ref<SpriteFrames> sprites);
 
             StringName GetSpeciesType1() const;
             void SetSpeciesType1(const StringName& type);

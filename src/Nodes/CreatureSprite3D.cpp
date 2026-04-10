@@ -17,7 +17,7 @@ CreatureSprite3D::CreatureSprite3D() {
     add_child(m_audioPlayer);
 
     // Set sprite frames based on species resource
-    set_sprite_frames(DataManager::s_creature_sprite_frames);
+    //set_sprite_frames(DataManager::s_creature_sprite_frames);
 }
 
 CreatureSprite3D::~CreatureSprite3D() {
@@ -30,8 +30,6 @@ CreatureSprite3D::~CreatureSprite3D() {
 
 void CreatureSprite3D::_bind_methods() {
     // Binding methods to Godot
-    ClassDB::bind_method(D_METHOD("get_species_id"), &CreatureSprite3D::GetSpeciesId);
-    ClassDB::bind_method(D_METHOD("set_species_id", "id"), &CreatureSprite3D::SetSpeciesId);
     ClassDB::bind_method(D_METHOD("get_species_resource"), &CreatureSprite3D::GetSpeciesResource);
     ClassDB::bind_method(D_METHOD("set_species_resource", "resource"), &CreatureSprite3D::SetSpeciesResource);
 
@@ -39,14 +37,6 @@ void CreatureSprite3D::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "species_resource", PROPERTY_HINT_RESOURCE_TYPE, "SpeciesResource"), "set_species_resource", "get_species_resource");
 }
 
-godot::StringName CreatureSprite3D::GetSpeciesId() const {
-    return m_speciesId;
-}
-
-void CreatureSprite3D::SetSpeciesId(const StringName& id) {
-    m_speciesId = id;
-
-}
 
 godot::Ref<godot::SpeciesResource> CreatureSprite3D::GetSpeciesResource() const {
     return m_speciesResource;
@@ -57,11 +47,13 @@ void CreatureSprite3D::SetSpeciesResource(Ref<SpeciesResource> resource) {
 }
 
 void CreatureSprite3D::SetSprite(bool direction){
-    godot::String animation_name = m_speciesId;
 
+    set_sprite_frames(m_speciesResource->GetSpeciesSprites());
 
-    if (direction){animation_name += "_Front";}
-    else {animation_name += "_Back";}
-    set_autoplay(godot::StringName(animation_name)); // Assuming the animation name corresponds to the species ID
+    godot::String animation_name;
+
+    if (direction){animation_name = "Front";}
+    else {animation_name = "Back";}
+    set_autoplay(godot::StringName(animation_name)); // Assuming the animation name corresponds to the animation name
     //godot::UtilityFunctions::print(animation_name," sprite loaded");
 } 
