@@ -29,6 +29,12 @@ class BattleManager {
         static BattleSide s_ally;
         static BattleSide s_opp;
 
+        
+        static godot::Ref<godot::BattleTeam> m_player_team;
+
+        static void set_player_team(const godot::Ref<godot::BattleTeam> &team);
+        godot::Ref<godot::BattleTeam> get_player_team() const;
+
 };
 
 

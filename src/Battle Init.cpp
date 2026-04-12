@@ -5,10 +5,10 @@
 #include "Nodes/UserInterface.hpp"
 #include "Nodes/DialogueBox.hpp"
 
-
 #include <nodes/CreatureSprite3D.hpp>
 #include <Resources/BattleCreature.hpp>
 #include <Resources/BattleTeam.hpp>
+#include <Battle GD.hpp>
 
 #include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
@@ -22,7 +22,7 @@
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/node.hpp>
 
-void BattleInit::WildBattle(godot::Ref<godot::BattleTeam> battle_team, uint8_t level) {
+void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int format) {
     // Temporary until battle system is implemented
     //godot::UtilityFunctions::print("Wild Battle Initialized: " + battle_team.get) + " (Level. " + godot::String::num(level) + ")");
 
@@ -39,25 +39,24 @@ void BattleInit::WildBattle(godot::Ref<godot::BattleTeam> battle_team, uint8_t l
     if (battle_team->get_member_count() != 1){
         return; //TEMPORARY
     }
+    //CURRENTLY HARDCODED FOR 1V1 SINGLES
 
-    // Set Wild Battle Species and Level (add in later)   
+    //init player
 
-    InitCreatures(battle_team->get_member(0),level,true);
+    godot::Ref<godot::BattleCreature> player_creature = BattleManager::m_player_team->get_member(0);
+
+    InitCreatures(player_creature,player_creature->get_level(),false);
     
-    InitCreatures(battle_team->get_member(0),level,false); ////temp in place of a player's creature
+    //init opponent
+
+    godot::Ref<godot::BattleCreature> creature = battle_team->get_member(0);
+
+
+    InitCreatures(creature,creature->get_level(),true);
+    
 
 }
 
-void BattleInit::SingleBattle() {
-    // Temporary until battle system is implemented
-    godot::UtilityFunctions::print("Single Battle Initialized");
-
-    if (InitializeBattleField() != godot::Error::OK) {
-        godot::UtilityFunctions::push_error("Failed to initialize battle field for single battle.");
-        return;
-    }
-
-}
 
 godot::Error BattleInit::InitializeBattleField() {
     // Check if Battle Singleton is initialized
@@ -103,7 +102,8 @@ void BattleInit::InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature,
 
     godot::UserInterface::GetInstance()->InitHealthbar(BattleCreature->get_creature_name(),level,33,opponent);
 
-    BattleManager::s_current_battlefield->AddSprites(creature_sprite,opponent);
+    //BattleManager::s_current_battlefield->AddSprites(creature_sprite,opponent);
+    FIXFIXFIXFIXFIXFIXFIX REMEMBER THE THING
 
 }
 

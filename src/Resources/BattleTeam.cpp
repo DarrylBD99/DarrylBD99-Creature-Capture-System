@@ -19,7 +19,6 @@ void BattleTeam::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("set_members", "members"), &BattleTeam::set_members);
     ClassDB::bind_method(D_METHOD("get_members"), &BattleTeam::get_members);
-    //ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "members"), "set_members", "get_members");
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "members", PROPERTY_HINT_ARRAY_TYPE, "BattleCreature"),"set_members","get_members");
 
     ClassDB::bind_method(D_METHOD("add_member", "member"), &BattleTeam::add_member);

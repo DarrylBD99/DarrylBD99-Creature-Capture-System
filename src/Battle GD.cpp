@@ -1,6 +1,7 @@
 #include "Battle GD.hpp"
 #include "Battle Init.hpp"
 #include "Data Manager.hpp"
+#include "Battle Manager.hpp"
 
 #include <godot_cpp/core/class_db.hpp>
 
@@ -16,9 +17,9 @@ using godot::CCS_Battle;
 void CCS_Battle::_bind_methods() {
     // Binding methods to Godot
     ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("initialize_battle_singleton"), &initialize_battle_singleton);
-    ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("single_battle"), &BattleInit::SingleBattle);
-    ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("wild_battle", "species", "level"), &BattleInit::WildBattle);
+    ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("start_battle", "BattleTeam"), &BattleInit::start_battle);
     ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("update_project_settings"), &DataManager::update_project_settings);
+    ClassDB::bind_static_method("CCS_Battle", godot::D_METHOD("set_player_team","BattleTeam"), &BattleManager::set_player_team);
 }
 
 void CCS_Battle::initialize_battle_singleton() {
@@ -35,5 +36,4 @@ void CCS_Battle::initialize_battle_singleton() {
 }
 
 void CCS_Battle::main_battle_loop(){
-    
 }

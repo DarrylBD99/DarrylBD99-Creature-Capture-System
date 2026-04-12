@@ -1,7 +1,9 @@
 #include "BattleField.hpp"
-#include <godot_cpp/classes/texture2d.hpp>
+#include <godot_cpp/variant/array.hpp>
 
 using godot::BattleField;
+
+using namespace godot;
 
 BattleField::BattleField() {
     // Constructor code here
@@ -13,10 +15,18 @@ BattleField::~BattleField() {
 
 void BattleField::_bind_methods() {
     // Binding methods to Godot
-    ClassDB::bind_method(D_METHOD("get_player_pos"), &BattleField::GetPlayerPos);
-    ClassDB::bind_method(D_METHOD("set_player_pos", "pos"), &BattleField::SetPlayerPos);
-    ClassDB::bind_method(D_METHOD("get_opponent_pos"), &BattleField::GetOpponentPos);
-    ClassDB::bind_method(D_METHOD("set_opponent_pos", "pos"), &BattleField::SetOpponentPos);
+    ClassDB::bind_method(D_METHOD("set_player_pos", "pos"), &BattleField::set_player_pos);
+    ClassDB::bind_method(D_METHOD("get_player_pos"), &BattleField::get_player_pos);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "members", PROPERTY_HINT_ARRAY_TYPE, "Marker3d"),"set_player_pos","get_player_pos");
+    ClassDB::bind_method(D_METHOD("add_player_pos", "pos"), &BattleField::add_player_pos);
+    ClassDB::bind_method(D_METHOD("clear_player_pls"), &BattleField::clear_player_pos);
+
+    ClassDB::bind_method(D_METHOD("set_opponent_pos", "pos"), &BattleField::set_player_pos);
+    ClassDB::bind_method(D_METHOD("get_opponent_pos"), &BattleField::get_player_pos);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "members", PROPERTY_HINT_ARRAY_TYPE, "Marker3d"),"set_opponent_pos","get_opponent_pos");
+    ClassDB::bind_method(D_METHOD("add_opponent_pos", "pos"), &BattleField::add_player_pos);
+    ClassDB::bind_method(D_METHOD("clear_opponent_pls"), &BattleField::clear_player_pos);
+
 
     ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "player_pos"), "set_player_pos", "get_player_pos");
     ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "opponent_pos"), "set_opponent_pos", "get_opponent_pos");
@@ -26,52 +36,33 @@ void BattleField::_init() {
     // Initialization code here
 }
 
-godot::Vector3 BattleField::GetPlayerPos() const {
-    return m_player_pos;
-}
 
-void BattleField::SetPlayerPos(const godot::Vector3& pos) {
+//plyr
+void BattleField::set_player_pos(const Array &pos) {
     m_player_pos = pos;
 }
-
-godot::Vector3 BattleField::GetOpponentPos() const {
-    return m_opponent_pos;
+Array BattleField::get_player_pos() const {
+    return m_player_pos;
+}
+void BattleField::add_player_pos(const Marker3D *pos) {
+    m_player_pos.append(pos);
+}
+void BattleField::clear_player_pos() {
+    m_player_pos.clear();
 }
 
-void BattleField::SetOpponentPos(const godot::Vector3& pos) {
+//opp
+void BattleField::set_opponent_pos(const Array &pos) {
     m_opponent_pos = pos;
 }
-
-
-void BattleField::AddSprites(CreatureSprite3D* sprite,bool opponent) {
-    godot::UtilityFunctions::print("Adding opponent's sprite to battlefield.");
-    if (sprite == nullptr) {
-        godot::UtilityFunctions::push_error("Cannot add null opponent sprite to battlefield.");
-        return;
-    }
-    add_child(sprite);
-
-    if (opponent){sprite->set_position(m_opponent_pos);}
-    else{sprite->set_position(m_player_pos);}
-
-    AdjustSprite(sprite);
+Array BattleField::get_opponent_pos() const {
+    return m_opponent_pos;
+}
+void BattleField::add_opponent_pos(const Marker3D *pos) {
+    m_opponent_pos.append(pos);
+}
+void BattleField::clear_opponent_pos() {
+    m_opponent_pos.clear();
 }
 
 
-
-void BattleField::AdjustSprite(CreatureSprite3D* sprite){
-    //should probably have checks
-    Ref<SpriteFrames> frames = sprite->get_sprite_frames();
-    if (frames.is_null()) {
-        godot::UtilityFunctions::push_error("SpriteFrames resource is null. Cannot adjust sprite.");
-        return;
-    }
-    
-
-    StringName anim = sprite->get_animation();
-    int frame = sprite->get_frame();
-    
-    Ref<Texture2D> tex = frames->get_frame_texture(anim, frame);
-    float h = tex->get_height();
-    sprite->set_offset(Vector2(0, h * 0.5f));
-}
