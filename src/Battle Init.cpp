@@ -22,7 +22,7 @@
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/node.hpp>
 
-void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int format) {
+void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int player_format,int opponent_format) {
     // Temporary until battle system is implemented
     //godot::UtilityFunctions::print("Wild Battle Initialized: " + battle_team.get) + " (Level. " + godot::String::num(level) + ")");
 
@@ -41,19 +41,18 @@ void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int for
     }
     //CURRENTLY HARDCODED FOR 1V1 SINGLES
 
+
+    BattleManager::s_current_battlefield->initPositions();
+
     //init player
 
     godot::Ref<godot::BattleCreature> player_creature = BattleManager::m_player_team->get_member(0);
-
-    InitCreatures(player_creature,player_creature->get_level(),false);
+    InitCreatures(player_creature,player_format,false);
     
     //init opponent
 
     godot::Ref<godot::BattleCreature> creature = battle_team->get_member(0);
-
-
-    InitCreatures(creature,creature->get_level(),true);
-    
+    InitCreatures(creature,opponent_format,true);
 
 }
 
@@ -89,7 +88,7 @@ godot::Error BattleInit::InitializeBattleField() {
 }
 
 
-void BattleInit::InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature,int level,bool opponent){
+void BattleInit::InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature,int format,bool opponent){
     // will init all creatures here later
     // Create Battle Creature sprite
 
@@ -100,10 +99,9 @@ void BattleInit::InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature,
     creature_sprite->SetSpeciesResource(BattleCreature->get_species_resource());
     creature_sprite->SetSprite(opponent);
 
-    godot::UserInterface::GetInstance()->InitHealthbar(BattleCreature->get_creature_name(),level,33,opponent);
+    godot::UserInterface::GetInstance()->InitHealthbar(BattleCreature->get_creature_name(),BattleCreature->get_level(),33,opponent);
 
-    //BattleManager::s_current_battlefield->AddSprites(creature_sprite,opponent);
-    FIXFIXFIXFIXFIXFIXFIX REMEMBER THE THING
+    BattleManager::s_current_battlefield->AddSprites(creature_sprite,format,opponent);
 
 }
 

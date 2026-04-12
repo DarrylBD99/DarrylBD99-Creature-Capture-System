@@ -11,8 +11,8 @@ class BattleInit {
         static godot::Error InitializeBattleField();
     public:
         BattleInit() = delete;
-        static void start_battle(godot::Ref<godot::BattleTeam> BattleTeam, int format);
-        static void InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature, int level,bool opponent);
+        static void start_battle(godot::Ref<godot::BattleTeam> BattleTeam, int player_format,int opponent_format);
+        static void InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature, int format,bool opponent);
         static void InitUserInterface();
 };
 

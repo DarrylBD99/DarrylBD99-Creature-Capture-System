@@ -16,10 +16,12 @@ namespace godot {
 
         private:
             //Vector3 m_player_pos = Vector3();
-            TypedArray<Marker3D> m_player_pos;
+            TypedArray<Vector3> m_player_pos;
+            Dictionary m_player_side_occupancy;
 
             //Vector3 m_opponent_pos = Vector3();
-            TypedArray<Marker3D> m_opponent_pos;
+            TypedArray<Vector3> m_opponent_pos;
+            Dictionary m_opponent_side_occupancy;
 
         protected:
             static void _bind_methods();
@@ -29,18 +31,21 @@ namespace godot {
             virtual ~BattleField();
             void _init();
 
-            void set_player_pos(const Array &pos);
+            void set_player_pos(const TypedArray<Vector3> &pos_array);
             Array get_player_pos() const;
-            void add_player_pos(const Marker3D *pos);
+            void add_player_pos(const Vector3 &pos);
             void clear_player_pos();
 
-            void set_opponent_pos(const Array &pos);
+            void set_opponent_pos(const TypedArray<Vector3> &pos_array);
             Array get_opponent_pos() const;
-            void add_opponent_pos(const Marker3D *pos);
+            void add_opponent_pos(const Vector3 &pos);
             void clear_opponent_pos();
 
-            void AddSprites(CreatureSprite3D* sprite,bool opponent);
+            void initPositions();
+
+            void AddSprites(CreatureSprite3D* sprite,int format,bool opponent);
             void AdjustSprite(CreatureSprite3D* sprite);
+
     };
 };
 

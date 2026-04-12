@@ -5,6 +5,7 @@ var ui_open : bool
 @onready var bag : PanelContainer = %bag
 @onready var creatures: PanelContainer = %Creatures
 
+
 func _ready() -> void:
 	bag.hide()
 	creatures.hide()
