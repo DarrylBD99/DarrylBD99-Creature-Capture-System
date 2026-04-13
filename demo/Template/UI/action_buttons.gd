@@ -27,6 +27,9 @@ func _on_creatures_button_pressed() -> void:
 	if !ui_open:
 		ui_open = true
 		creatures.show()
+	elif creatures.visible:
+		ui_open = false
+		creatures.hide()
 func _on_creatures_close_button_pressed() -> void:
 	creatures.hide()
 	ui_open = false
@@ -36,6 +39,9 @@ func _on_bag_button_pressed() -> void:
 	if !ui_open:
 		ui_open = true
 		bag.show()
+	elif bag.visible:
+		ui_open = false
+		bag.hide()
 func _on_bag_close_button_pressed() -> void:
 	bag.hide()
 	ui_open = false
