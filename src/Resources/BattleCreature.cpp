@@ -5,6 +5,7 @@ using namespace godot;
 
 #include <godot_cpp/classes/ref.hpp>
 #include <Resources/StaticData/Species.hpp>
+#include <Resources/StaticData/Attacks.hpp>
 
 
 BattleCreature::BattleCreature() {
@@ -80,7 +81,7 @@ void BattleCreature::InitBattleCreature(){
 
 //remember the setters/getters for the names
 // Setters
-void BattleCreature::set_species_resource(const  Ref<SpeciesResource> resource) {
+void BattleCreature::set_species_resource(const Ref<SpeciesResource> resource) {
     m_species_resource = resource;
 }
 
@@ -88,6 +89,12 @@ void BattleCreature::set_species_resource(const  Ref<SpeciesResource> resource) 
 void BattleCreature::set_creature_name(const StringName &name){
     m_creature_name = name;
 }
+
+
+void BattleCreature::set_active(bool active) {
+    m_is_active = active;
+}
+
 
 
 void BattleCreature::set_level(int level) {
@@ -123,6 +130,10 @@ void BattleCreature::set_speed(int speed) {
 
 StringName BattleCreature::get_creature_name() const {
     return m_creature_name;
+}
+
+bool BattleCreature::get_active() const {
+    return m_is_active;
 }
 
 int BattleCreature::get_level() const {

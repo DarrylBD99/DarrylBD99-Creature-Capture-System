@@ -18,24 +18,26 @@ using godot::Ref, godot::BattleTeam, godot::BattleCreature, std::vector;
 class BattleManager {
     private:
         struct BattleSide {
-            vector<BattleTeam*> teams;
+            //vector<BattleTeam*> teams; ? -fevernova
             vector<BattleCreature*> active_creatures;
         };
+
 
     public:
         BattleManager() = delete;
         static godot::BattleField* s_current_battlefield;
         static godot::UserInterface* s_current_userinterface;
-        static BattleSide s_ally;
-        static BattleSide s_opp;
 
-        
+        static godot::Ref<godot::BattleTeam> m_opponent_team;
         static godot::Ref<godot::BattleTeam> m_player_team;
 
         static void set_player_team(const godot::Ref<godot::BattleTeam> &team);
         godot::Ref<godot::BattleTeam> get_player_team() const;
 
-};
+        static vector<godot::Ref<godot::BattleCreature>> m_active_creatures;
 
+        static void order_active_creatures_by_speed();
+
+};
 
 #endif // BATTLE_MANAGER_HPP

@@ -4,6 +4,7 @@
 #include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/classes/resource.hpp>
 #include <Resources/StaticData/Species.hpp>
+#include <Resources/StaticData/Attacks.hpp>
 
 namespace godot {
     class BattleCreature : public Resource {
@@ -12,8 +13,9 @@ namespace godot {
         private:
             // Add member variables here
             Ref<SpeciesResource> m_species_resource;
-
             StringName m_creature_name;
+
+            bool m_is_active = false;
 
             int m_level = 1;
             
@@ -23,6 +25,8 @@ namespace godot {
             int m_attack = 1;
             int m_defense = 1;
             int m_speed = 1;
+
+            TypedArray<AttackResource> m_attacks;
 
         protected:
             static void _bind_methods();
@@ -36,6 +40,7 @@ namespace godot {
         void set_species_resource(const Ref<SpeciesResource> resource);
         void set_creature_id(const StringName &id);
         void set_creature_name(const StringName &name);
+        void set_active(bool active);
         void set_level(int level);
         void set_max_hp(int max_hp);
         void set_current_hp(int current_hp);
@@ -47,6 +52,7 @@ namespace godot {
         Ref<SpeciesResource> get_species_resource() const;
         StringName get_creature_id() const;
         StringName get_creature_name() const;
+        bool get_active() const;
         int get_level() const;
         int get_max_hp() const;
         int get_current_hp() const;

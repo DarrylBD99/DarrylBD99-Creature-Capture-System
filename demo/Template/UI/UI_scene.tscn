@@ -72,6 +72,7 @@ text = "FLEE"
 
 [node name="bag" type="PanelContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(500, 500)
 anchors_preset = 8
 anchor_left = 0.5
@@ -94,6 +95,7 @@ text = "Close"
 
 [node name="Creatures" type="PanelContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(500, 500)
 anchors_preset = 8
 anchor_left = 0.5
@@ -114,9 +116,68 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 text = "Close"
 
+[node name="MovesContainer" type="GridContainer" parent="."]
+visible = false
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -304.0
+offset_top = -42.0
+offset_bottom = 42.0
+grow_horizontal = 0
+grow_vertical = 2
+columns = 2
+
+[node name="Move1" type="AttackButton" parent="MovesContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Move1
+"
+
+[node name="Move2" type="AttackButton" parent="MovesContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Move2
+"
+
+[node name="Move3" type="AttackButton" parent="MovesContainer"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+text = "Move2
+"
+
+[node name="Move4" type="AttackButton" parent="MovesContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Move3
+"
+
+[node name="Control" type="Control" parent="MovesContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Button" type="Button" parent="MovesContainer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.0
+offset_right = 75.0
+offset_bottom = 31.0
+grow_horizontal = 2
+text = "Back
+"
+
 [connection signal="pressed" from="ActionsContainer/fight" to="ActionsContainer" method="_on_fight_button_pressed"]
 [connection signal="pressed" from="ActionsContainer/creatures" to="ActionsContainer" method="_on_creatures_button_pressed"]
 [connection signal="pressed" from="ActionsContainer/bag" to="ActionsContainer" method="_on_bag_button_pressed"]
 [connection signal="pressed" from="ActionsContainer/FLEE" to="ActionsContainer" method="_on_flee_button_pressed"]
 [connection signal="pressed" from="bag/BagButton" to="ActionsContainer" method="_on_bag_close_button_pressed"]
 [connection signal="pressed" from="Creatures/CreaturesButton" to="ActionsContainer" method="_on_creatures_close_button_pressed"]
+[connection signal="pressed" from="MovesContainer/Move1" to="MovesContainer" method="_on_fight_button_pressed"]
+[connection signal="pressed" from="MovesContainer/Move2" to="MovesContainer" method="_on_creatures_button_pressed"]
+[connection signal="pressed" from="MovesContainer/Move3" to="MovesContainer" method="_on_bag_button_pressed"]
+[connection signal="pressed" from="MovesContainer/Move4" to="MovesContainer" method="_on_flee_button_pressed"]
+[connection signal="pressed" from="MovesContainer/Control/Button" to="ActionsContainer" method="_on_moves_back_button_pressed"]

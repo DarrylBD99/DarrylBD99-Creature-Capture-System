@@ -16,27 +16,16 @@ namespace godot {
             Ref<AudioStream> m_attack_sound;
             Ref<SpriteFrames> m_attack_animation;
 
-            int m_attack_power;
-            int m_attack_accuracy;
-            int m_attack_pp;
-            bool m_attack_contacts;
+            int m_attack_power = 0;
+            int m_attack_accuracy = 100;
+            int m_attack_pp = 10;
 
-            StringName m_attack_type;
-
-
-            /// TODO
-            ///insert chance of secondary effect (eg. burn,flinch)
-            ///insert other charastaristics (eg. sound move, ball move)
-            ///insert who it targets (1 or 2 opponent or ally ect.)
-            ///insert move description
-
+            /// TODO everything
 
         protected:
             static void _bind_methods();
             
         public:
-            enum m_category_enum { PHYSICAL, SPECIAL, STATUS };
-            m_category_enum m_attack_category; 
 
             AttackResource();
             virtual ~AttackResource();
@@ -47,9 +36,6 @@ namespace godot {
             Ref<SpriteFrames> GetAttackAnimation() const;
             void SetAttackAnimation(const Ref<SpriteFrames>& sprite);
 
-
-            StringName GetAttackType() const;
-            void SetAttackType(const StringName& type);
             /// Power
             int GetAttackPower() const;
             void SetAttackPower(int value);
@@ -59,18 +45,8 @@ namespace godot {
             /// PP
             int GetAttackPP() const;
             void SetAttackPP(int value);
-            /// Type
-            m_category_enum GetAttackCategory() const;
-            void SetAttackCategory(m_category_enum type);
-            /// Contact
-            bool GetAttackContacts() const;
-            void SetAttackContacts(bool value);
-
-
 
     };
 };
-
-VARIANT_ENUM_CAST(AttackResource::m_category_enum);
 
 #endif

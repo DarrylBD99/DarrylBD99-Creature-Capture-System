@@ -4,17 +4,23 @@ extends GridContainer
 var ui_open : bool
 @onready var bag : PanelContainer = %bag
 @onready var creatures: PanelContainer = %Creatures
+@onready var moves_container: GridContainer = $"../MovesContainer"
 
 
 func _ready() -> void:
 	bag.hide()
 	creatures.hide()
+	moves_container.hide()
 	ui_open = false
 
 
 func _on_fight_button_pressed() -> void:
-	## fight menu logic eg. tween or unhide the menu
-	pass
+	moves_container.show()
+	hide()
+func _on_moves_back_button_pressed() -> void:
+	moves_container.hide()
+	show()
+
 
 ## creatures
 func _on_creatures_button_pressed() -> void:

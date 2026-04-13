@@ -5,29 +5,30 @@
 [sub_resource type="GDScript" id="GDScript_65yaf"]
 script/source = "extends Node
 
-@export var thingy2 : BattleTeam
+@export var team : BattleTeam
 
 func _ready() -> void:
 	CCS_Battle.update_project_settings()
+	
 	CCS_Battle.initialize_battle_singleton()
 	
-	CCS_Battle.set_player_team(thingy2)
+	CCS_Battle.set_player_team(team)
 	
-	CCS_Battle.start_battle(thingy2,1)
-	pass
+	CCS_Battle.start_battle(team,1,1)
 "
 
-[sub_resource type="SpeciesResource" id="SpeciesResource_65yaf"]
+[sub_resource type="SpeciesResource" id="SpeciesResource_nfj5t"]
 species_id = &"bloom"
 species_sprites = ExtResource("1_nfj5t")
 
-[sub_resource type="BattleCreature" id="BattleCreature_nfj5t"]
-species_resource = SubResource("SpeciesResource_65yaf")
+[sub_resource type="BattleCreature" id="BattleCreature_b56jl"]
+species_resource = SubResource("SpeciesResource_nfj5t")
+level = 10
 
-[sub_resource type="BattleTeam" id="BattleTeam_65yaf"]
-team_name = "bazinga"
-members = Array[BattleCreature]([SubResource("BattleCreature_nfj5t")])
+[sub_resource type="BattleTeam" id="BattleTeam_i812h"]
+team_name = "team1 (doesn't matter)"
+members = Array[BattleCreature]([SubResource("BattleCreature_b56jl")])
 
 [node name="Node" type="Node"]
 script = SubResource("GDScript_65yaf")
-thingy2 = SubResource("BattleTeam_65yaf")
+team = SubResource("BattleTeam_i812h")

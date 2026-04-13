@@ -1,4 +1,4 @@
-#include "Attack.hpp"
+#include "Attacks.hpp"
 #include <Type.hpp>
 
 using godot::AttackResource;
@@ -12,10 +12,6 @@ void AttackResource::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_attack_animation"), &AttackResource::GetAttackAnimation);
     ClassDB::bind_method(D_METHOD("set_attack_animation", "sprite"), &AttackResource::SetAttackAnimation);
 
-    /// Type
-    ClassDB::bind_method(D_METHOD("get_attack_type"), &AttackResource::GetAttackType);
-    ClassDB::bind_method(D_METHOD("set_attack_type", "type"), &AttackResource::SetAttackType);
-
     /// Power
     ClassDB::bind_method(D_METHOD("get_attack_power"), &AttackResource::GetAttackPower);
     ClassDB::bind_method(D_METHOD("set_attack_power", "value"), &AttackResource::SetAttackPower);
@@ -25,16 +21,6 @@ void AttackResource::_bind_methods() {
     /// PP
     ClassDB::bind_method(D_METHOD("get_attack_pp"), &AttackResource::GetAttackPP);
     ClassDB::bind_method(D_METHOD("set_attack_pp", "value"), &AttackResource::SetAttackPP);
-    /// Category
-    ClassDB::bind_method(D_METHOD("get_attack_category"), &AttackResource::GetAttackCategory);
-    ClassDB::bind_method(D_METHOD("set_attack_category", "category"), &AttackResource::SetAttackCategory);
-    /// Contact
-    ClassDB::bind_method(D_METHOD("get_attack_contacts"), &AttackResource::GetAttackContacts);
-    ClassDB::bind_method(D_METHOD("set_attack_contacts", "value"), &AttackResource::SetAttackContacts);
-    // Enums
-    BIND_ENUM_CONSTANT(PHYSICAL);
-    BIND_ENUM_CONSTANT(SPECIAL);
-    BIND_ENUM_CONSTANT(STATUS);
 
     // Properties
     ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "attack_type"), "set_attack_type", "get_attack_type");
@@ -80,14 +66,6 @@ void AttackResource::SetAttackAnimation(const Ref<SpriteFrames>& sprite) {
     m_attack_animation = sprite;
 }
 
-/// type
-godot::StringName AttackResource::GetAttackType() const {
-    return m_attack_type;
-}
-void AttackResource::SetAttackType(const StringName& type) {
-    m_attack_type = type;
-}
-
 /// Power
 int AttackResource::GetAttackPower() const {
     return m_attack_power;
@@ -112,19 +90,3 @@ void AttackResource::SetAttackPP(int value) {
     m_attack_pp = value;
 }
 
-
-/// category
-godot::AttackResource::m_category_enum AttackResource::GetAttackCategory() const {
-    return m_attack_category;
-}
-void AttackResource::SetAttackCategory(m_category_enum type) {
-    m_attack_category = type;
-}
-
-/// Contact
-bool AttackResource::GetAttackContacts() const {
-    return m_attack_contacts;
-}
-void AttackResource::SetAttackContacts(bool value) {
-    m_attack_contacts = value;
-}

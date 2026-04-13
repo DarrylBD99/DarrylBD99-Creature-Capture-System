@@ -39,8 +39,6 @@ void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int pla
     if (battle_team->get_member_count() != 1){
         return; //TEMPORARY
     }
-    //CURRENTLY HARDCODED FOR 1V1 SINGLES
-
 
     BattleManager::s_current_battlefield->initPositions();
 
@@ -48,11 +46,17 @@ void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int pla
 
     godot::Ref<godot::BattleCreature> player_creature = BattleManager::m_player_team->get_member(0);
     InitCreatures(player_creature,player_format,false);
+    player_creature->set_active(true);
     
     //init opponent
-
     godot::Ref<godot::BattleCreature> creature = battle_team->get_member(0);
     InitCreatures(creature,opponent_format,true);
+    creature->set_active(true);
+
+
+    BattleManager::m_opponent_team = battle_team;
+
+    BattleManager::order_active_creatures_by_speed();
 
 }
 
@@ -78,7 +82,6 @@ godot::Error BattleInit::InitializeBattleField() {
         return godot::Error::ERR_CANT_CREATE;
     }
     
-
     // Add Default Battlefield to Battle Singleton
     BattleManager::s_current_battlefield = (godot::BattleField*)default_battlefield->instantiate();
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_battlefield);
@@ -89,11 +92,8 @@ godot::Error BattleInit::InitializeBattleField() {
 
 
 void BattleInit::InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature,int format,bool opponent){
-    // will init all creatures here later
-    // Create Battle Creature sprite
 
     BattleCreature->InitBattleCreature();
-
 
     godot::CreatureSprite3D* creature_sprite = memnew(godot::CreatureSprite3D());
     creature_sprite->SetSpeciesResource(BattleCreature->get_species_resource());
@@ -106,7 +106,6 @@ void BattleInit::InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature,
 }
 
 void BattleInit::InitUserInterface(){
-
 
     if (DataManager::s_userinterface == nullptr || DataManager::s_userinterface->is_empty()) {
         godot::UtilityFunctions::push_error("UserInterface path not set");
