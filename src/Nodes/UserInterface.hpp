@@ -33,6 +33,7 @@ namespace godot {
             static VBoxContainer *m_opponents_container;
             static VBoxContainer *m_allys_container;
             static HBoxContainer *m_dialogue_box_container;
+            static Control *m_attacks_buttons_parent;
 
             static Ref<PackedScene> s_healthbar_scene;
             static Ref<PackedScene> s_dialogue_box_scene;
@@ -47,6 +48,9 @@ namespace godot {
             void SetDialogueBoxContainer(HBoxContainer *node);
             HBoxContainer *GetDialogueBoxContainer() const;
 
+            void SetAttacksButtonsParent(Control *node);
+            Control *GetAttacksButtonsParent() const;
+
             void SetHealthbarScene(Ref<PackedScene> healthbar);
             Ref<PackedScene> GetHealthbarScene() const;
 
@@ -56,6 +60,7 @@ namespace godot {
 
             void InitHealthbar(const String &name, int level,int health,bool ally);
             void InitDialogueBox();
+            void InitAttacksButtons();
 
     };
 };

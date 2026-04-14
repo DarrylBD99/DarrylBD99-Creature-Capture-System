@@ -30,11 +30,12 @@ void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int pla
     
     // Initialize Battlefield
     if (InitializeBattleField() != godot::Error::OK) {
-        godot::UtilityFunctions::push_error("Failed to initialize battle field for wild battle.");
-        return;
-    }
-
-    InitUserInterface();
+        godot::UtilityFunctions::push_error("Failed to initialize battlefield");
+        return;}
+    if (InitUserInterface() != godot::Error::OK) {
+        godot::UtilityFunctions::push_error("Failed to initialize UI");
+        return;}
+    
     
     if (battle_team->get_member_count() != 1){
         return; //TEMPORARY
@@ -105,18 +106,18 @@ void BattleInit::InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature,
 
 }
 
-void BattleInit::InitUserInterface(){
+godot::Error BattleInit::InitUserInterface(){
 
     if (DataManager::s_userinterface == nullptr || DataManager::s_userinterface->is_empty()) {
         godot::UtilityFunctions::push_error("UserInterface path not set");
-        return;
+        return godot::Error::ERR_CANT_CREATE;
     }
 
     Ref<godot::PackedScene> default_userinterface = godot::ResourceLoader::get_singleton()->load(*DataManager::s_userinterface, "PackedScene");
 
     if (default_userinterface.is_null()) {
         godot::UtilityFunctions::push_error("Failed to load UI scene");
-        return;
+        return godot::Error::ERR_CANT_CREATE;
     }
 
     BattleManager::s_current_userinterface = (godot::UserInterface*)default_userinterface->instantiate();
@@ -124,5 +125,8 @@ void BattleInit::InitUserInterface(){
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_userinterface);
 
     godot::UserInterface::GetInstance()->InitDialogueBox();
+
+
+    return godot::Error::OK;
 }
 

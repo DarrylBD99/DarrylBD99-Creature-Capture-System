@@ -6,6 +6,7 @@
 #include <Resources/StaticData/Species.hpp>
 #include <Resources/StaticData/Attacks.hpp>
 
+
 namespace godot {
     class BattleCreature : public Resource {
         GDCLASS(BattleCreature, Resource);

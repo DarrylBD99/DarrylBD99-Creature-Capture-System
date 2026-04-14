@@ -13,7 +13,6 @@ namespace godot {
         
         private:
             StringName m_attack_id;
-            Ref<AudioStream> m_attack_sound;
             Ref<SpriteFrames> m_attack_animation;
 
             int m_attack_power = 0;
@@ -31,8 +30,6 @@ namespace godot {
             virtual ~AttackResource();
             StringName GetAttackId() const;
             void SetAttackId(const StringName& id);
-            Ref<AudioStream> GetAttackSound() const;
-            void SetAttackSound(Ref<AudioStream> stream);
             Ref<SpriteFrames> GetAttackAnimation() const;
             void SetAttackAnimation(const Ref<SpriteFrames>& sprite);
 

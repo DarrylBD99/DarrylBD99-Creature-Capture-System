@@ -13,7 +13,7 @@ class BattleInit {
         BattleInit() = delete;
         static void start_battle(godot::Ref<godot::BattleTeam> BattleTeam, int player_format,int opponent_format);
         static void InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature, int format,bool opponent);
-        static void InitUserInterface();
+        static godot::Error InitUserInterface();
 };
 
 #endif // BATTLE_INIT_HPP

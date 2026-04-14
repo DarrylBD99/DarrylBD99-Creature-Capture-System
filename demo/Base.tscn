@@ -23,7 +23,7 @@ species_sprites = ExtResource("1_nfj5t")
 
 [sub_resource type="BattleCreature" id="BattleCreature_b56jl"]
 species_resource = SubResource("SpeciesResource_nfj5t")
-level = 10
+level = 67676767
 
 [sub_resource type="BattleTeam" id="BattleTeam_i812h"]
 team_name = "team1 (doesn't matter)"

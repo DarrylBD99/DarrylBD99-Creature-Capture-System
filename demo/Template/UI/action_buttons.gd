@@ -16,7 +16,10 @@ func _ready() -> void:
 
 func _on_fight_button_pressed() -> void:
 	moves_container.show()
+	bag.hide()
+	creatures.hide()
 	hide()
+	ui_open = false
 func _on_moves_back_button_pressed() -> void:
 	moves_container.hide()
 	show()
@@ -45,7 +48,6 @@ func _on_bag_button_pressed() -> void:
 func _on_bag_close_button_pressed() -> void:
 	bag.hide()
 	ui_open = false
-
 
 func _on_flee_button_pressed() -> void:
 	## flee logic, eg. CSS_Battle.attempt_flee()

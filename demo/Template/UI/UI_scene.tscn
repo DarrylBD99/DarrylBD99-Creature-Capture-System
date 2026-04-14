@@ -4,10 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://cuc04femhe2re" path="res://Template/UI/DialogueBoxScene.tscn" id="2_x04xn"]
 [ext_resource type="Script" uid="uid://dtg13cc4u14ih" path="res://Template/UI/action_buttons.gd" id="3_0jh5q"]
 
-[node name="CanvasGroup" type="UserInterface" node_paths=PackedStringArray("opponents_container", "allys_container", "dialogue_box_container")]
+[node name="CanvasGroup" type="UserInterface" node_paths=PackedStringArray("opponents_container", "allys_container", "dialogue_box_container", "attacks_buttons_parent")]
 opponents_container = NodePath("Enemy heath")
 allys_container = NodePath("allys health")
 dialogue_box_container = NodePath("HboxContainer")
+attacks_buttons_parent = NodePath("MovesContainer")
 healthbar_scene = ExtResource("1_ccu88")
 dialogue_box_scene = ExtResource("2_x04xn")
 

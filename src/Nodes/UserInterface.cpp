@@ -6,12 +6,14 @@
 #include <Data Manager.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
+#include <Nodes/AttackButton.hpp>
 
 using namespace godot;
 
 VBoxContainer *UserInterface::m_opponents_container = nullptr;
 VBoxContainer *UserInterface::m_allys_container = nullptr;
 HBoxContainer *UserInterface::m_dialogue_box_container = nullptr;
+Control* UserInterface::m_attacks_buttons_parent = nullptr;
 Ref<PackedScene> UserInterface::s_healthbar_scene;
 Ref<PackedScene> UserInterface::s_dialogue_box_scene;
 
@@ -39,6 +41,11 @@ void UserInterface::_bind_methods() {
         &UserInterface::SetAllysContainer);
     ClassDB::bind_method(D_METHOD("get_allys_container"),
         &UserInterface::GetAllysContainer);
+
+    ClassDB::bind_method(D_METHOD("set_attacks_buttons_parent", "node"),
+        &UserInterface::SetAttacksButtonsParent);
+    ClassDB::bind_method(D_METHOD("get_attacks_buttons_parent"),
+        &UserInterface::GetAttacksButtonsParent);
     
     ClassDB::bind_method(D_METHOD("set_dialogue_box_container", "node"),
         &UserInterface::SetDialogueBoxContainer);
@@ -56,6 +63,8 @@ void UserInterface::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "allys_container",PROPERTY_HINT_NODE_TYPE, "VBoxContainer"),"set_allys_container","get_allys_container");
     
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "dialogue_box_container",PROPERTY_HINT_NODE_TYPE, "HBoxContainer"),"set_dialogue_box_container","get_dialogue_box_container");
+
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "attacks_buttons_parent",PROPERTY_HINT_NODE_TYPE, "Control"),"set_attacks_buttons_parent","get_attacks_buttons_parent");
 
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT,"healthbar_scene",PROPERTY_HINT_RESOURCE_TYPE,"PackedScene"),"set_healthbar_scene","get_healthbar_scene");
 
@@ -83,6 +92,12 @@ void UserInterface::SetDialogueBoxContainer(HBoxContainer* node) {
 HBoxContainer* UserInterface::GetDialogueBoxContainer() const {
     return m_dialogue_box_container;
 }
+void UserInterface::SetAttacksButtonsParent(Control *node) {
+    m_attacks_buttons_parent = node;
+}
+Control *UserInterface::GetAttacksButtonsParent() const {
+    return m_attacks_buttons_parent;
+}
 UserInterface* UserInterface::GetInstance() {
     return s_instance;
 }
@@ -100,7 +115,6 @@ Ref<PackedScene> UserInterface::GetDialogueBoxScene() const {
 }
 
 void UserInterface::InitHealthbar(const String &name,int level,int health,bool opponent){
-
     
     if (s_healthbar_scene.is_null()) {
         UtilityFunctions::push_error("HealthBar scene not set");
@@ -134,12 +148,12 @@ void UserInterface::InitHealthbar(const String &name,int level,int health,bool o
 void UserInterface::InitDialogueBox(){
     if (!m_dialogue_box_container){return;}
     if (!s_dialogue_box_scene.is_valid()){return;}
+    InitAttacksButtons();
 
     Node* diabox_instance = s_dialogue_box_scene->instantiate();
     DialogueBox* dialoguebox = Object::cast_to<DialogueBox>(diabox_instance);
 
     godot::UserInterface::m_dialogue_box_container->add_child(dialoguebox);
-
 
     //temp test
     dialoguebox->AddTextToQueue("Hello? Hello, hello?");
@@ -156,4 +170,24 @@ void UserInterface::InitDialogueBox(){
     dialoguebox->AddTextToQueue("Well, good luck, and I'll talk to you tomorrow.");
 }
 
+void UserInterface::InitAttacksButtons(){
+    Array buttons;
+
+    if (!m_attacks_buttons_parent) {
+		return;
+	}
+
+	int count = m_attacks_buttons_parent->get_child_count();
+
+	for (int i = 0; i < count; i++) {
+		Node *child = m_attacks_buttons_parent->get_child(i);
+
+		if (Object::cast_to<AttackButton>(child)) {
+			buttons.append(child);
+		}
+	}
+    
+    //godot::UtilityFunctions::print(bazinga);
+
+}
 
