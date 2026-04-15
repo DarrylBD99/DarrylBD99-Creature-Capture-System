@@ -35,6 +35,7 @@ class BattleManager {
         godot::Ref<godot::BattleTeam> get_player_team() const;
 
         static vector<godot::Ref<godot::BattleCreature>> m_active_creatures;
+        static vector<godot::Ref<godot::BattleCreature>> GetActiveCreatures();
 
         static void order_active_creatures_by_speed();
 

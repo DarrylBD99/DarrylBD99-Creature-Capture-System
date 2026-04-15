@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqpvv2auaelcj"]
+[gd_scene load_steps=5 format=3 uid="uid://bqpvv2auaelcj"]
 
 [ext_resource type="PackedScene" uid="uid://dmgxefr804qyq" path="res://Template/UI/healthbar ui.tscn" id="1_ccu88"]
 [ext_resource type="PackedScene" uid="uid://cuc04femhe2re" path="res://Template/UI/DialogueBoxScene.tscn" id="2_x04xn"]
 [ext_resource type="Script" uid="uid://dtg13cc4u14ih" path="res://Template/UI/action_buttons.gd" id="3_0jh5q"]
+[ext_resource type="Script" uid="uid://xx2frkqi2wa3" path="res://Template/UI/move_1.gd" id="4_lyqy3"]
 
 [node name="CanvasGroup" type="UserInterface" node_paths=PackedStringArray("opponents_container", "allys_container", "dialogue_box_container", "attacks_buttons_parent")]
 opponents_container = NodePath("Enemy heath")
@@ -136,6 +137,7 @@ custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 text = "Move1
 "
+script = ExtResource("4_lyqy3")
 
 [node name="Move2" type="AttackButton" parent="MovesContainer"]
 custom_minimum_size = Vector2(150, 40)

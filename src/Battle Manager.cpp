@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <Resources/BattleCreature.hpp>
 
 // Initialize static member
 godot::BattleField* BattleManager::s_current_battlefield = nullptr;
@@ -16,6 +17,13 @@ vector<godot::Ref<godot::BattleCreature>> BattleManager::m_active_creatures;
 
 void BattleManager::set_player_team(const godot::Ref<godot::BattleTeam> &team) {
     m_player_team = team;
+
+    auto members = m_player_team->get_members();
+
+    for (int i = 0; i < members.size(); i++){
+        godot::Ref<godot::BattleCreature> creature = members[i];
+        creature->set_player(true); //does this
+    }
 }
 
 godot::Ref<godot::BattleTeam> BattleManager::get_player_team() const {
@@ -42,7 +50,11 @@ void BattleManager::order_active_creatures_by_speed() {
     std::sort(m_active_creatures.begin(), m_active_creatures.end(),
     [](const godot::Ref<godot::BattleCreature> &a,
        const godot::Ref<godot::BattleCreature> &b) {
-        return a->get_speed() > b->get_speed();
+        return a->get_speed_stat() > b->get_speed_stat();
     });
 
+}
+
+vector<godot::Ref<godot::BattleCreature>> BattleManager::GetActiveCreatures() {
+    return m_active_creatures;
 }
