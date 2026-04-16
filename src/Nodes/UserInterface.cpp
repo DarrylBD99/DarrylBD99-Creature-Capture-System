@@ -148,7 +148,6 @@ void UserInterface::InitHealthbar(const String &name,int level,int health,bool o
 void UserInterface::InitDialogueBox(){
     if (!m_dialogue_box_container){return;}
     if (!s_dialogue_box_scene.is_valid()){return;}
-    InitAttacksButtons();
 
     Node* diabox_instance = s_dialogue_box_scene->instantiate();
     DialogueBox* dialoguebox = Object::cast_to<DialogueBox>(diabox_instance);
@@ -170,11 +169,11 @@ void UserInterface::InitDialogueBox(){
     dialoguebox->AddTextToQueue("Well, good luck, and I'll talk to you tomorrow.");
 }
 
-void UserInterface::InitAttacksButtons(){
+Array UserInterface::GetAttacksButtons(){
     Array buttons;
 
     if (!m_attacks_buttons_parent) {
-		return;
+		UtilityFunctions::push_error("attacks parent not found or not set");
 	}
 
 	int count = m_attacks_buttons_parent->get_child_count();
@@ -186,8 +185,43 @@ void UserInterface::InitAttacksButtons(){
 			buttons.append(child);
 		}
 	}
-    
-    //godot::UtilityFunctions::print(bazinga);
 
+    godot::UtilityFunctions::print(buttons);
+    return buttons;
 }
 
+void UserInterface::InitAttacksButtons(){
+    Array buttons = GetAttacksButtons();
+
+    if (buttons.is_empty()){
+        UtilityFunctions::push_error("attack buttons not found");
+        return;
+    }
+
+    auto active_creatures = BattleManager::GetActiveCreatures();
+    godot::Ref<godot::BattleCreature> the_creature_in_question;
+
+    UtilityFunctions::print(active_creatures.size());
+
+    for (int i = 0; i < active_creatures.size(); i++){
+        godot::Ref<godot::BattleCreature> creature = active_creatures[i];
+        UtilityFunctions::print(creature);
+        if (creature->get_player()){
+            the_creature_in_question = creature;
+        }
+    }
+    if (the_creature_in_question.is_null()){
+        UtilityFunctions::push_error("the_creature_in_question is null");
+        return;
+     }
+
+    auto attacks = the_creature_in_question->get_creature_attacks();
+
+    for (int i = 0; i < attacks.size(); i++){
+        auto bazinga = Object::cast_to<AttackButton>(buttons[i]);
+        bazinga->SetAttackButtonMove(attacks[i]);
+
+    }
+}
+
+ 

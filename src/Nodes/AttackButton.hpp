@@ -21,6 +21,7 @@ namespace godot {
 
         void SetAttackButtonMove(const Ref<AttackResource> attack);
         Ref<AttackResource> GetAttackButtonMove() const;
+        virtual void on_attack_set();
 
     };
 };

@@ -47,19 +47,29 @@ void BattleCreature::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::INT, "current_hp"), "set_current_hp", "get_current_hp");
 
     // Attack
-    ClassDB::bind_method(D_METHOD("set_attack", "attack"), &BattleCreature::set_attack);
-    ClassDB::bind_method(D_METHOD("get_attack"), &BattleCreature::get_attack);
+    ClassDB::bind_method(D_METHOD("set_attack", "attack"), &BattleCreature::set_attack_stat);
+    ClassDB::bind_method(D_METHOD("get_attack"), &BattleCreature::get_attack_stat);
     ADD_PROPERTY(PropertyInfo(Variant::INT, "attack"), "set_attack", "get_attack");
 
     // Defense
-    ClassDB::bind_method(D_METHOD("set_defense", "defense"), &BattleCreature::set_defense);
-    ClassDB::bind_method(D_METHOD("get_defense"), &BattleCreature::get_defense);
+    ClassDB::bind_method(D_METHOD("set_defense", "defense"), &BattleCreature::set_defense_stat);
+    ClassDB::bind_method(D_METHOD("get_defense"), &BattleCreature::get_defense_stat);
     ADD_PROPERTY(PropertyInfo(Variant::INT, "defense"), "set_defense", "get_defense");
 
     // Speed
-    ClassDB::bind_method(D_METHOD("set_speed", "speed"), &BattleCreature::set_speed);
-    ClassDB::bind_method(D_METHOD("get_speed"), &BattleCreature::get_speed);
+    ClassDB::bind_method(D_METHOD("set_speed", "speed"), &BattleCreature::set_speed_stat);
+    ClassDB::bind_method(D_METHOD("get_speed"), &BattleCreature::get_speed_stat);
     ADD_PROPERTY(PropertyInfo(Variant::INT, "speed"), "set_speed", "get_speed");
+
+
+    ClassDB::bind_method(D_METHOD("set_attacks", "attacks"), &BattleCreature::set_attacks);
+    ClassDB::bind_method(D_METHOD("get_attacks"), &BattleCreature::get_attacks);
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "attacks", PROPERTY_HINT_ARRAY_TYPE, "AttackResource"),"set_attacks","get_attacks");
+
+    ClassDB::bind_method(D_METHOD("add_attack", "attack"), &BattleCreature::add_attack);
+    ClassDB::bind_method(D_METHOD("clear_attacks"), &BattleCreature::clear_attacks);
+    ClassDB::bind_method(D_METHOD("get_attack_count"), &BattleCreature::get_attack_count);
+    ClassDB::bind_method(D_METHOD("get_attack", "index"), &BattleCreature::get_attack);
 }
 
 
@@ -73,9 +83,9 @@ void BattleCreature::InitBattleCreature(){
     //replace these with the calculations for the stats
     //temp
     m_max_hp = m_species_resource->GetSpeciesHP();
-    m_attack = m_species_resource->GetSpeciesATK();
-    m_defense = m_species_resource->GetSpeciesDEF();
-    m_speed = m_species_resource->GetSpeciesSPEED();
+    m_attack_stat = m_species_resource->GetSpeciesATK();
+    m_defense_stat = m_species_resource->GetSpeciesDEF();
+    m_speed_stat = m_species_resource->GetSpeciesSPEED();
 
 }
 
@@ -94,7 +104,9 @@ void BattleCreature::set_creature_name(const StringName &name){
 void BattleCreature::set_active(bool active) {
     m_is_active = active;
 }
-
+void BattleCreature::set_player(bool player) {
+    m_is_player = player;
+}
 
 
 void BattleCreature::set_level(int level) {
@@ -109,16 +121,16 @@ void BattleCreature::set_current_hp(int current_hp) {
     m_current_hp = current_hp;
 }
 
-void BattleCreature::set_attack(int attack) {
-    m_attack = attack;
+void BattleCreature::set_attack_stat(int attack) {
+    m_attack_stat = attack;
 }
 
-void BattleCreature::set_defense(int defense) {
-    m_defense = defense;
+void BattleCreature::set_defense_stat(int defense) {
+    m_defense_stat = defense;
 }
 
-void BattleCreature::set_speed(int speed) {
-    m_speed = speed;
+void BattleCreature::set_speed_stat(int speed) {
+    m_speed_stat = speed;
 }
 
 
@@ -131,9 +143,15 @@ void BattleCreature::set_speed(int speed) {
 StringName BattleCreature::get_creature_name() const {
     return m_creature_name;
 }
+TypedArray<AttackResource> BattleCreature::get_creature_attacks() const {
+    return m_attacks;
+}
 
 bool BattleCreature::get_active() const {
     return m_is_active;
+}
+bool BattleCreature::get_player() const {
+    return m_is_player;
 }
 
 int BattleCreature::get_level() const {
@@ -148,14 +166,42 @@ int BattleCreature::get_current_hp() const {
     return m_current_hp;
 }
 
-int BattleCreature::get_attack() const {
-    return m_attack;
+int BattleCreature::get_attack_stat() const {
+    return m_attack_stat;
 }
 
-int BattleCreature::get_defense() const {
-    return m_defense;
+int BattleCreature::get_defense_stat() const {
+    return m_defense_stat;
 }
 
-int BattleCreature::get_speed() const {
-    return m_speed;
+int BattleCreature::get_speed_stat() const {
+    return m_speed_stat;
+}
+
+
+void BattleCreature::set_attacks(const Array &attacks) {
+    m_attacks = attacks;
+}
+
+Array BattleCreature::get_attacks() const {
+    return m_attacks;
+}
+
+void BattleCreature::add_attack(const Ref<AttackResource> &attack) {
+    m_attacks.append(attack);
+}
+
+void BattleCreature::clear_attacks() {
+    m_attacks.clear();
+}
+
+int BattleCreature::get_attack_count() const {
+    return m_attacks.size();
+}
+
+Ref<AttackResource> BattleCreature::get_attack(int index) const {
+    if (index < 0 || index >= m_attacks.size()) {
+        return Ref<BattleCreature>();
+    }
+    return m_attacks[index];
 }

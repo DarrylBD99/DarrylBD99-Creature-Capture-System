@@ -44,20 +44,22 @@ void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int pla
     BattleManager::s_current_battlefield->initPositions();
 
     //init player
-
     godot::Ref<godot::BattleCreature> player_creature = BattleManager::m_player_team->get_member(0);
-    InitCreatures(player_creature,player_format,false);
     player_creature->set_active(true);
+    InitCreatures(player_creature,player_format,false);
+    
     
     //init opponent
     godot::Ref<godot::BattleCreature> creature = battle_team->get_member(0);
-    InitCreatures(creature,opponent_format,true);
     creature->set_active(true);
+    InitCreatures(creature,opponent_format,true);
 
 
     BattleManager::m_opponent_team = battle_team;
 
     BattleManager::order_active_creatures_by_speed();
+    
+    godot::UserInterface::GetInstance()->InitAttacksButtons();
 
 }
 

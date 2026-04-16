@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://butfvjgmmpy0i"]
+[gd_scene load_steps=7 format=3 uid="uid://butfvjgmmpy0i"]
 
 [ext_resource type="SpriteFrames" uid="uid://cbhigoniplqrl" path="res://Template/SpriteFrames/Base.tres" id="1_nfj5t"]
 
@@ -17,13 +17,18 @@ func _ready() -> void:
 	CCS_Battle.start_battle(team,1,1)
 "
 
+[sub_resource type="AttackResource" id="AttackResource_nfj5t"]
+attack_id = &"bazinga"
+attack_power = 5
+
 [sub_resource type="SpeciesResource" id="SpeciesResource_nfj5t"]
 species_id = &"bloom"
 species_sprites = ExtResource("1_nfj5t")
 
 [sub_resource type="BattleCreature" id="BattleCreature_b56jl"]
 species_resource = SubResource("SpeciesResource_nfj5t")
-level = 67676767
+level = 50
+attacks = Array[AttackResource]([SubResource("AttackResource_nfj5t")])
 
 [sub_resource type="BattleTeam" id="BattleTeam_i812h"]
 team_name = "team1 (doesn't matter)"
