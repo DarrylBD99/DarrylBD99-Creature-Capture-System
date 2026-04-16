@@ -32,6 +32,8 @@ void CreatureSprite3D::_bind_methods() {
     // Binding methods to Godot
     ClassDB::bind_method(D_METHOD("get_species_resource"), &CreatureSprite3D::GetSpeciesResource);
     ClassDB::bind_method(D_METHOD("set_species_resource", "resource"), &CreatureSprite3D::SetSpeciesResource);
+    ClassDB::bind_method(D_METHOD("set_species_id", "id"), &CreatureSprite3D::SetSpeciesId);
+    ClassDB::bind_method(D_METHOD("get_species_id"), &CreatureSprite3D::GetSpeciesId);
 
     ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "species_id"), "set_species_id", "get_species_id");
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "species_resource", PROPERTY_HINT_RESOURCE_TYPE, "SpeciesResource"), "set_species_resource", "get_species_resource");
@@ -57,3 +59,11 @@ void CreatureSprite3D::SetSprite(bool direction){
     set_autoplay(godot::StringName(animation_name)); // Assuming the animation name corresponds to the animation name
     //godot::UtilityFunctions::print(animation_name," sprite loaded");
 } 
+
+void CreatureSprite3D::SetSpeciesId(const StringName& id){
+    m_speciesId = id;
+}
+
+godot::StringName CreatureSprite3D::GetSpeciesId() const{
+    return m_speciesId;
+}

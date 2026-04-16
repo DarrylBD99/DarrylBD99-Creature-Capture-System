@@ -11,6 +11,8 @@ namespace godot {
 
         protected:
             static void _bind_methods();
+            StringName m_speciesId; // isn't this redundent since SpeciesId is in SpeciesResource
+
         public:
             CreatureSprite3D();
             virtual ~CreatureSprite3D();
@@ -19,6 +21,10 @@ namespace godot {
             Ref<SpeciesResource> GetSpeciesResource() const;
             void SetSpeciesResource(Ref<SpeciesResource> resource);
             void SetSprite(bool direction);
+
+            void SetSpeciesId(const StringName& id);
+
+            StringName GetSpeciesId() const;
     };
 };
 
