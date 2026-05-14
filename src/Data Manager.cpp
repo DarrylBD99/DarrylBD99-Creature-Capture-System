@@ -12,6 +12,7 @@
 
 // Static member definitions
 godot::ProjectSettings* DataManager::project_setting = nullptr;
+godot::String* DataManager::s_userinterface = nullptr;
 godot::Node* DataManager::s_battle_singleton = nullptr;
 godot::Ref<godot::SpriteFrames> DataManager::s_creature_sprite_frames = nullptr;
 
@@ -66,6 +67,16 @@ void DataManager::initialize_project_settings() {
                 PropertyHint::PROPERTY_HINT_FILE,
                 "*.tscn, *.scn",
                 "res://Template/BattleField.scn"
+            }
+        },
+                { // Default healthbar ui
+            {
+                "darrylbd99/creature_capture_system/main/User_interface"
+            }, SettingProperty{
+                Variant::STRING,
+                PropertyHint::PROPERTY_HINT_FILE,
+                "*.tscn, *.scn",
+                "res://Template/UI/UI_scene.tscn"
             }
         },
         { // Rarity Alternate Color Chance
@@ -124,7 +135,31 @@ void DataManager::update_project_settings() {
         s_creature_sprite_frames = godot::ResourceLoader::get_singleton()->load(project_setting->get_setting("darrylbd99/creature_capture_system/sprite_frames/base"), "SpriteFrames");
 
     godot::String battlefield_path = project_setting->get_setting("darrylbd99/creature_capture_system/main/default_battlefield");
+    Ref<godot::PackedScene> default_battlefield = godot::ResourceLoader::get_singleton()->load(battlefield_path, "PackedScene");
+
+    //UI
+    godot::String UI_path = project_setting->get_setting("darrylbd99/creature_capture_system/main/User_interface");
+    Ref<godot::PackedScene> default_UI = godot::ResourceLoader::get_singleton()->load(UI_path, "PackedScene");
+
+    if (default_battlefield.is_null())
+        default_battlefield = godot::ResourceLoader::get_singleton()->load("res://Template/BattleField.scn", "PackedScene");
+
+    if (default_battlefield.is_null()) {
+        godot::print_error("Failed to load default battlefield");
+        return;
+    }
+    
+
+    if (default_UI.is_null()){
+        default_UI = godot::ResourceLoader::get_singleton()->load("res://Template/UI/UI_scene.tscn", "PackedScene");
+    }
+    if (default_UI.is_null()) {
+        godot::print_error("Failed to load UI");
+        return;
+    }
+
     s_default_battlefield_path = new godot::String(battlefield_path);
+    s_userinterface = new godot::String(UI_path);
 }
 
 void DataManager::free_data() {
