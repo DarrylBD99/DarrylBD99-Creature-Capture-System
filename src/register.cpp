@@ -63,6 +63,7 @@ void uninitialize(ModuleInitializationLevel p_level) {
 
     // Free data manager resources
     DataManager::free_data();
+    godot::UserInterface::FreeStaticResources();
 }
 
 extern "C" {

@@ -10,10 +10,6 @@
 
 using namespace godot;
 
-VBoxContainer *UserInterface::m_opponents_container = nullptr;
-VBoxContainer *UserInterface::m_allys_container = nullptr;
-HBoxContainer *UserInterface::m_dialogue_box_container = nullptr;
-Control* UserInterface::m_attacks_buttons_parent = nullptr;
 Ref<PackedScene> UserInterface::s_healthbar_scene;
 Ref<PackedScene> UserInterface::s_dialogue_box_scene;
 
@@ -21,13 +17,22 @@ UserInterface* UserInterface::s_instance = nullptr;
 
 
 UserInterface::UserInterface() {
+    s_instance = this;
 }
 
 UserInterface::~UserInterface() {
+    if (dialogue_box) {
+        dialogue_box->queue_free();
+        dialogue_box = nullptr;
+    }
+
+    if (s_instance == this) {
+        s_instance = nullptr;
+    }
 }
 
 void UserInterface::_ready() {
-    s_instance = this;
+    InitDialogueBox();
 }
 
 void UserInterface::_bind_methods() {
@@ -62,7 +67,7 @@ void UserInterface::_bind_methods() {
 
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "allys_container",PROPERTY_HINT_NODE_TYPE, "VBoxContainer"),"set_allys_container","get_allys_container");
     
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "dialogue_box_container",PROPERTY_HINT_NODE_TYPE, "HBoxContainer"),"set_dialogue_box_container","get_dialogue_box_container");
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "dialogue_box_container",PROPERTY_HINT_NODE_TYPE, "Container"),"set_dialogue_box_container","get_dialogue_box_container");
 
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "attacks_buttons_parent",PROPERTY_HINT_NODE_TYPE, "Control"),"set_attacks_buttons_parent","get_attacks_buttons_parent");
 
@@ -86,10 +91,10 @@ void UserInterface::SetAllysContainer(VBoxContainer *node) {
 VBoxContainer *UserInterface::GetAllysContainer() const {
     return m_allys_container;
 }
-void UserInterface::SetDialogueBoxContainer(HBoxContainer* node) {
+void UserInterface::SetDialogueBoxContainer(Container* node) {
     m_dialogue_box_container = node;
 }
-HBoxContainer* UserInterface::GetDialogueBoxContainer() const {
+Container* UserInterface::GetDialogueBoxContainer() const {
     return m_dialogue_box_container;
 }
 void UserInterface::SetAttacksButtonsParent(Control *node) {
@@ -146,27 +151,29 @@ void UserInterface::InitHealthbar(const String &name,int level,int health,bool o
 }
 
 void UserInterface::InitDialogueBox(){
-    if (!m_dialogue_box_container){return;}
-    if (!s_dialogue_box_scene.is_valid()){return;}
+    if (!m_dialogue_box_container){
+        UtilityFunctions::push_error("Dialogue box container not set");
+        return;
+    }
+    if (!s_dialogue_box_scene.is_valid()){
+        UtilityFunctions::push_error("Dialogue box scene not set");
+        return;
+    }
 
-    Node* diabox_instance = s_dialogue_box_scene->instantiate();
-    DialogueBox* dialoguebox = Object::cast_to<DialogueBox>(diabox_instance);
+    Node* dialogue_box_instance = s_dialogue_box_scene->instantiate();
+    if (!dialogue_box_instance) {
+        UtilityFunctions::push_error("Failed to instantiate DialogueBox scene");
+        return;
+    }
 
-    godot::UserInterface::m_dialogue_box_container->add_child(dialoguebox);
+    dialogue_box = Object::cast_to<DialogueBox>(dialogue_box_instance);
+    if (!dialogue_box) {
+        UtilityFunctions::push_error("DialogueBox scene's root does not inherit from DialogueBox class");
+        memdelete(dialogue_box_instance);
+        return;
+    }
 
-    //temp test
-    dialoguebox->AddTextToQueue("Hello? Hello, hello?");
-    dialoguebox->AddTextToQueue("Uh, I wanted to record a message for you to help you get settled in on your first night.");
-    dialoguebox->AddTextToQueue("Um, I actually worked in that office before you. I'm finishing up my last week now, as a matter of fact.");
-    dialoguebox->AddTextToQueue("So, I know it can be a bit overwhelming, but I'm here to tell you there's nothing to worry about.");
-    dialoguebox->AddTextToQueue("The animatronic characters here do get a bit quirky at night, but do I blame them? No.");
-    dialoguebox->AddTextToQueue("If I were forced to sing those same stupid songs for twenty years and I never got a bath...");
-    dialoguebox->AddTextToQueue("I'd probably get a little angry at night too.");
-    dialoguebox->AddTextToQueue("Heh, hey, what are you, uh, still here? I should probably tell you about your first night.");
-    dialoguebox->AddTextToQueue("Uh, the main thing to remember is to keep an eye on the cameras.");
-    dialoguebox->AddTextToQueue("Uh, the animatronics do tend to wander a bit...");
-    dialoguebox->AddTextToQueue("Uh, I should also mention that, uh, the parts and service rooms are off-limits, okay?");
-    dialoguebox->AddTextToQueue("Well, good luck, and I'll talk to you tomorrow.");
+    m_dialogue_box_container->add_child(dialogue_box);
 }
 
 Array UserInterface::GetAttacksButtons(){
@@ -224,4 +231,8 @@ void UserInterface::InitAttacksButtons(){
     }
 }
 
+void UserInterface::FreeStaticResources() {
+    s_healthbar_scene = Ref<PackedScene>();
+    s_dialogue_box_scene = Ref<PackedScene>();
+}
  

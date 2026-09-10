@@ -126,8 +126,6 @@ godot::Error BattleInit::InitUserInterface(){
 
     DataManager::s_battle_singleton->add_child(BattleManager::s_current_userinterface);
 
-    godot::UserInterface::GetInstance()->InitDialogueBox();
-
 
     return godot::Error::OK;
 }

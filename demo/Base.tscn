@@ -9,7 +9,6 @@ script/source = "extends Node
 
 func _ready() -> void:
 	CCS_Battle.update_project_settings()
-	
 	CCS_Battle.initialize_battle_singleton()
 	
 	CCS_Battle.set_player_team(team)
