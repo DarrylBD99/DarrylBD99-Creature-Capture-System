@@ -15,6 +15,7 @@ namespace godot {
             // Add member variables here
             Ref<SpeciesResource> m_species_resource;
             StringName m_creature_name;
+            StringName m_creature_id;
 
             bool m_is_active = false;
             bool m_is_player = false;

@@ -205,3 +205,11 @@ Ref<AttackResource> BattleCreature::get_attack(int index) const {
     }
     return m_attacks[index];
 }
+
+void BattleCreature::set_creature_id(const StringName &id) {
+    m_creature_id = id;
+}
+
+StringName BattleCreature::get_creature_id() const {
+    return m_creature_id;
+}
