@@ -2,7 +2,9 @@
 
 #include <iostream>
 #include <algorithm>
+#include <random>
 #include <Resources/BattleCreature.hpp>
+#include <godot_cpp/core/math.hpp>
 
 // Initialize static member
 godot::BattleField* BattleManager::s_current_battlefield = nullptr;
@@ -31,6 +33,8 @@ godot::Ref<godot::BattleTeam> BattleManager::get_player_team() const {
 }
 
 
+// this works but i'm not sure how it would work with moves/items/abilities/field conditions
+
 void BattleManager::order_active_creatures_by_speed() {
 
     m_active_creatures.clear();
@@ -47,13 +51,21 @@ void BattleManager::order_active_creatures_by_speed() {
         }
     }
 
-    std::sort(m_active_creatures.begin(), m_active_creatures.end(),
-    [](const godot::Ref<godot::BattleCreature> &a,
-       const godot::Ref<godot::BattleCreature> &b) {
-        return a->get_speed_stat() > b->get_speed_stat();
-    });
+    // randomizes positions before sorting; making speed ties 50 50
+    
+    for (int i = m_active_creatures.size() - 1; i > 0; i--) {
+        int j = (int)(godot::UtilityFunctions::randf() * (i + 1));
+        std::swap(m_active_creatures[i], m_active_creatures[j]);
+    }
 
-}
+
+    std::stable_sort(m_active_creatures.begin(), m_active_creatures.end(),
+        [](const godot::Ref<godot::BattleCreature> &a,
+           const godot::Ref<godot::BattleCreature> &b) {
+            return a->get_speed_stat() > b->get_speed_stat();
+        });
+
+    }
 
 vector<godot::Ref<godot::BattleCreature>> BattleManager::GetActiveCreatures() {
     return m_active_creatures;

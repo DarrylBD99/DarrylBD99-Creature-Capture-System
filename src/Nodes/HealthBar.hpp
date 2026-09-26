@@ -15,6 +15,7 @@ namespace godot {
         private:
             Label *m_creature_name = nullptr;
             Label *m_creature_level = nullptr;
+            // mon gender here =
             ProgressBar *m_creature_healthbar = nullptr; // (should properly rename this)
 
         protected:

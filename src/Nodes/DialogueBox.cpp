@@ -65,6 +65,13 @@ float DialogueBox::GetCharacterTime() const {
     return m_char_time;
 }
 
+
+// in hind sight i really i dont like input being here
+// imo we should leave all input functions in gdscript,
+// i mean in general this implementation (the entire dialogue script) seems pretty messy to me
+// 
+// - fvna
+
 void DialogueBox::_unhandled_input(const Ref<InputEvent> &event) {
 
     if (!dialogue_enabled){return;}
@@ -164,6 +171,7 @@ void DialogueBox::AdvanceDialogueStartTimer(float delay,bool enabled){
     timer = dialogue_delay;
     timer_enabled = enabled;
 }
+
 void DialogueBox::AdvanceDialogue(){
     if (dialogue_queue.size() > 0){dialogue_queue.remove_at(0);}
     StartDialogue();
