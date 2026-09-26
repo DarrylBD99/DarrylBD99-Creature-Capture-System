@@ -5,6 +5,7 @@ reloadable = true
 
 [libraries]
 windows.debug.x86_64 = "res://bin/DarrylBD99_CCS.windows.template_debug.x86_64.dll"
+linux.debug.x86_64 = "res://bin/libDarrylBD99_CCS.linux.template_debug.x86_64.so"
 
 [icons]
 BattleField = "res://addons/DarrylBD99 CCS/assets/icons/battle_field.svg"

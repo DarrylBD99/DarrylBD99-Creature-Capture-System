@@ -2,3 +2,4 @@
 *.o
 .sconsign.dblite
 .vscode/c_cpp_properties.json
+.idea/editor.xml

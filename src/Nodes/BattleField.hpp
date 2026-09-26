@@ -7,7 +7,7 @@
 
 #include <godot_cpp/classes/ref.hpp>
 
-#include <nodes/CreatureSprite3D.hpp>
+#include <Nodes/CreatureSprite3D.hpp>
 
 namespace godot {
     class BattleField : public Node {

@@ -3,7 +3,7 @@
 #include "Battle Manager.hpp"
 #include "Data Manager.hpp"
 
-#include <nodes/CreatureSprite3D.hpp>
+#include <Nodes/CreatureSprite3D.hpp>
 
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/engine.hpp>
