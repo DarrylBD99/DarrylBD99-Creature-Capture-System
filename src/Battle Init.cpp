@@ -5,10 +5,10 @@
 #include "Nodes/UserInterface.hpp"
 #include "Nodes/DialogueBox.hpp"
 
-#include <nodes/CreatureSprite3D.hpp>
 #include <Resources/BattleCreature.hpp>
 #include <Resources/BattleTeam.hpp>
 #include <Battle GD.hpp>
+#include <Nodes/CreatureSprite3D.hpp>
 
 #include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
