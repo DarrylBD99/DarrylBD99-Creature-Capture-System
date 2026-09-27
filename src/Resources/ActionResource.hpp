@@ -3,6 +3,7 @@
 
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/variant/string_name.hpp>
+#include <Resources/BattleCreature.hpp>
 #include <Type.hpp>
 
 
@@ -30,8 +31,8 @@ namespace godot {
             int m_priority = 0;
             ActionType m_event_type = ActionType::JACKSHIT;
 
-            StringName m_actor_id;
-            StringName m_target_id;
+            Ref<BattleCreature> m_actor;
+            Ref<BattleCreature> m_target;
 
 
             StringName m_move_id;
@@ -52,11 +53,11 @@ namespace godot {
             ActionType GetEventType() const;
             void SetEventType(ActionType type);
 
-            StringName GetActorId() const;
-            void SetActorId(const StringName& id);
+            Ref<BattleCreature> GetActorId() const;
+            void SetActorId(const Ref<BattleCreature> id);
 
-            StringName GetTargetId() const;
-            void SetTargetId(const StringName& id);
+            Ref<BattleCreature> GetTargetId() const;
+            void SetTargetId(const Ref<BattleCreature> id);
 
             // for MOVE events
             StringName GetMoveId() const;

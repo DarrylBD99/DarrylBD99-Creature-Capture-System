@@ -26,20 +26,20 @@ void ActionResource::SetEventType(godot::ActionType type) {
     m_event_type = type;
 }
 
-godot::StringName ActionResource::GetActorId() const {
-    return m_actor_id;
+godot::Ref<godot::BattleCreature> ActionResource::GetActorId() const {
+    return m_actor;
 }
 
-void ActionResource::SetActorId(const godot::StringName& id) {
-    m_actor_id = id;
+void ActionResource::SetActorId(const Ref<BattleCreature> id) {
+    m_actor = id;
 }
 
-godot::StringName ActionResource::GetTargetId() const {
-    return m_target_id;
+godot::Ref<godot::BattleCreature> ActionResource::GetTargetId() const {
+    return m_target;
 }
 
-void ActionResource::SetTargetId(const godot::StringName& id) {
-    m_target_id = id;
+void ActionResource::SetTargetId(const Ref<BattleCreature> id) {
+    m_target = id;
 }
 
 // for MOVE events

@@ -8,6 +8,7 @@
 
 #include <Resources/BattleTeam.hpp>
 #include <Resources/BattleCreature.hpp>
+#include <Resources/ActionResource.hpp>
 
 #include <Nodes/BattleField.hpp>
 #include <Nodes/UserInterface.hpp>
@@ -37,7 +38,11 @@ class BattleManager {
         static vector<godot::Ref<godot::BattleCreature>> m_active_creatures;
         static vector<godot::Ref<godot::BattleCreature>> GetActiveCreatures();
 
-        static void order_active_creatures_by_speed();
+        static vector<godot::Ref<godot::ActionResource>> m_actions; // inshallah cleared after every turn
+
+        static void order_actions();
+        static void play_turn();
+
 
 };
 
