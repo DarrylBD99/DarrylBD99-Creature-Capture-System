@@ -70,3 +70,27 @@ void BattleManager::order_active_creatures_by_speed() {
 vector<godot::Ref<godot::BattleCreature>> BattleManager::GetActiveCreatures() {
     return m_active_creatures;
 }
+
+
+// plays one turn AFTER getting all the inputs 
+
+// inputs create events (what is the input, who used it, who does it target)
+
+void BattleManager::play_turn() {
+
+
+    // order the events by priority, eg.
+
+    // attempt flee
+    // use item
+    // switching out
+    // special function (eg. mega, tera)
+    // regular move (all priorities, indivisual move priorities should be handled differently for modularity sake)
+
+
+    // for every event in events: do the event eg. attempt switching out or use a move.
+    // then wait until its finished (done with a signal, "finished" here probably just means its animation)
+
+    //     -- for every event reorder the events in the same priority
+
+}
