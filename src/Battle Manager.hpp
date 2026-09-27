@@ -33,7 +33,7 @@ class BattleManager {
         static godot::Ref<godot::BattleTeam> m_player_team;
 
         static void set_player_team(const godot::Ref<godot::BattleTeam> &team);
-        godot::Ref<godot::BattleTeam> get_player_team() const;
+        static godot::Ref<godot::BattleTeam> get_player_team();
 
         static vector<godot::Ref<godot::BattleCreature>> m_active_creatures;
         static vector<godot::Ref<godot::BattleCreature>> GetActiveCreatures();

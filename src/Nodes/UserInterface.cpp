@@ -205,13 +205,16 @@ void UserInterface::InitAttacksButtons(){
         return;
     }
 
-    auto active_creatures = BattleManager::GetActiveCreatures();
+    auto player_creatures = BattleManager::get_player_team();
+    auto members = player_creatures->get_members();
+
     godot::Ref<godot::BattleCreature> the_creature_in_question;
 
-    UtilityFunctions::print(active_creatures.size());
+    UtilityFunctions::print(members.size());
 
-    for (int i = 0; i < active_creatures.size(); i++){
-        godot::Ref<godot::BattleCreature> creature = active_creatures[i];
+
+    for (int i = 0; i < members.size(); i++){
+        godot::Ref<godot::BattleCreature> creature = members[i];
         UtilityFunctions::print(creature);
         if (creature->get_player()){
             the_creature_in_question = creature;

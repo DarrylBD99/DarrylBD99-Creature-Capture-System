@@ -10,6 +10,8 @@
 godot::BattleField* BattleManager::s_current_battlefield = nullptr;
 godot::UserInterface* BattleManager::s_current_userinterface = nullptr;
 
+vector<godot::Ref<godot::ActionResource>> BattleManager::m_actions;
+
 godot::Ref<godot::BattleTeam> BattleManager::m_player_team;
 godot::Ref<godot::BattleTeam> BattleManager::m_opponent_team;
 
@@ -28,10 +30,13 @@ void BattleManager::set_player_team(const godot::Ref<godot::BattleTeam> &team) {
     }
 }
 
-godot::Ref<godot::BattleTeam> BattleManager::get_player_team() const {
+godot::Ref<godot::BattleTeam> BattleManager::get_player_team() {
     return m_player_team;
 }
 
+vector<godot::Ref<godot::BattleCreature>> BattleManager::GetActiveCreatures() {
+    return m_active_creatures;
+}
 
 
 
@@ -82,10 +87,6 @@ void BattleManager::order_actions() {
 
 
 
-
-vector<godot::Ref<godot::BattleCreature>> BattleManager::GetActiveCreatures() {
-    return m_active_creatures;
-}
 
 
 // plays one turn AFTER getting all the inputs 

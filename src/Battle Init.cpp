@@ -57,7 +57,6 @@ void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int pla
 
     BattleManager::m_opponent_team = battle_team;
 
-    BattleManager::order_active_creatures_by_speed();
     
     godot::UserInterface::GetInstance()->InitAttacksButtons();
 
