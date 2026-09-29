@@ -67,20 +67,25 @@ void BattleManager::order_actions() {
     }
 
     // the actual sorting
+
+    // for things like trick room we would basiclly need to have an if statement that goes like 
+    // if trickroom: > else <
     std::stable_sort(m_actions.begin(), m_actions.end(),
-        [](const godot::Ref<godot::ActionResource> &a,
-           const godot::Ref<godot::ActionResource> &b) {
+        [](const godot::Ref<godot::ActionResource>& a,
+           const godot::Ref<godot::ActionResource>& b) {
 
             // sort by priority
-            if (a->GetPriority() != b->GetPriority())
-                return a->GetPriority() > b->GetPriority();
+            int pa = a->GetPriority();
+            int pb = b->GetPriority();
+            if (pa != pb) return pa > pb;
 
             // sort by speed
-            int sa = 0, sb = 0;
-            if (a->GetActorId().is_valid()) sa = a->GetActorId()->get_speed_stat();
-            if (b->GetActorId().is_valid()) sb = b->GetActorId()->get_speed_stat();
+            int sa = a->GetActor().is_valid() ? a->GetActor()->get_speed_stat() : 0;
+            int sb = b->GetActor().is_valid() ? b->GetActor()->get_speed_stat() : 0;
             return sa > sb;
         });
+
+    // 
     
     // i actually don't have any way to test this until its mostly finished lmfao o7
 }
@@ -91,7 +96,7 @@ void BattleManager::order_actions() {
 
 // plays one turn AFTER getting all the inputs 
 
-// inputs create events (what is the input, who used it, who does it target)
+// inputs create actions (what is the input, who used it, who does it target)
 
 void BattleManager::play_turn() {
 

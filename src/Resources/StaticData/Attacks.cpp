@@ -76,3 +76,10 @@ void AttackResource::SetAttackPP(int value) {
     m_attack_pp = value;
 }
 
+/// Priority
+int AttackResource::GetPriority() const {
+    return m_priority;
+}
+void AttackResource::SetPriority(int value) {
+    m_priority = value;
+}

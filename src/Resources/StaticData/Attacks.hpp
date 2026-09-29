@@ -18,6 +18,7 @@ namespace godot {
             int m_attack_power = 0;
             int m_attack_accuracy = 100;
             int m_attack_pp = 10;
+            int m_priority = 0;
 
             /// TODO everything
 
@@ -42,6 +43,9 @@ namespace godot {
             /// PP
             int GetAttackPP() const;
             void SetAttackPP(int value);
+
+            int GetPriority() const;
+            void SetPriority(int value);
 
     };
 };
