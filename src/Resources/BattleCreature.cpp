@@ -17,19 +17,25 @@ BattleCreature::~BattleCreature() {
 
 void BattleCreature::_bind_methods() {
 
-
     // Species resource
     ClassDB::bind_method(D_METHOD("set_species_resource", "resource"), &BattleCreature::set_species_resource);
     ClassDB::bind_method(D_METHOD("get_species_resource"), &BattleCreature::get_species_resource);
-    ADD_PROPERTY(
-        PropertyInfo(Variant::OBJECT, "species_resource", PROPERTY_HINT_RESOURCE_TYPE, "SpeciesResource"),
-        "set_species_resource",
-        "get_species_resource"
-    );
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "species_resource", PROPERTY_HINT_RESOURCE_TYPE, "SpeciesResource"), "set_species_resource", "get_species_resource");
 
-    ClassDB::bind_method(D_METHOD("get_creature_name"), &BattleCreature::get_creature_name);
+    // Creature ID
+    ClassDB::bind_method(D_METHOD("set_creature_id", "id"), &BattleCreature::set_creature_id);
+    ClassDB::bind_method(D_METHOD("get_creature_id"), &BattleCreature::get_creature_id);
+    ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "creature_id"), "set_creature_id", "get_creature_id");
+
+    // Creature Name
     ClassDB::bind_method(D_METHOD("set_creature_name", "name"), &BattleCreature::set_creature_name);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "creature_name"),"set_creature_name", "get_creature_name");
+    ClassDB::bind_method(D_METHOD("get_creature_name"), &BattleCreature::get_creature_name);
+    ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "creature_name"), "set_creature_name", "get_creature_name");
+
+    // Player
+    ClassDB::bind_method(D_METHOD("set_player", "player"), &BattleCreature::set_player);
+    ClassDB::bind_method(D_METHOD("get_player"), &BattleCreature::get_player);
+    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "player"), "set_player", "get_player");
 
     // Level
     ClassDB::bind_method(D_METHOD("set_level", "level"), &BattleCreature::set_level);
@@ -47,24 +53,24 @@ void BattleCreature::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::INT, "current_hp"), "set_current_hp", "get_current_hp");
 
     // Attack
-    ClassDB::bind_method(D_METHOD("set_attack", "attack"), &BattleCreature::set_attack_stat);
-    ClassDB::bind_method(D_METHOD("get_attack"), &BattleCreature::get_attack_stat);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "attack"), "set_attack", "get_attack");
+    ClassDB::bind_method(D_METHOD("set_attack_stat", "attack"), &BattleCreature::set_attack_stat);
+    ClassDB::bind_method(D_METHOD("get_attack_stat"), &BattleCreature::get_attack_stat);
+    ADD_PROPERTY(PropertyInfo(Variant::INT, "attack_stat"), "set_attack_stat", "get_attack_stat");
 
     // Defense
-    ClassDB::bind_method(D_METHOD("set_defense", "defense"), &BattleCreature::set_defense_stat);
-    ClassDB::bind_method(D_METHOD("get_defense"), &BattleCreature::get_defense_stat);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "defense"), "set_defense", "get_defense");
+    ClassDB::bind_method(D_METHOD("set_defense_stat", "defense"), &BattleCreature::set_defense_stat);
+    ClassDB::bind_method(D_METHOD("get_defense_stat"), &BattleCreature::get_defense_stat);
+    ADD_PROPERTY(PropertyInfo(Variant::INT, "defense_stat"), "set_defense_stat", "get_defense_stat");
 
     // Speed
-    ClassDB::bind_method(D_METHOD("set_speed", "speed"), &BattleCreature::set_speed_stat);
-    ClassDB::bind_method(D_METHOD("get_speed"), &BattleCreature::get_speed_stat);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "speed"), "set_speed", "get_speed");
+    ClassDB::bind_method(D_METHOD("set_speed_stat", "speed"), &BattleCreature::set_speed_stat);
+    ClassDB::bind_method(D_METHOD("get_speed_stat"), &BattleCreature::get_speed_stat);
+    ADD_PROPERTY(PropertyInfo(Variant::INT, "speed_stat"), "set_speed_stat", "get_speed_stat");
 
-
+    // Attacks
     ClassDB::bind_method(D_METHOD("set_attacks", "attacks"), &BattleCreature::set_attacks);
     ClassDB::bind_method(D_METHOD("get_attacks"), &BattleCreature::get_attacks);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "attacks", PROPERTY_HINT_ARRAY_TYPE, "AttackResource"),"set_attacks","get_attacks");
+    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "attacks", PROPERTY_HINT_ARRAY_TYPE, "AttackResource"), "set_attacks", "get_attacks");
 
     ClassDB::bind_method(D_METHOD("add_attack", "attack"), &BattleCreature::add_attack);
     ClassDB::bind_method(D_METHOD("clear_attacks"), &BattleCreature::clear_attacks);

@@ -78,8 +78,9 @@ void BattleField::initPositions(){
 
 
 
-void BattleField::AddSprites(CreatureSprite3D* sprite,int format,bool opponent) {
+void BattleField::AddSprites(CreatureSprite3D* sprite,BattleFormat format,bool opponent) {
     godot::UtilityFunctions::print("Adding sprites to battlefield.");
+
     if (sprite == nullptr) {
         godot::UtilityFunctions::push_error("Cannot add null sprite to battlefield.");
         return;
@@ -88,21 +89,47 @@ void BattleField::AddSprites(CreatureSprite3D* sprite,int format,bool opponent) 
     if (m_opponent_side_occupancy.keys().size() == 0){
         godot::UtilityFunctions::push_error("opponent positions not set");
     }
+
     if (m_player_side_occupancy.keys().size() == 0){
-        godot::UtilityFunctions::push_error("opponent positions not set");
+        godot::UtilityFunctions::push_error("player positions not set");
     }
 
-    //this assumes other code makes sure no two sprites are loaded in at once
+    int position_count = 0;
+
+    switch (format)
+    {
+        case BattleFormat::Singles:
+            position_count = 1;
+            break;
+
+        case BattleFormat::Dobules:
+            position_count = 2;
+            break;
+
+        case BattleFormat::Triples:
+            position_count = 3;
+            break;
+
+        case BattleFormat::TwoVOne:
+            position_count = opponent ? 1 : 2;
+            break;
+
+        case BattleFormat::TwoVTwo:
+            position_count = 2;
+            break;
+    }
+
     add_child(sprite);
 
-    //this can be simplfied but ITEEZ WHAT ITEEZ
     godot::UtilityFunctions::print(m_opponent_side_occupancy);
 
     if (opponent){ 
         Array keys = m_opponent_side_occupancy.keys();
-        for (int i = 0; i < keys.size() && i < format; i++) { //checks the first (first if 1v1 for example)
+
+        for (int i = 0; i < keys.size() && i < position_count; i++) {
             Vector3 key = (Vector3)keys[i];
-            if (!m_opponent_side_occupancy[key]) { //m_opponent_side_occupancy[key] returns false if empty
+
+            if (!m_opponent_side_occupancy[key]) {
                 sprite->set_position(key);
                 m_opponent_side_occupancy[key] = true;
                 break;
@@ -111,9 +138,11 @@ void BattleField::AddSprites(CreatureSprite3D* sprite,int format,bool opponent) 
     }
     else{
         Array keys = m_player_side_occupancy.keys();
-        for (int i = 0; i < keys.size() && i < format; i++) { //checks the first (first if 1v1 for example)
+
+        for (int i = 0; i < keys.size() && i < position_count; i++) {
             Vector3 key = (Vector3)keys[i];
-            if (!m_player_side_occupancy[key]) { //m_player_side_occupancy[key] returns false if empty
+
+            if (!m_player_side_occupancy[key]) {
                 sprite->set_position(key);
                 m_player_side_occupancy[key] = true;
                 break;

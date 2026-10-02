@@ -22,11 +22,19 @@
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/node.hpp>
 
-void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int player_format,int opponent_format) {
+void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int format,int opponent_format) {
     // Temporary until battle system is implemented
     //godot::UtilityFunctions::print("Wild Battle Initialized: " + battle_team.get) + " (Level. " + godot::String::num(level) + ")");
 
     // Check if Species exist (add later)
+    
+    godot::UtilityFunctions::print("didn't crash yet1");
+    
+
+    BattleFormat battle_format = static_cast<BattleFormat>(format);
+    
+    godot::UtilityFunctions::print("didn't crash yet2");
+
     
     // Initialize Battlefield
     if (InitializeBattleField() != godot::Error::OK) {
@@ -38,21 +46,25 @@ void BattleInit::start_battle(godot::Ref<godot::BattleTeam> battle_team, int pla
     
     
     if (battle_team->get_member_count() != 1){
+        godot::UtilityFunctions::push_error("irenhoirelugewigre");
         return; //TEMPORARY
     }
 
+
     BattleManager::s_current_battlefield->initPositions();
 
+    godot::UtilityFunctions::print("didn't crash yet3");
+
+    return;
+    
     //init player
     godot::Ref<godot::BattleCreature> player_creature = BattleManager::m_player_team->get_member(0);
-    player_creature->set_active(true);
-    InitCreatures(player_creature,player_format,false);
+    InitCreatures(player_creature,battle_format,false);
     
     
     //init opponent
     godot::Ref<godot::BattleCreature> creature = battle_team->get_member(0);
-    creature->set_active(true);
-    InitCreatures(creature,opponent_format,true);
+    InitCreatures(creature,battle_format,true);
 
 
     BattleManager::m_opponent_team = battle_team;
@@ -93,19 +105,56 @@ godot::Error BattleInit::InitializeBattleField() {
 }
 
 
-void BattleInit::InitCreatures(godot::Ref<godot::BattleCreature> BattleCreature,int format,bool opponent){
+void BattleInit::InitCreatures(const godot::Ref<godot::BattleTeam>& team, BattleFormat format, bool opponent){
+    
+    int creature_count = 0;
 
-    BattleCreature->InitBattleCreature();
+    switch (format)
+    {
+        case BattleFormat::Singles:
+            creature_count = 1;
+            break;
 
-    godot::CreatureSprite3D* creature_sprite = memnew(godot::CreatureSprite3D());
-    creature_sprite->SetSpeciesResource(BattleCreature->get_species_resource());
-    creature_sprite->SetSprite(opponent);
+        case BattleFormat::Dobules:
+            creature_count = 2;
+            break;
 
-    godot::UserInterface::GetInstance()->InitHealthbar(BattleCreature->get_creature_name(),BattleCreature->get_level(),33,opponent);
+        case BattleFormat::Triples:
+            creature_count = 3;
+            break;
 
-    BattleManager::s_current_battlefield->AddSprites(creature_sprite,format,opponent);
+        case BattleFormat::TwoVOne:
+            creature_count = opponent ? 1 : 2;
+            break;
 
+        case BattleFormat::TwoVTwo:
+            creature_count = 2;
+            break;
+    }
+
+    const auto& creatures = team->get_members();
+
+    int creatures_to_initialize = std::min(creature_count, static_cast<int>(creatures.size()));
+
+    for (int i = 0; i < creatures_to_initialize; ++i)
+    {
+        godot::Ref<godot::BattleCreature> battle_creature = creatures[i];
+
+        battle_creature->InitBattleCreature();
+
+        godot::CreatureSprite3D* creature_sprite = memnew(godot::CreatureSprite3D());
+
+        creature_sprite->SetSpeciesResource(battle_creature->get_species_resource());
+
+        creature_sprite->SetSprite(opponent);
+
+        godot::UserInterface::GetInstance()->InitHealthbar(battle_creature->get_creature_name(),battle_creature->get_level(),33,opponent);
+
+        BattleManager::s_current_battlefield->AddSprites(creature_sprite,format,opponent);
+    }
 }
+
+
 
 godot::Error BattleInit::InitUserInterface(){
 

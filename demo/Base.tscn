@@ -13,7 +13,7 @@ func _ready() -> void:
 	
 	CCS_Battle.set_player_team(team)
 	
-	CCS_Battle.start_battle(team,1,1)
+	CCS_Battle.start_battle(team,0,1)
 "
 
 [sub_resource type="AttackResource" id="AttackResource_nfj5t"]
@@ -31,7 +31,7 @@ attacks = Array[AttackResource]([SubResource("AttackResource_nfj5t")])
 
 [sub_resource type="BattleTeam" id="BattleTeam_i812h"]
 team_name = "team1 (doesn't matter)"
-members = Array[BattleCreature]([SubResource("BattleCreature_b56jl")])
+members = Array[BattleCreature]([SubResource("BattleCreature_b56jl"), SubResource("BattleCreature_b56jl")])
 
 [node name="Node" type="Node"]
 script = SubResource("GDScript_65yaf")

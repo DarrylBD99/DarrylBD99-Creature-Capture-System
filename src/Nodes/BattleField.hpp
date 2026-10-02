@@ -5,10 +5,10 @@
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/marker3d.hpp>
 #include <godot_cpp/variant/vector3.hpp>
-
 #include <godot_cpp/classes/ref.hpp>
-
+#include <Battle Manager.hpp>
 #include <Nodes/CreatureSprite3D.hpp>
+#include "Resources/StaticData/BattleFormats.hpp"
 
 namespace godot {
     class BattleField : public Node {
@@ -43,7 +43,7 @@ namespace godot {
 
             void initPositions();
 
-            void AddSprites(CreatureSprite3D* sprite,int format,bool opponent);
+            void AddSprites(CreatureSprite3D* sprite,BattleFormat format,bool opponent);
             void AdjustSprite(CreatureSprite3D* sprite);
 
     };

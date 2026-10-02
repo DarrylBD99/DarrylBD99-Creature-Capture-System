@@ -13,7 +13,10 @@ godot::UserInterface* BattleManager::s_current_userinterface = nullptr;
 vector<godot::Ref<godot::ActionResource>> BattleManager::m_actions;
 
 godot::Ref<godot::BattleTeam> BattleManager::m_player_team;
+godot::Ref<godot::BattleTeam> BattleManager::m_ally_team;
+
 godot::Ref<godot::BattleTeam> BattleManager::m_opponent_team;
+godot::Ref<godot::BattleTeam> BattleManager::m_opponent_2_team;
 
 
 
@@ -121,7 +124,8 @@ void BattleManager::Battle::occupy_slots(BattleFormat format)
     if (opponent_side == nullptr  or player_side == nullptr){
         godot::UtilityFunctions::push_error("A battle side is null, go figure out which lmfao");
         return;
-    }
+    }   
+    //ir3ngoiugnr3iugnoiu3lngkjn
 
     switch (format)
     {

@@ -16,6 +16,7 @@ namespace godot {
             static void initialize_battle_singleton();
             static void main_battle_loop();
 
+            
         protected:
             static void _bind_methods();
     };
