@@ -15,7 +15,6 @@ vector<godot::Ref<godot::ActionResource>> BattleManager::m_actions;
 godot::Ref<godot::BattleTeam> BattleManager::m_player_team;
 godot::Ref<godot::BattleTeam> BattleManager::m_opponent_team;
 
-vector<godot::Ref<godot::BattleCreature>> BattleManager::m_active_creatures;
 
 
 
@@ -26,18 +25,13 @@ void BattleManager::set_player_team(const godot::Ref<godot::BattleTeam> &team) {
 
     for (int i = 0; i < members.size(); i++){
         godot::Ref<godot::BattleCreature> creature = members[i];
-        creature->set_player(true); //does this
+        creature->set_player(true); // sets the creatures as controllable by the player
     }
 }
 
 godot::Ref<godot::BattleTeam> BattleManager::get_player_team() {
     return m_player_team;
 }
-
-vector<godot::Ref<godot::BattleCreature>> BattleManager::GetActiveCreatures() {
-    return m_active_creatures;
-}
-
 
 
 // this works but i'm not sure how it would work with moves/items/abilities/field conditions
@@ -110,4 +104,98 @@ void BattleManager::play_turn() {
     //            (in the ideal world this would only happen whenever something that changes priority/speed happens
     //            but we shouldn't bother with that rn)
 
+}
+
+
+
+
+
+
+
+
+void BattleManager::Battle::occupy_slots(BattleFormat format)
+{
+    BattleSide* player_side = battle_sides[0];
+    BattleSide* opponent_side = battle_sides[1];
+
+    if (opponent_side == nullptr  or player_side == nullptr){
+        godot::UtilityFunctions::push_error("A battle side is null, go figure out which lmfao");
+        return;
+    }
+
+    switch (format)
+    {
+        case BattleFormat::Singles:
+        {
+            BattleManager::occupy_team_slots(player_side, BattleManager::m_player_team, 1);
+
+            BattleManager::occupy_team_slots(opponent_side, BattleManager::m_opponent_team, 1);
+
+        }
+
+        case BattleFormat::Dobules:
+        {
+            BattleManager::occupy_team_slots(player_side, BattleManager::m_player_team, 2);
+
+            BattleManager::occupy_team_slots(opponent_side, BattleManager::m_opponent_team, 2);
+
+        }
+
+        case BattleFormat::Triples:
+        {
+            BattleManager::occupy_team_slots(player_side, BattleManager::m_player_team, 3);
+
+            BattleManager::occupy_team_slots(opponent_side, BattleManager::m_opponent_team, 3);
+
+        }
+
+        case BattleFormat::TwoVOne: //lets ignore OneVTwo for now
+        {
+            BattleManager::occupy_team_slots(player_side, BattleManager::m_player_team, 1);
+
+            BattleManager::occupy_team_slots(player_side, BattleManager::m_ally_team, 1);
+
+            BattleManager::occupy_team_slots(opponent_side, BattleManager::m_opponent_team, 1);
+
+        }
+
+        case BattleFormat::TwoVTwo:
+        {
+            BattleManager::occupy_team_slots(player_side, BattleManager::m_player_team, 1);
+
+            BattleManager::occupy_team_slots(player_side, BattleManager::m_ally_team, 1);
+
+            BattleManager::occupy_team_slots(opponent_side, BattleManager::m_opponent_team, 1);
+
+            BattleManager::occupy_team_slots(opponent_side, BattleManager::m_opponent_2_team, 1);
+
+        }
+    }
+}
+
+
+
+void BattleManager::occupy_team_slots(BattleManager::BattleSide* side,const godot::Ref<godot::BattleTeam>& team,int amount){
+
+    if (team.is_null()){
+        godot::UtilityFunctions::push_error("Team is null. did you set the correct format?");
+        return;
+    }
+
+    const auto& members = team->get_members();
+
+    if (members.size() == 0){
+        godot::UtilityFunctions::push_error("a team has no members!");
+        return;
+    }
+
+    for (int i = 0; i < amount && i < members.size(); ++i)
+    {
+        BattleManager::CreatureSlot* slot = new BattleManager::CreatureSlot;
+
+        slot->creature = members[i];
+
+        side->creature_slots.push_back(slot);
+        side->active_creatures.push_back(slot->creature.ptr());
+    }
 }

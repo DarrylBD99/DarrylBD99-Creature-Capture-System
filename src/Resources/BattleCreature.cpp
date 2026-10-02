@@ -14,7 +14,7 @@ BattleCreature::BattleCreature() {
 BattleCreature::~BattleCreature() {
 }
 
-// No Godot bindings
+
 void BattleCreature::_bind_methods() {
 
 
@@ -101,9 +101,6 @@ void BattleCreature::set_creature_name(const StringName &name){
 }
 
 
-void BattleCreature::set_active(bool active) {
-    m_is_active = active;
-}
 void BattleCreature::set_player(bool player) {
     m_is_player = player;
 }
@@ -147,9 +144,7 @@ TypedArray<AttackResource> BattleCreature::get_creature_attacks() const {
     return m_attacks;
 }
 
-bool BattleCreature::get_active() const {
-    return m_is_active;
-}
+
 bool BattleCreature::get_player() const {
     return m_is_player;
 }

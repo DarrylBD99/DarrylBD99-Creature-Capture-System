@@ -17,7 +17,6 @@ namespace godot {
             StringName m_creature_name;
             StringName m_creature_id;
 
-            bool m_is_active = false;
             bool m_is_player = false;
 
             int m_level = 1;
@@ -43,7 +42,6 @@ namespace godot {
         void set_species_resource(const Ref<SpeciesResource> resource);
         void set_creature_id(const StringName &id);
         void set_creature_name(const StringName &name);
-        void set_active(bool active);
         void set_player(bool player);
         void set_level(int level);
         void set_max_hp(int max_hp);
@@ -57,7 +55,6 @@ namespace godot {
         StringName get_creature_id() const;
         StringName get_creature_name() const;
         TypedArray<AttackResource> get_creature_attacks() const;
-        bool get_active() const;
         bool get_player() const;
         int get_level() const;
         int get_max_hp() const;
