@@ -61,5 +61,6 @@
         "ranges": "cpp",
         "span": "cpp",
         "sstream": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "C:/Users/darry/Desktop/Stuff/Projects/DarrylBD99-Creature-Capture-System/godot-cpp"
 }
