@@ -66,6 +66,7 @@ void BattleField::AdjustSprite(CreatureSprite3D* sprite){
         godot::UtilityFunctions::push_error("SpriteFrames resource is null. Cannot adjust sprite.");
         return;
     }
+    
 
     StringName anim = sprite->get_animation();
     int frame = sprite->get_frame();

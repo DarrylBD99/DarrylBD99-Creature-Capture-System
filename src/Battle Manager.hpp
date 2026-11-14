@@ -10,6 +10,8 @@
 #include <Resources/BattleCreature.hpp>
 
 #include <Nodes/BattleField.hpp>
+#include <Nodes/UserInterface.hpp>
+#include <Nodes/HealthBar.hpp>
 
 using godot::Ref, godot::BattleTeam, godot::BattleCreature, std::vector;
 
@@ -23,6 +25,7 @@ class BattleManager {
     public:
         BattleManager() = delete;
         static godot::BattleField* s_current_battlefield;
+        static godot::UserInterface* s_current_userinterface;
         static BattleSide s_ally;
         static BattleSide s_opp;
 
