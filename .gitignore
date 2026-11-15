@@ -6,3 +6,4 @@
 .vscode/c_cpp_properties.json
 .idea/editor.xml
 *.os
+*.obj
