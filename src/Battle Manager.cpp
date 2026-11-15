@@ -121,7 +121,7 @@ void BattleManager::Battle::occupy_slots(BattleFormat format)
     BattleSide* player_side = battle_sides[0];
     BattleSide* opponent_side = battle_sides[1];
 
-    if (opponent_side == nullptr  or player_side == nullptr){
+    if (opponent_side == nullptr || player_side == nullptr){
         godot::UtilityFunctions::push_error("A battle side is null, go figure out which lmfao");
         return;
     }   
