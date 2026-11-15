@@ -478,7 +478,7 @@ visible = false
 layout_mode = 2
 
 [node name="Panel" type="Panel" parent="Panel/MarginContainer/Credits"]
-layout_mode = 2
+layout_mode = 0
 offset_right = 1024.0
 offset_bottom = 520.0
 
@@ -573,13 +573,6 @@ Tileset
 Stylized Medieval Market
 RPG Battle music
 RPG Essentials SFX (Free)"
-
-[node name="Disclaimer" type="Label" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-text = "Disclaimer: AI image generation was used for Lumas such as Bloom for this demo to help finish the demo faster."
-horizontal_alignment = 1
 
 [node name="CreditsBackButton" type="Button" parent="Panel/MarginContainer/Credits/Panel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
